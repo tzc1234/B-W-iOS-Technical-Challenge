@@ -1,9 +1,8 @@
 import UIKit
 
 final class AppFlowCoordinator {
-
-    var tabBarController: UITabBarController
-    var navigationController: UINavigationController
+    private let tabBarController: UITabBarController
+    private let navigationController: UINavigationController
     private let appDependencies: AppDependenciesContainer
 
     init(tabBarController: UITabBarController,
