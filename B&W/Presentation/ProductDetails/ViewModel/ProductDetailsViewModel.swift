@@ -11,7 +11,7 @@ protocol ProductDetailsViewModelOutput {
     var price: String { get }
 }
 
-protocol ProductDetailsViewModel: ProductDetailsViewModelInput, ProductDetailsViewModelOutput { }
+typealias ProductDetailsViewModel = ProductDetailsViewModelInput & ProductDetailsViewModelOutput
 
 final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
 
