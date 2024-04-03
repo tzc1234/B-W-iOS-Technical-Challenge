@@ -9,8 +9,7 @@ public enum DataTransferError: Error {
 
 public protocol DataTransferService {
     typealias CompletionHandler<T> = (Result<T, DataTransferError>) -> Void
-
-    @discardableResult
+    
     func request<T: Decodable, E: ResponseRequestable>(with endpoint: E,
                                                        completion: @escaping CompletionHandler<T>) -> NetworkCancellable? where E.Response == T
 }
