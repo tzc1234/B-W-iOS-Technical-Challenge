@@ -40,7 +40,7 @@ final class DependencyContainer {
 
     func makeProductsListViewModel(actions: ProductsListViewModelActions) -> ProductsListViewModel {
         return DefaultProductsListViewModel(useCase: makeGetProductsUseCase(),
-                                          actions: actions)
+                                            actions: actions)
     }
 
     func makeProductDetailsViewModel(product: Product) -> ProductDetailsViewModel {

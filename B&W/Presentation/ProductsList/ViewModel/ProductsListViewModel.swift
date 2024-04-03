@@ -23,20 +23,23 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     let items: Observable<[ProductsListItemViewModel]> = Observable([])
     let error: Observable<String> = Observable("")
 
-    private var query: String = "" // Set query to private, since it needn't to be exposed
-    private var products: [Product] = [] // Set products to private, since it needn't to be exposed
-    private var loadTask: Cancellable? { willSet { loadTask?.cancel() } }
+    private var query: String = "" // Set query to private, since it needn't to be exposed.
+    private var products: [Product] = [] // Set products to private, since it needn't to be exposed.
+    private var loadTask: Cancellable? {
+        willSet {
+            // State the intention precisely.
+            cancelCurrentPendingTaskBeforeAssigningNewTask()
+        }
+    }
 
     private let useCase: GetProductsUseCase
     private let actions: ProductsListViewModelActions
-
-    // MARK: - Init
-
+    
     init(useCase: GetProductsUseCase, actions: ProductsListViewModelActions) {
         self.useCase = useCase
         self.actions = actions
     }
-
+    
     private func load(productQuery: ProductQuery) {
         query = productQuery.query
 
@@ -53,6 +56,10 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
                         NSLocalizedString("Failed loading products", comment: "")
                 }
         })
+    }
+    
+    private func cancelCurrentPendingTaskBeforeAssigningNewTask() {
+        loadTask?.cancel()
     }
 }
 
