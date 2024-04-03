@@ -27,8 +27,8 @@ final class AppDependenciesContainer {
         return DefaultDataTransferService(with: apiDataNetwork)
     }()
 
-    func makeProductsDependenciesContainer() -> DependencyContainer {
-        let dependencies = DependencyContainer.Dependencies(apiDataTransferService: apiDataTransferService)
-        return DependencyContainer(dependencies: dependencies)
+    func makeProductsDependenciesContainer() -> ProductsDependenciesContainer {
+        let dependencies = ProductsDependenciesContainer.Dependencies(apiDataTransferService: apiDataTransferService)
+        return ProductsDependenciesContainer(dependencies: dependencies)
     }
 }

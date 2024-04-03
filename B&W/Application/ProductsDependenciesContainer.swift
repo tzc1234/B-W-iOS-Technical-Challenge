@@ -1,7 +1,8 @@
 import Foundation
 import UIKit
 
-final class DependencyContainer {
+// Rename from DependencyContainer to ProductsDependenciesContainer, a more explicit name.
+final class ProductsDependenciesContainer {
 
     struct Dependencies {
         let apiDataTransferService: DataTransferService
@@ -43,7 +44,7 @@ final class DependencyContainer {
     }
 }
 
-extension DependencyContainer: GetProductsFlowCoordinatorDependencies {
+extension ProductsDependenciesContainer: GetProductsFlowCoordinatorDependencies {
     // MARK: - Controllers
     
     func makeProductsListViewController(actions: ProductsListViewModelActions) -> ProductsListViewController {
