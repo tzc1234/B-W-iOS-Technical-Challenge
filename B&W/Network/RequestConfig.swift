@@ -6,8 +6,8 @@ public protocol RequestConfig {
 
 public struct ApiRequestConfig: RequestConfig {
     public let baseURL: URL
-
-     public init(baseURL: URL) {
+    
+    public init(baseURL: URL) {
         self.baseURL = baseURL
     }
 }

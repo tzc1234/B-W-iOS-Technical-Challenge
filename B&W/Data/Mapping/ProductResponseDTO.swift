@@ -4,6 +4,7 @@ struct ProductResponseDTO: Decodable {
     private enum CodingKeys: String, CodingKey {
         case products = "data"
     }
+    
     let products: [ProductDTO]
 }
 
@@ -13,9 +14,9 @@ extension ProductResponseDTO {
             case id
             case attributes
         }
+        
         let id: String
         let attributes: ProductAttributesDTO
-
     }
 
     struct ProductAttributesDTO: Decodable {

@@ -10,10 +10,8 @@ final class DefaultProductsRepository {
 }
 
 extension DefaultProductsRepository: ProductsRepository {
-
     public func fetchProductsList(query: ProductQuery,
                                   completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable? {
-
         let task = RepositoryTask()
 
         guard !task.isCancelled else { return nil }
