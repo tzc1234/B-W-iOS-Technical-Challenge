@@ -1,9 +1,7 @@
 import Foundation
 
 struct APIEndpoints {
-
     static func getProducts() -> Endpoint<ProductResponseDTO> {
-        return Endpoint(path: "db",
-                        method: .get)
+        return Endpoint(path: "db", method: .get)
     }
 }

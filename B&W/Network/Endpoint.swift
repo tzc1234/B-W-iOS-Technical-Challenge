@@ -1,13 +1,26 @@
 import Foundation
 
 public enum HTTPMethodType: String {
-    case get     = "GET"
-    case post    = "POST"
-    // etc
+    case get = "GET"
+}
+
+// Move the Requestable extension functions to Endpoint extension,
+// therefore variables(path, isFullPath, method) needn't to be exposed from Requestable.
+public protocol Requestable {
+    func urlRequest(with config: RequestConfig) throws -> URLRequest
+}
+
+public protocol ResponseRequestable: Requestable {
+    associatedtype Response
+
+    var responseDecoder: ResponseDecoder { get }
+}
+
+enum RequestError: Error {
+    case componentsError
 }
 
 public class Endpoint<R>: ResponseRequestable {
-
     public typealias Response = R
 
     public var path: String
@@ -26,40 +39,19 @@ public class Endpoint<R>: ResponseRequestable {
     }
 }
 
-public protocol Requestable {
-    var path: String { get }
-    var isFullPath: Bool { get }
-    var method: HTTPMethodType { get }
-
-    func urlRequest(with config: RequestConfig) throws -> URLRequest
-}
-
-public protocol ResponseRequestable: Requestable {
-    associatedtype Response
-
-    var responseDecoder: ResponseDecoder { get }
-}
-
-enum RequestError: Error {
-    case componentsError
-}
-
-extension Requestable {
-    func url(with config: RequestConfig) throws -> URL {
-
+extension Endpoint {
+    public func url(with config: RequestConfig) throws -> URL {
         let baseURL = config.baseURL.absoluteString.last != "/" ? config.baseURL.absoluteString + "/" : config.baseURL.absoluteString
         let endpoint = isFullPath ? path : baseURL.appending(path)
 
         guard let urlComponents = URLComponents(string: endpoint) else { throw RequestError.componentsError }
-
         guard let url = urlComponents.url else { throw RequestError.componentsError }
 
         return url
     }
 
     public func urlRequest(with config: RequestConfig) throws -> URLRequest {
-
-        let url = try self.url(with: config)
+        let url = try url(with: config)
         var urlRequest = URLRequest(url: url)
 
         urlRequest.httpMethod = method.rawValue
