@@ -2,9 +2,9 @@ import Foundation
 
 public final class Observable<Value> {
 
-    struct Observer<Value> {
+    struct Observer<V> {
         weak var observer: AnyObject?
-        let block: (Value) -> Void
+        let block: (V) -> Void
     }
 
     private var observers = [Observer<Value>]()
