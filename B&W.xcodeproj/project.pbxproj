@@ -39,6 +39,7 @@
 		2BFB4A62251655DB00BD4735 /* ProductDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFB4A61251655DB00BD4735 /* ProductDetailsViewModel.swift */; };
 		BE5857B22BBDC7EF006FF630 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */; };
 		BE5857B42BBDD51A006FF630 /* NetworkSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */; };
+		BE5857B92BBDDD3A006FF630 /* DataTransferErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B82BBDDD3A006FF630 /* DataTransferErrorHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		BE4119E82BBD8937003E05F5 /* B&W.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "B&W.xctestplan"; sourceTree = "<group>"; };
 		BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
 		BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionManager.swift; sourceTree = "<group>"; };
+		BE5857B82BBDDD3A006FF630 /* DataTransferErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransferErrorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +271,7 @@
 				BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */,
 				2B91C72925139EFB00F0957C /* RequestConfig.swift */,
 				2B91C7422513AA0E00F0957C /* DataTransferService.swift */,
+				BE5857B82BBDDD3A006FF630 /* DataTransferErrorHandler.swift */,
 				2B91C7C52514F6DD00F0957C /* NetworkService.swift */,
 				BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */,
 				2B481AC7251686C400E72283 /* ConnectionError.swift */,
@@ -455,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE5857B92BBDDD3A006FF630 /* DataTransferErrorHandler.swift in Sources */,
 				2B91C7432513AA0E00F0957C /* DataTransferService.swift in Sources */,
 				2B91C7342513A28200F0957C /* ProductResponseDTO.swift in Sources */,
 				2B891247251356A5004BC46D /* ProductDetailsViewController.swift in Sources */,
