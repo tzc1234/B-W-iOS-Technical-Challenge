@@ -12,20 +12,18 @@ protocol ProductsListViewModelInput {
 protocol ProductsListViewModelOutput {
     var items: Observable<[ProductsListItemViewModel]> { get }
     var error: Observable<String> { get }
-    var query: String { get }
 }
 
 typealias ProductsListViewModel = ProductsListViewModelInput & ProductsListViewModelOutput
 
 final class DefaultProductsListViewModel: ProductsListViewModel {
-
+    
     // MARK: - OUTPUT
 
     let items: Observable<[ProductsListItemViewModel]> = Observable([])
-
     let error: Observable<String> = Observable("")
 
-    var query: String = ""
+    private var query: String = ""
 
     private let useCase: GetProductsUseCase
 
