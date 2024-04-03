@@ -13,7 +13,6 @@ protocol ProductsListViewModelOutput {
     var items: Observable<[ProductsListItemViewModel]> { get }
     var error: Observable<String> { get }
     var query: String { get }
-    var isEmpty: Bool { get }
 }
 
 typealias ProductsListViewModel = ProductsListViewModelInput & ProductsListViewModelOutput
@@ -27,8 +26,6 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     let error: Observable<String> = Observable("")
 
     var query: String = ""
-
-    var isEmpty: Bool { return items.value.isEmpty }
 
     private let useCase: GetProductsUseCase
 
