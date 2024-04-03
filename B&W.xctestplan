@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "6A1A8384-C910-476D-A871-96459FCCFBEA",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:B&W.xcodeproj",
+      "identifier" : "2B89123E251356A5004BC46D",
+      "name" : "B&W"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:B&W.xcodeproj",
+        "identifier" : "2B891254251356A7004BC46D",
+        "name" : "B&WTests"
+      }
+    }
+  ],
+  "version" : 1
+}

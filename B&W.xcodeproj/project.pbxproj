@@ -13,7 +13,6 @@
 		2B89124C251356A7004BC46D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B89124B251356A7004BC46D /* Assets.xcassets */; };
 		2B89124F251356A7004BC46D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B89124D251356A7004BC46D /* LaunchScreen.storyboard */; };
 		2B89125A251356A7004BC46D /* ProductsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B891259251356A7004BC46D /* ProductsListViewModelTests.swift */; };
-		2B891265251356A7004BC46D /* B_WUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B891264251356A7004BC46D /* B_WUITests.swift */; };
 		2B89127325135907004BC46D /* ProductsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B89127225135907004BC46D /* ProductsListViewController.swift */; };
 		2B89128425135F5D004BC46D /* ProductDetailsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B89128225135F5D004BC46D /* ProductDetailsViewController.storyboard */; };
 		2B89128725135F84004BC46D /* ProductsListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B89128525135F84004BC46D /* ProductsListViewController.storyboard */; };
@@ -48,13 +47,6 @@
 			remoteGlobalIDString = 2B89123E251356A5004BC46D;
 			remoteInfo = "B&W";
 		};
-		2B891261251356A7004BC46D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B891237251356A5004BC46D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2B89123E251356A5004BC46D;
-			remoteInfo = "B&W";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -68,9 +60,6 @@
 		2B891255251356A7004BC46D /* B&WTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "B&WTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B891259251356A7004BC46D /* ProductsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListViewModelTests.swift; sourceTree = "<group>"; };
 		2B89125B251356A7004BC46D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B891260251356A7004BC46D /* B&WUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "B&WUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B891264251356A7004BC46D /* B_WUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = B_WUITests.swift; sourceTree = "<group>"; };
-		2B891266251356A7004BC46D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B89127225135907004BC46D /* ProductsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListViewController.swift; sourceTree = "<group>"; };
 		2B89128325135F5D004BC46D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "B&W/Base.lproj/ProductDetailsViewController.storyboard"; sourceTree = "<group>"; };
 		2B89128625135F84004BC46D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProductsListViewController.storyboard; sourceTree = "<group>"; };
@@ -95,6 +84,7 @@
 		2B91C7C52514F6DD00F0957C /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		2B91C8512515285100F0957C /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		2BFB4A61251655DB00BD4735 /* ProductDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewModel.swift; sourceTree = "<group>"; };
+		BE4119E82BBD8937003E05F5 /* B&W.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "B&W.xctestplan"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,22 +102,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B89125D251356A7004BC46D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		2B891236251356A5004BC46D = {
 			isa = PBXGroup;
 			children = (
+				BE4119E82BBD8937003E05F5 /* B&W.xctestplan */,
 				2B891241251356A5004BC46D /* B&W */,
 				2B891258251356A7004BC46D /* B&WTests */,
-				2B891263251356A7004BC46D /* B&WUITests */,
 				2B891240251356A5004BC46D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -137,7 +120,6 @@
 			children = (
 				2B89123F251356A5004BC46D /* B&W.app */,
 				2B891255251356A7004BC46D /* B&WTests.xctest */,
-				2B891260251356A7004BC46D /* B&WUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,15 +144,6 @@
 				2B89125B251356A7004BC46D /* Info.plist */,
 			);
 			path = "B&WTests";
-			sourceTree = "<group>";
-		};
-		2B891263251356A7004BC46D /* B&WUITests */ = {
-			isa = PBXGroup;
-			children = (
-				2B891264251356A7004BC46D /* B_WUITests.swift */,
-				2B891266251356A7004BC46D /* Info.plist */,
-			);
-			path = "B&WUITests";
 			sourceTree = "<group>";
 		};
 		2B89127725135E38004BC46D /* Application */ = {
@@ -411,24 +384,6 @@
 			productReference = 2B891255251356A7004BC46D /* B&WTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2B89125F251356A7004BC46D /* B&WUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2B89126F251356A7004BC46D /* Build configuration list for PBXNativeTarget "B&WUITests" */;
-			buildPhases = (
-				2B89125C251356A7004BC46D /* Sources */,
-				2B89125D251356A7004BC46D /* Frameworks */,
-				2B89125E251356A7004BC46D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2B891262251356A7004BC46D /* PBXTargetDependency */,
-			);
-			name = "B&WUITests";
-			productName = "B&WUITests";
-			productReference = 2B891260251356A7004BC46D /* B&WUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -444,10 +399,6 @@
 						LastSwiftMigration = 1530;
 					};
 					2B891254251356A7004BC46D = {
-						CreatedOnToolsVersion = 11.7;
-						TestTargetID = 2B89123E251356A5004BC46D;
-					};
-					2B89125F251356A7004BC46D = {
 						CreatedOnToolsVersion = 11.7;
 						TestTargetID = 2B89123E251356A5004BC46D;
 					};
@@ -468,7 +419,6 @@
 			targets = (
 				2B89123E251356A5004BC46D /* B&W */,
 				2B891254251356A7004BC46D /* B&WTests */,
-				2B89125F251356A7004BC46D /* B&WUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -486,13 +436,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2B891253251356A7004BC46D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2B89125E251356A7004BC46D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -542,14 +485,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B89125C251356A7004BC46D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2B891265251356A7004BC46D /* B_WUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -557,11 +492,6 @@
 			isa = PBXTargetDependency;
 			target = 2B89123E251356A5004BC46D /* B&W */;
 			targetProxy = 2B891256251356A7004BC46D /* PBXContainerItemProxy */;
-		};
-		2B891262251356A7004BC46D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2B89123E251356A5004BC46D /* B&W */;
-			targetProxy = 2B891261251356A7004BC46D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -794,46 +724,6 @@
 			};
 			name = Release;
 		};
-		2B891270251356A7004BC46D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 739Y89842X;
-				INFOPLIST_FILE = "B&WUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.artemissimplesolutions.B-WUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "B&W";
-			};
-			name = Debug;
-		};
-		2B891271251356A7004BC46D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 739Y89842X;
-				INFOPLIST_FILE = "B&WUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.artemissimplesolutions.B-WUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "B&W";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -860,15 +750,6 @@
 			buildConfigurations = (
 				2B89126D251356A7004BC46D /* Debug */,
 				2B89126E251356A7004BC46D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2B89126F251356A7004BC46D /* Build configuration list for PBXNativeTarget "B&WUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2B891270251356A7004BC46D /* Debug */,
-				2B891271251356A7004BC46D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
