@@ -37,6 +37,7 @@
 		2B91C7C62514F6DD00F0957C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C7C52514F6DD00F0957C /* NetworkService.swift */; };
 		2B91C8522515285100F0957C /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C8512515285100F0957C /* Observable.swift */; };
 		2BFB4A62251655DB00BD4735 /* ProductDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFB4A61251655DB00BD4735 /* ProductDetailsViewModel.swift */; };
+		BE5857B22BBDC7EF006FF630 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		2B91C8512515285100F0957C /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		2BFB4A61251655DB00BD4735 /* ProductDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewModel.swift; sourceTree = "<group>"; };
 		BE4119E82BBD8937003E05F5 /* B&W.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "B&W.xctestplan"; sourceTree = "<group>"; };
+		BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				2B91C72425139E0500F0957C /* Endpoint.swift */,
+				BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */,
 				2B91C72925139EFB00F0957C /* RequestConfig.swift */,
 				2B91C7422513AA0E00F0957C /* DataTransferService.swift */,
 				2B91C7C52514F6DD00F0957C /* NetworkService.swift */,
@@ -472,6 +475,7 @@
 				2B89129225136CC3004BC46D /* ProductsListItemViewModel.swift in Sources */,
 				2B91C7722513B39600F0957C /* RepositoryTask.swift in Sources */,
 				2B91C7822514AC7000F0957C /* DependencyInjector.swift in Sources */,
+				BE5857B22BBDC7EF006FF630 /* ResponseDecoder.swift in Sources */,
 				2B91C75B2513ACDF00F0957C /* ProductsRepository.swift in Sources */,
 				2B89127325135907004BC46D /* ProductsListViewController.swift in Sources */,
 			);
