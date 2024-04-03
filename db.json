@@ -1,0 +1,56 @@
+{
+ "data": [{
+     "id": "160",
+     "attributes": {
+         "name": "Product 1",
+         "description": "Some description",
+         "price_data":
+             [{
+             "price_pennies": 3800
+             }]
+         ,
+         "rating": 4.9,
+         "media":
+
+             [{
+              "url": "https://picsum.photos/200/300"
+             }]
+
+
+     }
+ },
+ {
+     "id": "170",
+     "attributes": {
+         "name": "Product 2",
+         "description": "Some other description",
+         "price_data":
+             [{
+             "price_pennies": 1800
+             }]
+         ,
+         "rating": 4.4,
+         "media":
+             [{
+             "url": "https://picsum.photos/200/300"
+             }]
+     }
+ },
+ {
+     "id": "180",
+     "attributes": {
+         "name": "Product 3",
+         "description": "Description",
+         "price_data":
+             [{
+             "price_pennies": 1100
+             }]
+         ,
+        "rating": 5.0,
+         "media":
+             [{
+             "url": "https://picsum.photos/200/300"
+             }]
+     }
+ }]
+}
