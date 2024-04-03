@@ -79,7 +79,7 @@
                             <outlet property="delegate" destination="ktb-54-2KA" id="fA9-gs-WAz"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Shop" image="basket" catalog="system" id="oZH-Ig-lh2"/>
+                    <tabBarItem key="tabBarItem" title="Shop" image="basket" id="oZH-Ig-lh2"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="rhW-kN-y26" kind="showDetail" id="SPR-sQ-jGj"/>
@@ -99,7 +99,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="basket" catalog="system" width="128" height="108"/>
+        <image name="basket" width="23" height="22"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
