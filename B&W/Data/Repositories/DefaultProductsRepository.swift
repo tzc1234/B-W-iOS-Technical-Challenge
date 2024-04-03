@@ -16,7 +16,7 @@ extension DefaultProductsRepository: ProductsRepository {
 
         let task = RepositoryTask()
 
-        guard !task.isCancelled else { return nil}
+        guard !task.isCancelled else { return nil }
 
         let endpoint = APIEndpoints.getProducts()
         task.networkTask = self.dataTransferService.request(with: endpoint) { result in

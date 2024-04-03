@@ -18,7 +18,7 @@ final class DefaultGetProductsUseCase: GetProductsUseCase {
                  completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable? {
 
         return productsRepository.fetchProductsList(query: requestValue.query,
-                                                completion: { result in
+                                                    completion: { result in
             completion(result)
         })
     }

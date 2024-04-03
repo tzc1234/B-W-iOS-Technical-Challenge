@@ -2,7 +2,6 @@ import Foundation
 
 struct ProductsListViewModelActions {
     let showProductDetails: (Product) -> Void
-
 }
 
 protocol ProductsListViewModelInput {
@@ -47,7 +46,6 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     }
 
     private func load(productQuery: ProductQuery) {
-
         query = productQuery.query
 
         loadTask = useCase.execute(
@@ -70,7 +68,6 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
 
 extension DefaultProductsListViewModel {
     func viewDidLoad() {
-
         load(productQuery: .init(query: query))
     }
 
