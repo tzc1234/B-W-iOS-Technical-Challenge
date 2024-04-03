@@ -40,7 +40,15 @@ public class Endpoint<R>: ResponseRequestable {
 }
 
 extension Endpoint {
-    public func url(with config: RequestConfig) throws -> URL {
+    public func urlRequest(with config: RequestConfig) throws -> URLRequest {
+        let url = try url(with: config)
+        var urlRequest = URLRequest(url: url)
+
+        urlRequest.httpMethod = method.rawValue
+        return urlRequest
+    }
+    
+    private func url(with config: RequestConfig) throws -> URL {
         let baseURL = config.baseURL.absoluteString.last != "/" ? config.baseURL.absoluteString + "/" : config.baseURL.absoluteString
         let endpoint = isFullPath ? path : baseURL.appending(path)
 
@@ -48,13 +56,5 @@ extension Endpoint {
         guard let url = urlComponents.url else { throw RequestError.componentsError }
 
         return url
-    }
-
-    public func urlRequest(with config: RequestConfig) throws -> URLRequest {
-        let url = try url(with: config)
-        var urlRequest = URLRequest(url: url)
-
-        urlRequest.httpMethod = method.rawValue
-        return urlRequest
     }
 }
