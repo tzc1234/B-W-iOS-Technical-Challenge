@@ -17,7 +17,7 @@ protocol ProductsListViewModelOutput {
     var isEmpty: Bool { get }
 }
 
-protocol ProductsListViewModel: ProductsListViewModelInput, ProductsListViewModelOutput {}
+typealias ProductsListViewModel = ProductsListViewModelInput & ProductsListViewModelOutput
 
 final class DefaultProductsListViewModel: ProductsListViewModel {
 
