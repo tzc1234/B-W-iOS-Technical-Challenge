@@ -6,7 +6,6 @@ public enum DataTransferError: Error {
     case networkFailure(NetworkError)
     case resolvedNetworkFailure(Error)
 }
-// MARK: - Error Resolver
 
 public protocol DataTransferErrorHandler {
     func handle(error: NetworkError) -> Error
@@ -41,7 +40,6 @@ public final class DefaultDataTransferService {
 }
 
 extension DefaultDataTransferService: DataTransferService {
-
     public func request<T: Decodable, E: ResponseRequestable>(with endpoint: E,
                                                               completion: @escaping CompletionHandler<T>) -> NetworkCancellable? where E.Response == T {
 
@@ -71,22 +69,5 @@ extension DefaultDataTransferService: DataTransferService {
     private func resolve(networkError error: NetworkError) -> DataTransferError {
         let resolvedError = self.errorHandler.handle(error: error)
         return resolvedError is NetworkError ? .networkFailure(error) : .resolvedNetworkFailure(resolvedError)
-    }
-
-}
-
-public class RawDataResponseDecoder: ResponseDecoder {
-    public init() { }
-
-    enum CodingKeys: String, CodingKey {
-        case `default` = ""
-    }
-    public func decode<T: Decodable>(_ data: Data) throws -> T {
-        if T.self is Data.Type, let data = data as? T {
-            return data
-        } else {
-            let context = DecodingError.Context(codingPath: [CodingKeys.default], debugDescription: "Expected Data type")
-            throw Swift.DecodingError.typeMismatch(T.self, context)
-        }
     }
 }
