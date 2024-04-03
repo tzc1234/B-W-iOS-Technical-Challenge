@@ -82,7 +82,7 @@
                     <tabBarItem key="tabBarItem" title="Shop" image="basket" id="oZH-Ig-lh2"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="rhW-kN-y26" kind="showDetail" id="SPR-sQ-jGj"/>
+                        <segue destination="rhW-kN-y26" kind="showDetail" identifier="PushToProductDetailsSegue" id="SPR-sQ-jGj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AtK-v7-QLg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -92,7 +92,9 @@
         <!--ProductDetailsViewController-->
         <scene sceneID="e8I-FC-L2f">
             <objects>
-                <viewControllerPlaceholder storyboardName="ProductDetailsViewController" id="rhW-kN-y26" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="ProductDetailsViewController" id="rhW-kN-y26" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Eap-sw-SLW"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5FO-32-yTG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1381.875" y="108.80281690140845"/>
