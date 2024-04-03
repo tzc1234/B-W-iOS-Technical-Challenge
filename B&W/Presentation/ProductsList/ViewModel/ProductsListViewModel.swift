@@ -26,8 +26,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     private var query: String = ""
 
     private let useCase: GetProductsUseCase
-
-    private let actions: ProductsListViewModelActions?
+    private let actions: ProductsListViewModelActions
 
     private var loadTask: Cancellable? { willSet { loadTask?.cancel() } }
 
@@ -35,7 +34,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
 
     // MARK: - Init
 
-    init(useCase: GetProductsUseCase, actions: ProductsListViewModelActions? = nil) {
+    init(useCase: GetProductsUseCase, actions: ProductsListViewModelActions) {
         self.useCase = useCase
         self.actions = actions
     }
@@ -67,6 +66,6 @@ extension DefaultProductsListViewModel {
     }
 
     func didSelectItem(at index: Int) {
-        actions?.showProductDetails(products[index])
+        actions.showProductDetails(products[index])
     }
 }
