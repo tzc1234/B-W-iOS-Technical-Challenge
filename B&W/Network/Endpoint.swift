@@ -23,10 +23,10 @@ enum RequestError: Error {
 public class Endpoint<R>: ResponseRequestable {
     public typealias Response = R
 
-    public var path: String
-    public var isFullPath: Bool
-    public var method: HTTPMethodType
-    public var responseDecoder: ResponseDecoder
+    public let path: String
+    public let isFullPath: Bool
+    public let method: HTTPMethodType
+    public let responseDecoder: ResponseDecoder
 
     init(path: String,
          isFullPath: Bool = false,
