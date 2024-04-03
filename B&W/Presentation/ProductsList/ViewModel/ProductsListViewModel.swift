@@ -23,14 +23,12 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     let items: Observable<[ProductsListItemViewModel]> = Observable([])
     let error: Observable<String> = Observable("")
 
-    private var query: String = ""
+    private var query: String = "" // Set query to private, since it needn't to be exposed
+    private var products: [Product] = [] // Set products to private, since it needn't to be exposed
+    private var loadTask: Cancellable? { willSet { loadTask?.cancel() } }
 
     private let useCase: GetProductsUseCase
     private let actions: ProductsListViewModelActions
-
-    private var loadTask: Cancellable? { willSet { loadTask?.cancel() } }
-
-    var products: [Product] = []
 
     // MARK: - Init
 
