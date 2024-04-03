@@ -38,6 +38,7 @@
 		2B91C8522515285100F0957C /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C8512515285100F0957C /* Observable.swift */; };
 		2BFB4A62251655DB00BD4735 /* ProductDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFB4A61251655DB00BD4735 /* ProductDetailsViewModel.swift */; };
 		BE5857B22BBDC7EF006FF630 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */; };
+		BE5857B42BBDD51A006FF630 /* NetworkSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		2BFB4A61251655DB00BD4735 /* ProductDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewModel.swift; sourceTree = "<group>"; };
 		BE4119E82BBD8937003E05F5 /* B&W.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "B&W.xctestplan"; sourceTree = "<group>"; };
 		BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
+		BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +270,7 @@
 				2B91C72925139EFB00F0957C /* RequestConfig.swift */,
 				2B91C7422513AA0E00F0957C /* DataTransferService.swift */,
 				2B91C7C52514F6DD00F0957C /* NetworkService.swift */,
+				BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */,
 				2B481AC7251686C400E72283 /* ConnectionError.swift */,
 			);
 			path = Network;
@@ -461,6 +464,7 @@
 				2B91C7642513B11F00F0957C /* ProductQuery.swift in Sources */,
 				2B91C76C2513B26600F0957C /* Product.swift in Sources */,
 				2B481AC8251686C400E72283 /* ConnectionError.swift in Sources */,
+				BE5857B42BBDD51A006FF630 /* NetworkSessionManager.swift in Sources */,
 				2B891243251356A5004BC46D /* AppDelegate.swift in Sources */,
 				2B91C77D2513B5AB00F0957C /* GetProductsUseCase.swift in Sources */,
 				2B91C72F2513A11700F0957C /* APIEndpoints.swift in Sources */,
