@@ -65,6 +65,67 @@ final class ProductsListViewModelTests: XCTestCase {
         assert(items: loggedItems[1], asExpectedProducts: products)
     }
     
+    func test_itemLoadImage_ignoresWhenInvalidImagePath() {
+        let products = Products(products: [
+            makeProduct(imagePath: " : ")
+        ])
+        let (sut, getProducts, loadImage) = makeSUT()
+        
+        var loggedItems = [[ProductsListItemViewModel]]()
+        sut.items.observe(on: self) { loggedItems.append($0) }
+        sut.viewDidLoad()
+        getProducts.complete(with: products)
+        
+        let item = loggedItems[1].last!
+        item.loadImage()
+        
+        XCTAssertEqual(loadImage.loadCallCount, 0)
+    }
+    
+    func test_itemLoadImage_ignoresWhenEmptyImagePath() {
+        let products = Products(products: [
+            makeProduct(imagePath: "")
+        ])
+        let (sut, getProducts, loadImage) = makeSUT()
+        
+        var loggedItems = [[ProductsListItemViewModel]]()
+        sut.items.observe(on: self) { loggedItems.append($0) }
+        sut.viewDidLoad()
+        getProducts.complete(with: products)
+        
+        let item = loggedItems[1].last!
+        item.loadImage()
+        
+        XCTAssertEqual(loadImage.loadCallCount, 0)
+    }
+    
+    func test_itemLoadImage_doesNotDeliverDataOnLoadImageDataError() {
+        let url = anyURL()
+        let products = Products(products: [
+            makeProduct(imagePath: url.absoluteString)
+        ])
+        let (sut, getProducts, loadImage) = makeSUT()
+        
+        var loggedItems = [[ProductsListItemViewModel]]()
+        sut.items.observe(on: self) { loggedItems.append($0) }
+        sut.viewDidLoad()
+        getProducts.complete(with: products)
+        
+        let item = loggedItems[1].last!
+        item.loadImage()
+        
+        XCTAssertEqual(loadImage.loadCallCount, 1)
+        
+        var loggedData = [Data?]()
+        item.image.observe(on: self) { data in
+            loggedData.append(data)
+        }
+        loadImage.complete(with: anyNSError())
+        
+        XCTAssertEqual(loggedData, [nil])
+        XCTAssertEqual(loadImage.urls, [url])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(showProductDetails: @escaping (Product) -> Void = { _ in },
