@@ -18,6 +18,8 @@ public final class Observable<Value> {
     private let performOnMainQueue: PerformOnMainQueue
 
     public init(_ value: Value,
+                // Add default param for performOnMainQueue, enable testability.
+                // Code inside DispatchQueue.main.async is hard to test.
                 performOnMainQueue: @escaping PerformOnMainQueue = { action in
                     DispatchQueue.main.async { action() }
                 }) {
