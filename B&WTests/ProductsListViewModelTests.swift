@@ -21,6 +21,18 @@ final class ProductsListViewModelTests: XCTestCase {
         XCTAssertEqual(loggedErrorMessage, ["", "Failed loading products"])
     }
     
+    func test_viewDidLoad_deliversErrorOnGetProductsConnectionError() {
+        let (sut, getProducts, _) = makeSUT()
+        
+        var loggedErrorMessage = [String]()
+        sut.error.observe(on: self) { loggedErrorMessage.append($0) }
+        
+        sut.viewDidLoad()
+        getProducts.complete(with: DataTransferError.networkFailure(.notConnected))
+        
+        XCTAssertEqual(loggedErrorMessage, ["", "No internet connection"])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(showProductDetails: @escaping (Product) -> Void = { _ in },
