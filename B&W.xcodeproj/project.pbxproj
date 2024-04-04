@@ -48,6 +48,7 @@
 		BE6B5FA12BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */; };
 		BE6B5FA42BBEE4C400B608A1 /* DefaultImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA32BBEE4C400B608A1 /* DefaultImageDataLoader.swift */; };
 		BE6B5FA62BBEE5BA00B608A1 /* ImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA52BBEE5BA00B608A1 /* ImageDataLoader.swift */; };
+		BE6B5FA82BBEFF6E00B608A1 /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		BE6B5FA32BBEE4C400B608A1 /* DefaultImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataLoader.swift; sourceTree = "<group>"; };
 		BE6B5FA52BBEE5BA00B608A1 /* ImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataLoader.swift; sourceTree = "<group>"; };
+		BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 			children = (
 				2B89127D25135EB3004BC46D /* View */,
 				2B89127E25135EB7004BC46D /* ViewModel */,
+				BE6B5FA92BBF094B00B608A1 /* SwiftUI View */,
 			);
 			path = ProductDetails;
 			sourceTree = "<group>";
@@ -403,6 +406,14 @@
 			path = ImageDataLoader;
 			sourceTree = "<group>";
 		};
+		BE6B5FA92BBF094B00B608A1 /* SwiftUI View */ = {
+			isa = PBXGroup;
+			children = (
+				BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */,
+			);
+			path = "SwiftUI View";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -507,6 +518,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE6B5FA82BBEFF6E00B608A1 /* ProductDetailsView.swift in Sources */,
 				BE5857B92BBDDD3A006FF630 /* DataTransferErrorHandler.swift in Sources */,
 				2B91C7432513AA0E00F0957C /* DataTransferService.swift in Sources */,
 				2B91C7342513A28200F0957C /* ProductResponseDTO.swift in Sources */,
