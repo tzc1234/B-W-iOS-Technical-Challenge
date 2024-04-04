@@ -84,8 +84,4 @@ final class EndpointTests: XCTestCase {
         let config = ConfigStub(baseURL: baseURL)
         return Endpoint(config: config, path: path, isFullPath: isFullPath, method: method)
     }
-    
-    private struct ConfigStub: RequestConfig {
-        let baseURL: URL
-    }
 }
