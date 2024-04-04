@@ -28,6 +28,17 @@ final class ProductsDependenciesContainerTests: XCTestCase {
         XCTAssertNotNil(controller)
     }
     
+    func test_makeGetProductsFlowCoordinator_deliversGetProductsFlowCoordinatorSuccessfully() {
+        let sut = makeSUT()
+        
+        let coordinator: GetProductsFlowCoordinator = sut.makeGetProductsFlowCoordinator(
+            tabBarController: UITabBarController(),
+            navigationController: UINavigationController()
+        )
+        
+        XCTAssertNotNil(coordinator)
+    }
+    
     // MARK: Helpers
     
     private func makeSUT(baseURL: URL = URL(string: "https://base-url.com")!) -> ProductsDependenciesContainer {
