@@ -1,11 +1,6 @@
-import UIKit
+import SwiftUI
 
 class ProductDetailsViewController: UIViewController, StoryboardInstantiable {
-
-    @IBOutlet weak var productImageView: UIImageView!
-    @IBOutlet weak var productPriceLabel: UILabel!
-    @IBOutlet weak var productDescriptionTextView: UITextView!
-
     private var viewModel: ProductDetailsViewModel!
 
     static func create(with viewModel: ProductDetailsViewModel) -> ProductDetailsViewController {
@@ -16,7 +11,7 @@ class ProductDetailsViewController: UIViewController, StoryboardInstantiable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        updateView(with: nil)
         bind(to: viewModel)
     }
     
@@ -32,13 +27,22 @@ class ProductDetailsViewController: UIViewController, StoryboardInstantiable {
 
     private func bind(to viewModel: ProductDetailsViewModel) {
         viewModel.image.observe(on: self) { [weak self] in
-            self?.productImageView.image = $0.flatMap(UIImage.init)
+            self?.updateView(with: $0.flatMap(UIImage.init))
         }
     }
-
-    private func setupViews() {
+    
+    private func updateView(with image: UIImage?) {
         title = viewModel.name
-        productPriceLabel.text = viewModel.price
-        productDescriptionTextView.text = viewModel.description
+        let productDetailsView = ProductDetailsView(
+            price: viewModel.price,
+            description: viewModel.description,
+            image: image
+        )
+        
+        let hosting = UIHostingController(rootView: productDetailsView)
+        addChild(hosting)
+        hosting.view.frame = view.frame
+        view.addSubview(hosting.view)
+        hosting.didMove(toParent: self)
     }
 }

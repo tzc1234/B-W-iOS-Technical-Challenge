@@ -16,6 +16,7 @@ struct ProductDetailsView: View {
         VStack(spacing: 8) {
             Image(uiImage: image ?? UIImage())
                 .resizable()
+                .scaledToFit()
                 .frame(height: 200)
 
             Text(price)
@@ -33,7 +34,9 @@ struct ProductDetailsView: View {
 }
 
 #Preview {
-    ProductDetailsView(price: "£38.00", description: "some description", image: UIImage.make(withColor: .gray))
+    NavigationView {
+        ProductDetailsView(price: "£38.00", description: "some description", image: UIImage.make(withColor: .gray))
+    }
 }
 
 extension UIImage {

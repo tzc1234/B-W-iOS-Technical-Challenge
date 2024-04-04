@@ -53,11 +53,6 @@
                             <constraint firstAttribute="bottomMargin" secondItem="Qxc-Ro-8RE" secondAttribute="bottom" constant="-2" id="xTq-rv-g77"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="productDescriptionTextView" destination="S1P-DV-vhG" id="xle-33-RP6"/>
-                        <outlet property="productImageView" destination="AY6-cs-Fr9" id="CIB-As-R3J"/>
-                        <outlet property="productPriceLabel" destination="jy7-J4-Du3" id="nGt-uB-LQ0"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DWB-xe-w3w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
