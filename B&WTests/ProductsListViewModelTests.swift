@@ -121,20 +121,21 @@ final class ProductsListViewModelTests: XCTestCase {
     }
     
     func test_didSelectItem_triggersShowProductDetails() {
+        let product0 = makeProduct(id: "0")
         let product1 = makeProduct(id: "1")
-        let products = Products(products: [
-            makeProduct(id: "0"),
-            product1,
-            makeProduct(id: "2")
-        ])
+        let product2 = makeProduct(id: "2")
+        let products = Products(products: [product0, product1, product2])
         var loggedProducts = [Product]()
         let (sut, getProducts, _) = makeSUT(showProductDetails: { loggedProducts.append($0) })
         
         sut.viewDidLoad()
         getProducts.complete(with: products)
-        sut.didSelectItem(at: 1)
         
-        XCTAssertEqual(loggedProducts, [product1])
+        sut.didSelectItem(at: 1)
+        sut.didSelectItem(at: 0)
+        sut.didSelectItem(at: 2)
+        
+        XCTAssertEqual(loggedProducts, [product1, product0, product2])
     }
     
     func test_cancelPendingLoadTask_cancelsGetProductsTaskBeforeAssignNewTask() {
