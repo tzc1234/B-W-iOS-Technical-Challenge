@@ -105,7 +105,7 @@ final class ProductDetailsViewModelTests: XCTestCase {
     private func makeSUT(product: Product,
                          performOnMainQueue: @escaping PerformOnMainQueue = { $0() },
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> (sut: DefaultProductDetailsViewModel, loadImage: LoadImageDataUseCaseSpy) {
+                         line: UInt = #line) -> (sut: ProductDetailsViewModel, loadImage: LoadImageDataUseCaseSpy) {
         let loadImage = LoadImageDataUseCaseSpy()
         let sut = DefaultProductDetailsViewModel(
             product: product,
