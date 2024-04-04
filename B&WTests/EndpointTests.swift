@@ -33,12 +33,26 @@ final class EndpointTests: XCTestCase {
         XCTAssertEqual(request.httpMethod, "GET")
         XCTAssertEqual(receivedURL, "https://base-url.com/path")
     }
+    
+    func test_urlRequest_deliversCorrectRequestWhenIsFullPath() throws {
+        let fullPath = "https://full-path.com/"
+        let sut = makeSUT(path: fullPath, isFullPath: true)
+        
+        let request = try sut.urlRequest()
+        let receivedURL = try XCTUnwrap(request.url?.absoluteString)
+        
+        XCTAssertEqual(request.httpMethod, "GET")
+        XCTAssertEqual(receivedURL, fullPath)
+    }
 
     // MARK: - Helpers
     
-    private func makeSUT(baseURL: URL, path: String, method: HTTPMethodType = .get) -> Endpoint<Any> {
+    private func makeSUT(baseURL: URL = URL(string: "https://any-url.com/")!,
+                         path: String,
+                         isFullPath: Bool = false,
+                         method: HTTPMethodType = .get) -> Endpoint<Any> {
         let config = ConfigStub(baseURL: baseURL)
-        return Endpoint(config: config, path: path, method: method)
+        return Endpoint(config: config, path: path, isFullPath: isFullPath, method: method)
     }
     
     private struct ConfigStub: RequestConfig {
