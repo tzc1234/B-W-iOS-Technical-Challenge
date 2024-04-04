@@ -137,6 +137,19 @@ final class ProductsListViewModelTests: XCTestCase {
         XCTAssertEqual(loggedProducts, [product1])
     }
     
+    func test_cancelPendingLoadTask_cancelsGetProductsTaskBeforeAssignNewTask() {
+        let product = makeProduct(imagePath: anyURL().absoluteString)
+        let (sut, getProducts, _) = makeSUT()
+        
+        sut.viewDidLoad()
+        
+        XCTAssertEqual(getProducts.cancelCallCount, 0)
+        
+        sut.viewDidLoad()
+        
+        XCTAssertEqual(getProducts.cancelCallCount, 1)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(showProductDetails: @escaping (Product) -> Void = { _ in },
@@ -198,10 +211,22 @@ final class ProductsListViewModelTests: XCTestCase {
             executes.count
         }
         
+        private struct GetProductsCancellable: Cancellable {
+            let afterCancel: () -> Void
+            
+            func cancel() {
+                afterCancel()
+            }
+        }
+        
+        private(set) var cancelCallCount = 0
+        
         func execute(requestValue: GetProductsUseCaseRequestValue, 
                      completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable? {
             executes.append(ExecuteEvent(requestValue: requestValue, completion: completion))
-            return nil
+            return GetProductsCancellable { [weak self] in
+                self?.cancelCallCount += 1
+            }
         }
         
         func complete(with error: Error, at index: Int = 0) {
