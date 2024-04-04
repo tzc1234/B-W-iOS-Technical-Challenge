@@ -21,6 +21,9 @@ struct URLEndpoint: Requestable {
 }
 
 final class DefaultImageDataLoader {
+    typealias Result = Swift.Result<Data, Swift.Error>
+    typealias Completion = (Result) -> Void
+    
     private let service: NetworkService
     
     init(service: NetworkService) {
@@ -32,21 +35,42 @@ final class DefaultImageDataLoader {
         case noData
     }
     
-    func load(for url: URL, completion: @escaping (Result<Data, Swift.Error>) -> Void) {
+    private final class Wrapper: Cancellable {
+        private var completion: Completion?
+        var cancellable: NetworkCancellable?
+        
+        init(_ completion: Completion?) {
+            self.completion = completion
+        }
+        
+        func cancel() {
+            cancellable?.cancel()
+            completion = nil
+        }
+        
+        func complete(with result: Result) {
+            completion?(result)
+        }
+    }
+    
+    func load(for url: URL, completion: @escaping Completion) -> Cancellable {
         let endPoint = URLEndpoint(url: url)
-        _ = service.request(endpoint: endPoint) { result in
+        let wrapped = Wrapper(completion)
+        
+        wrapped.cancellable = service.request(endpoint: endPoint) { result in
             switch result {
             case let .success(data):
                 guard let data else {
-                    completion(.failure(Error.noData))
+                    wrapped.complete(with: .failure(Error.noData))
                     return
                 }
                 
-                completion(.success(data))
+                wrapped.complete(with: .success(data))
             case .failure:
-                completion(.failure(Error.failed))
+                wrapped.complete(with: .failure(Error.failed))
             }
         }
+        return wrapped
     }
 }
 
@@ -61,7 +85,7 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         let (sut, service) = makeSUT()
         let expectedURL = URL(string: "https://image-data.com")!
         
-        sut.load(for: expectedURL) { _ in }
+        _ = sut.load(for: expectedURL) { _ in }
         
         let request = try service.endpoints.first?.urlRequest()
         XCTAssertEqual(request?.url, expectedURL)
@@ -93,6 +117,32 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         })
     }
     
+    func test_load_cancelsRequestSuccessfully() {
+        let (sut, service) = makeSUT()
+        let anyData = Data("data".utf8)
+        
+        var completionCallCount = 0
+        let task = sut.load(for: anyURL()) { _ in completionCallCount += 1 }
+        task.cancel()
+        service.complete(with: anyData)
+        
+        XCTAssertEqual(service.cancelCallCount, 1)
+    }
+    
+    func test_load_doesNotDeliverResultAfterRequestCancelled() {
+        let (sut, service) = makeSUT()
+        let anyData = Data("data".utf8)
+        
+        var completionCallCount = 0
+        let task = sut.load(for: anyURL()) { _ in completionCallCount += 1 }
+        task.cancel()
+        service.complete(with: anyData)
+        service.complete(with: nil)
+        service.complete(with: .notConnected)
+        
+        XCTAssertEqual(completionCallCount, 0)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
@@ -110,7 +160,7 @@ final class DefaultImageDataLoaderTests: XCTestCase {
                         file: StaticString = #filePath,
                         line: UInt = #line) {
         let exp = expectation(description: "Wait for completion")
-        sut.load(for: anyURL()) { receivedResult in
+        _ = sut.load(for: anyURL()) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedData), .success(expectedData)):
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
@@ -132,7 +182,7 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         URL(string: "https://any-url.com")!
     }
     
-    private class NetworkServiceSpy: NetworkService {
+    private final class NetworkServiceSpy: NetworkService {
         struct Request {
             let endpoint: Requestable
             let completion: CompletionHandler
@@ -146,9 +196,21 @@ final class DefaultImageDataLoaderTests: XCTestCase {
             requests.map(\.endpoint)
         }
         
+        struct Cancellable: NetworkCancellable {
+            let afterCancel: () -> Void
+            
+            func cancel() {
+                afterCancel()
+            }
+        }
+        
+        private(set) var cancelCallCount = 0
+        
         func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable? {
             requests.append(Request(endpoint: endpoint, completion: completion))
-            return nil
+            return Cancellable(afterCancel: { [weak self] in
+                self?.cancelCallCount += 1
+            })
         }
         
         func complete(with error: NetworkError, at index: Int = 0) {
