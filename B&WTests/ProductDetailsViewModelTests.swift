@@ -16,6 +16,24 @@ final class ProductDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(loadImage.loadCallCount, 0)
     }
     
+    func test_init_setsAllPropertiesCorrectlyWhenAllNil() {
+        let nilPropertiesProduct = makeProduct(description: nil, name: nil, price: nil)
+        let (sut, _) = makeSUT(product: nilPropertiesProduct)
+        
+        XCTAssertEqual(sut.name, "")
+        XCTAssertEqual(sut.description, "")
+        XCTAssertEqual(sut.price, "")
+    }
+    
+    func test_init_setsAllPropertiesCorrectly() {
+        let product = makeProduct(description: "some description", name: "a name", price: "£111")
+        let (sut, _) = makeSUT(product: product)
+        
+        XCTAssertEqual(sut.name, product.name)
+        XCTAssertEqual(sut.description, product.description)
+        XCTAssertEqual(sut.price, product.price)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(product: Product,

@@ -15,12 +15,13 @@ protocol ProductDetailsViewModelOutput {
 typealias ProductDetailsViewModel = ProductDetailsViewModelInput & ProductDetailsViewModelOutput
 
 final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
-    private let imagePath: String?
     private var imageDataLoading: Cancellable?
 
-    let name: String
     let image: Observable<Data?> = Observable(nil)
+    
+    let name: String
     let description: String
+    private let imagePath: String?
     let price: String
     private let loadImageDataUseCase: LoadImageDataUseCase
 
