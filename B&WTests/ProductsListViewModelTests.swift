@@ -33,7 +33,7 @@ final class ProductsListViewModelTests: XCTestCase {
         XCTAssertEqual(loggedErrorMessage, ["", "No internet connection"])
     }
     
-    func test_viewDidLoad_deliversEmptyProductsWhenReceivedNoProducts() {
+    func test_viewDidLoad_deliversEmptyItemsWhenReceivedNoProducts() {
         let emptyProducts = Products(products: [])
         let (sut, getProducts, _) = makeSUT()
         
@@ -44,6 +44,25 @@ final class ProductsListViewModelTests: XCTestCase {
         getProducts.complete(with: emptyProducts)
         
         XCTAssertEqual(loggedItems, [[], []])
+    }
+    
+    func test_viewDidLoad_deliversItemsWhenReceivedProducts() {
+        let products = Products(products: [
+            makeProduct(description: nil, name: nil, price: nil),
+            makeProduct(description: "some descriptions", name: "a name", price: "£100"),
+            makeProduct(description: "another descriptions", name: "another name", price: "£99")
+        ])
+        let (sut, getProducts, _) = makeSUT()
+        
+        var loggedItems = [[ProductsListItemViewModel]]()
+        sut.items.observe(on: self) { loggedItems.append($0) }
+        
+        sut.viewDidLoad()
+        getProducts.complete(with: products)
+        
+        XCTAssertEqual(loggedItems.count, 2)
+        XCTAssertEqual(loggedItems[0], [])
+        assert(items: loggedItems[1], asExpectedProducts: products)
     }
     
     // MARK: - Helpers
@@ -65,6 +84,24 @@ final class ProductsListViewModelTests: XCTestCase {
         trackForMemoryLeaks(loadImage, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, getProducts, loadImage)
+    }
+    
+    private func assert(items: [ProductsListItemViewModel], 
+                        asExpectedProducts expectedProducts: Products,
+                        file: StaticString = #filePath,
+                        line: UInt = #line) {
+        let products = expectedProducts.products
+        guard products.count == items.count else {
+            XCTFail("Item count: \(items.count) not match expected product count: \(products.count)", file: file, line: line)
+            return
+        }
+        
+        items.enumerated().forEach { index, item in
+            let product = products[index]
+            XCTAssertEqual(item.name, product.name ?? "", "item(\(index) name not matched", file: file, line: line)
+            XCTAssertEqual(item.description, product.description ?? "", "item(\(index) name not matched", file: file, line: line)
+            XCTAssertEqual(item.price, product.price ?? "", "item(\(index) name not matched", file: file, line: line)
+        }
     }
     
     private final class GetProductsUseCaseSpy: GetProductsUseCase {
