@@ -90,7 +90,6 @@ final class ProductDetailsViewModelTests: XCTestCase {
     func test_cancelImageLoading_cancelsLoadImageDataProperly() {
         let product = makeProduct(imagePath: anyURL().absoluteString)
         let (sut, loadImage) = makeSUT(product: product)
-        let anyData = UIImage.make(withColor: .gray).pngData()!
         
         sut.updateImage()
         
