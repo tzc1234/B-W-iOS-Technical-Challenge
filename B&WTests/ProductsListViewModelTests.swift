@@ -33,6 +33,19 @@ final class ProductsListViewModelTests: XCTestCase {
         XCTAssertEqual(loggedErrorMessage, ["", "No internet connection"])
     }
     
+    func test_viewDidLoad_deliversEmptyProductsWhenReceivedNoProducts() {
+        let emptyProducts = Products(products: [])
+        let (sut, getProducts, _) = makeSUT()
+        
+        var loggedItems = [[ProductsListItemViewModel]]()
+        sut.items.observe(on: self) { loggedItems.append($0) }
+        
+        sut.viewDidLoad()
+        getProducts.complete(with: emptyProducts)
+        
+        XCTAssertEqual(loggedItems, [[], []])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(showProductDetails: @escaping (Product) -> Void = { _ in },
@@ -73,6 +86,10 @@ final class ProductsListViewModelTests: XCTestCase {
         
         func complete(with error: Error, at index: Int = 0) {
             executes[index].completion(.failure(error))
+        }
+        
+        func complete(with products: Products, at index: Int = 0) {
+            executes[index].completion(.success(products))
         }
     }
 }

@@ -20,7 +20,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     
     // MARK: - OUTPUT
 
-    let items: Observable<[ProductsListItemViewModel]> = Observable([])
+    let items: Observable<[ProductsListItemViewModel]>
     let error: Observable<String>
 
     private var query: String = "" // Set query to private, since it needn't to be exposed.
@@ -46,6 +46,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
         self.actions = actions
         self.loadImageDataUseCase = loadImageDataUseCase
         self.error = Observable("", performOnMainQueue: performOnMainQueue)
+        self.items = Observable([], performOnMainQueue: performOnMainQueue)
     }
     
     private func load(productQuery: ProductQuery) {

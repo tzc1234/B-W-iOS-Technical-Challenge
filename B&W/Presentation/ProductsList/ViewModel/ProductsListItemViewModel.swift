@@ -25,6 +25,12 @@ struct ProductsListItemViewModel {
     }
 }
 
+extension ProductsListItemViewModel: Equatable {
+    static func == (lhs: ProductsListItemViewModel, rhs: ProductsListItemViewModel) -> Bool {
+        lhs.name == rhs.name && lhs.description == rhs.description && lhs.price == rhs.price && lhs.image === rhs.image
+    }
+}
+
 extension ProductsListItemViewModel {
     func loadImage() {
         loadImageData { data in
