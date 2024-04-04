@@ -14,8 +14,7 @@ public extension StoryboardInstantiable where Self: UIViewController {
     static func instantiateViewController(_ bundle: Bundle? = nil) -> Self {
         let fileName = defaultFileName
         let storyboard = UIStoryboard(name: fileName, bundle: bundle)
-        guard let vc = storyboard.instantiateInitialViewController() as? Self else {
-
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "\(fileName)ID") as? Self else {
             fatalError("Failed to instantiate initial view controller \(Self.self) from storyboard named \(fileName)")
         }
         return vc

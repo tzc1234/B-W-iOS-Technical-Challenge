@@ -19,6 +19,15 @@ final class ProductsDependenciesContainerTests: XCTestCase {
         XCTAssertNotNil(controller)
     }
     
+    func test_makeProductDetailsViewController_deliversProductDetailsViewControllerSuccessfully() {
+        let sut = makeSUT()
+        let product = Product(id: "id", name: nil, description: nil, price: nil, imagePath: nil)
+        
+        let controller: ProductDetailsViewController = sut.makeProductDetailsViewController(product: product)
+        
+        XCTAssertNotNil(controller)
+    }
+    
     // MARK: Helpers
     
     private func makeSUT(baseURL: URL = URL(string: "https://base-url.com")!) -> ProductsDependenciesContainer {
