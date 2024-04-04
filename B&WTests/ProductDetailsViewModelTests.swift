@@ -87,6 +87,20 @@ final class ProductDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(loadImage.urls, [url])
     }
     
+    func test_cancelImageLoading_cancelsLoadImageDataProperly() {
+        let product = makeProduct(imagePath: anyURL().absoluteString)
+        let (sut, loadImage) = makeSUT(product: product)
+        let anyData = UIImage.make(withColor: .gray).pngData()!
+        
+        sut.updateImage()
+        
+        XCTAssertEqual(loadImage.cancelCallCount, 0)
+        
+        sut.cancelImageLoading()
+        
+        XCTAssertEqual(loadImage.cancelCallCount, 1)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(product: Product,
@@ -109,16 +123,12 @@ final class ProductDetailsViewModelTests: XCTestCase {
     }
     
     private final class LoadImageDataUseCaseSpy: LoadImageDataUseCase {
-        struct Load {
+        struct LoadEvent {
             let url: URL
             let completion: Completion
         }
         
-        private struct LoadImageCancellable: Cancellable {
-            func cancel() {}
-        }
-        
-        private var loads = [Load]()
+        private var loads = [LoadEvent]()
         var loadCallCount: Int {
             loads.count
         }
@@ -126,9 +136,21 @@ final class ProductDetailsViewModelTests: XCTestCase {
             loads.map(\.url)
         }
         
+        private struct LoadImageCancellable: Cancellable {
+            let afterCancel: () -> Void
+            
+            func cancel() {
+                afterCancel()
+            }
+        }
+        
+        private(set) var cancelCallCount = 0
+        
         func load(for url: URL, completion: @escaping Completion) -> Cancellable {
-            loads.append(Load(url: url, completion: completion))
-            return LoadImageCancellable()
+            loads.append(LoadEvent(url: url, completion: completion))
+            return LoadImageCancellable { [weak self] in
+                self?.cancelCallCount += 1
+            }
         }
         
         func complete(with error: Error, at index: Int = 0) {
