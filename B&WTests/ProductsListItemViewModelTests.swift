@@ -28,11 +28,27 @@ final class ProductsListItemViewModelTests: XCTestCase {
         XCTAssertEqual(sut.price, product.price)
     }
     
+    func test_image_deliversImageDataAfterLoadImage() {
+        let anyProduct = makeProduct(description: "Some Description", name: "a name", price: "£111")
+        let expectedData = UIImage.make(withColor: .red).pngData()!
+        let sut = makeSUT(product: anyProduct, loadImageData: { loadImage in
+            loadImage(expectedData)
+        })
+        
+        sut.loadImage()
+        
+        var loggedData = [Data?]()
+        sut.image.observe(on: self) { data in
+            loggedData.append(data)
+        }
+        
+        XCTAssertEqual(loggedData, [expectedData])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(product: Product,
-                         loadImageData: @escaping ProductsListItemViewModel.LoadImageData = { _ in }) 
-    -> ProductsListItemViewModel {
+                         loadImageData: @escaping ProductsListItemViewModel.LoadImageData = { _ in }) -> ProductsListItemViewModel {
         ProductsListItemViewModel(product: product, loadImageData: loadImageData)
     }
     

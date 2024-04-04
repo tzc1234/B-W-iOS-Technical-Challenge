@@ -36,15 +36,3 @@ struct ProductDetailsView: View {
 #Preview {
     ProductDetailsView(price: "£38.00", description: "some description", image: UIImage.make(withColor: .gray))
 }
-
-extension UIImage {
-    static func make(withColor color: UIColor, rect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1)) -> UIImage {
-        let format = UIGraphicsImageRendererFormat()
-        format.scale = 1
-
-        return UIGraphicsImageRenderer(size: rect.size, format: format).image { rendererContext in
-            color.setFill()
-            rendererContext.fill(rect)
-        }
-    }
-}
