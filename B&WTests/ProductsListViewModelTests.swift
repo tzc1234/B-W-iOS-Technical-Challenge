@@ -120,6 +120,23 @@ final class ProductsListViewModelTests: XCTestCase {
         XCTAssertEqual(loadImage.urls, [url])
     }
     
+    func test_didSelectItem_triggersShowProductDetails() {
+        let product1 = makeProduct(id: "1")
+        let products = Products(products: [
+            makeProduct(id: "0"),
+            product1,
+            makeProduct(id: "2")
+        ])
+        var loggedProducts = [Product]()
+        let (sut, getProducts, _) = makeSUT(showProductDetails: { loggedProducts.append($0) })
+        
+        sut.viewDidLoad()
+        getProducts.complete(with: products)
+        sut.didSelectItem(at: 1)
+        
+        XCTAssertEqual(loggedProducts, [product1])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(showProductDetails: @escaping (Product) -> Void = { _ in },
