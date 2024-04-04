@@ -55,8 +55,10 @@ final class DefaultLoadImageDataUseCaseTests: XCTestCase {
         let (sut, service) = makeSUT()
         let anyData = Data("data".utf8)
         
-        var completionCallCount = 0
-        let task = sut.load(for: anyURL()) { _ in completionCallCount += 1 }
+        let task = sut.load(for: anyURL()) { _ in }
+        
+        XCTAssertEqual(service.cancelCallCount, 0)
+        
         task.cancel()
         service.complete(with: anyData)
         
