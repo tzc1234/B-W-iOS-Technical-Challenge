@@ -34,9 +34,7 @@ struct ProductDetailsView: View {
 }
 
 #Preview {
-    NavigationView {
-        ProductDetailsView(price: "£38.00", description: "some description", image: UIImage.make(withColor: .gray))
-    }
+    ProductDetailsView(price: "£38.00", description: "some description", image: UIImage.make(withColor: .gray))
 }
 
 extension UIImage {
