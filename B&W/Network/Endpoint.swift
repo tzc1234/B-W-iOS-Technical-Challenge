@@ -43,7 +43,6 @@ extension Endpoint {
     public func urlRequest(with config: RequestConfig) throws -> URLRequest {
         let url = try url(with: config)
         var urlRequest = URLRequest(url: url)
-
         urlRequest.httpMethod = method.rawValue
         return urlRequest
     }
