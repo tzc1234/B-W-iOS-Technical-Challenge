@@ -36,7 +36,7 @@ final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
 
 extension DefaultProductDetailsViewModel {
     func updateImage() {
-        guard let imagePath, let url = URL(string: imagePath) else { return }
+        guard let imagePath, !imagePath.isEmpty, let url = URL(string: imagePath) else { return }
         
         // Use LoadImageDataUseCase for image loading on background queue,
         // instead of directly using Data(contentsOf:)

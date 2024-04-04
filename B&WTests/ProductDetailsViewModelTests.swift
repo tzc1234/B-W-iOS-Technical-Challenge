@@ -34,6 +34,24 @@ final class ProductDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.price, product.price)
     }
     
+    func test_updateImage_ignoresWhenInvalidImagePath() {
+        let product = makeProduct(imagePath: " : ")
+        let (sut, loadImage) = makeSUT(product: product)
+        
+        sut.updateImage()
+        
+        XCTAssertEqual(loadImage.loadCallCount, 0)
+    }
+    
+    func test_updateImage_ignoresWhenEmptyImagePath() {
+        let product = makeProduct(imagePath: "")
+        let (sut, loadImage) = makeSUT(product: product)
+        
+        sut.updateImage()
+        
+        XCTAssertEqual(loadImage.loadCallCount, 0)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(product: Product,
