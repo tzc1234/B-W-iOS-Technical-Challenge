@@ -45,7 +45,7 @@ final class ProductsDependenciesContainerTests: XCTestCase {
         return ProductsDependenciesContainer(
             config: config,
             dataTransferService: DummyDataTransferService(),
-            imageDataLoader: DummyImageDataLoader()
+            loadImageDataUseCase: DummyLoadImageDataUseCase()
         )
     }
     
@@ -60,13 +60,13 @@ final class ProductsDependenciesContainerTests: XCTestCase {
         }
     }
     
-    private class DummyImageDataLoader: ImageDataLoader {
-        private struct ImageDataLoaderCancellable: Cancellable {
+    private class DummyLoadImageDataUseCase: LoadImageDataUseCase {
+        private struct loadImageCancellable: Cancellable {
             func cancel() {}
         }
         
         func load(for url: URL, completion: @escaping Completion) -> Cancellable {
-            ImageDataLoaderCancellable()
+            loadImageCancellable()
         }
     }
 }

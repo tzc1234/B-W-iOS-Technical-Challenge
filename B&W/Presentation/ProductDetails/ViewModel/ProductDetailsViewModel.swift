@@ -22,14 +22,14 @@ final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
     let image: Observable<Data?> = Observable(nil)
     let description: String
     let price: String
-    private let imageDataLoader: ImageDataLoader
+    private let loadImageDataUseCase: LoadImageDataUseCase
 
-    init(product: Product, imageDataLoader: ImageDataLoader) {
+    init(product: Product, loadImageDataUseCase: LoadImageDataUseCase) {
         self.name = product.name ?? ""
         self.description = product.description ?? ""
         self.imagePath = product.imagePath
         self.price = product.price ?? ""
-        self.imageDataLoader = imageDataLoader
+        self.loadImageDataUseCase = loadImageDataUseCase
     }
 }
 
@@ -37,9 +37,9 @@ extension DefaultProductDetailsViewModel {
     func updateImage() {
         guard let imagePath, let url = URL(string: imagePath) else { return }
         
-        // Use ImageDataLoader for image loading on background queue,
+        // Use LoadImageDataUseCase for image loading on background queue,
         // instead of directly using Data(contentsOf:)
-        imageDataLoading = imageDataLoader.load(for: url) { [weak self] result in
+        imageDataLoading = loadImageDataUseCase.load(for: url) { [weak self] result in
             switch result {
             case let .success(data):
                 self?.image.value = data

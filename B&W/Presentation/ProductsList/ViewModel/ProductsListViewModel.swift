@@ -34,12 +34,14 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
 
     private let useCase: GetProductsUseCase
     private let actions: ProductsListViewModelActions
-    private let imageDataLoader: ImageDataLoader
+    private let loadImageDataUseCase: LoadImageDataUseCase
     
-    init(useCase: GetProductsUseCase, actions: ProductsListViewModelActions, imageDataLoader: ImageDataLoader) {
+    init(useCase: GetProductsUseCase,
+         actions: ProductsListViewModelActions,
+         loadImageDataUseCase: LoadImageDataUseCase) {
         self.useCase = useCase
         self.actions = actions
-        self.imageDataLoader = imageDataLoader
+        self.loadImageDataUseCase = loadImageDataUseCase
     }
     
     private func load(productQuery: ProductQuery) {
@@ -65,7 +67,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
             guard let imagePath = product.imagePath, let url = URL(string: imagePath) else { return }
             
             // The actual image data loading logic for ProductsListItemViewModel.
-            _ = self?.imageDataLoader.load(for: url) { result in
+            _ = self?.loadImageDataUseCase.load(for: url) { result in
                 switch result {
                 case let .success(data):
                     loadImageData(data)

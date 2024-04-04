@@ -1,5 +1,5 @@
 //
-//  DefaultImageDataLoader.swift
+//  LoadImageDataUseCase.swift
 //  B&W
 //
 //  Created by Tsz-Lung on 04/04/2024.
@@ -19,8 +19,14 @@ struct URLEndpoint: Requestable {
     }
 }
 
-// This component shouldn't belong to Repositories, since it use NetworkService directly.
-final class DefaultImageDataLoader: ImageDataLoader {
+protocol LoadImageDataUseCase {
+    typealias Result = Swift.Result<Data, Error>
+    typealias Completion = (Result) -> Void
+    
+    func load(for url: URL, completion: @escaping Completion) -> Cancellable
+}
+
+final class DefaultLoadImageDataUseCase: LoadImageDataUseCase {
     private let service: NetworkService
     
     init(service: NetworkService) {
@@ -45,7 +51,7 @@ final class DefaultImageDataLoader: ImageDataLoader {
             completion = nil
         }
         
-        func complete(with result: ImageDataLoader.Result) {
+        func complete(with result: LoadImageDataUseCase.Result) {
             completion?(result)
         }
     }

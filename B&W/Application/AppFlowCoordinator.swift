@@ -29,13 +29,13 @@ final class AppDependenciesContainer {
     
     private let networkService: NetworkService = DefaultNetworkService() // networkService now can be shared.
     private lazy var apiDataTransferService: DataTransferService = DefaultDataTransferService(with: networkService)
-    private lazy var imageDataLoader: ImageDataLoader = DefaultImageDataLoader(service: networkService)
+    private lazy var loadImageDataUseCase: LoadImageDataUseCase = DefaultLoadImageDataUseCase(service: networkService)
     
     func makeProductsDependenciesContainer() -> ProductsDependenciesContainer {
         return ProductsDependenciesContainer(
             config: config,
             dataTransferService: apiDataTransferService,
-            imageDataLoader: imageDataLoader
+            loadImageDataUseCase: loadImageDataUseCase
         )
     }
 }

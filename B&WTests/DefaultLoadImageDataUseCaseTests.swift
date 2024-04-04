@@ -1,5 +1,5 @@
 //
-//  DefaultImageDataLoaderTests.swift
+//  DefaultLoadImageDataUseCaseTests.swift
 //  B&WTests
 //
 //  Created by Tsz-Lung on 04/04/2024.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import B_W
 
-final class DefaultImageDataLoaderTests: XCTestCase {
+final class DefaultLoadImageDataUseCaseTests: XCTestCase {
     func test_init_doesNotNotifyService() {
         let (_, service) = makeSUT()
         
@@ -80,16 +80,16 @@ final class DefaultImageDataLoaderTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
-                         line: UInt = #line) -> (sut: DefaultImageDataLoader, service: NetworkServiceSpy) {
+                         line: UInt = #line) -> (sut: LoadImageDataUseCase, service: NetworkServiceSpy) {
         let service = NetworkServiceSpy()
-        let sut = DefaultImageDataLoader(service: service)
+        let sut = DefaultLoadImageDataUseCase(service: service)
         trackForMemoryLeaks(service, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, service)
     }
     
-    private func expect(_ sut: DefaultImageDataLoader,
-                        completeWith expectedResult: Result<Data, DefaultImageDataLoader.Error>,
+    private func expect(_ sut: LoadImageDataUseCase,
+                        completeWith expectedResult: Result<Data, DefaultLoadImageDataUseCase.Error>,
                         when action: () -> Void,
                         file: StaticString = #filePath,
                         line: UInt = #line) {
@@ -100,7 +100,7 @@ final class DefaultImageDataLoaderTests: XCTestCase {
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
                 
             case let (.failure(receivedError), .failure(expectedError)):
-                XCTAssertEqual(receivedError as? DefaultImageDataLoader.Error, expectedError, file: file, line: line)
+                XCTAssertEqual(receivedError as? DefaultLoadImageDataUseCase.Error, expectedError, file: file, line: line)
                 
             default:
                 XCTFail("Expect a result: \(expectedResult), got \(receivedResult) instead", file: file, line: line)
