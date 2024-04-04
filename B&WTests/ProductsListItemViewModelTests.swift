@@ -3,7 +3,6 @@
 //  B&WTests
 //
 //  Created by Tsz-Lung on 04/04/2024.
-//  Copyright © 2024 Artemis Simple Solutions Ltd. All rights reserved.
 //
 
 import XCTest
@@ -50,9 +49,5 @@ final class ProductsListItemViewModelTests: XCTestCase {
                          loadImageData: @escaping ProductsListItemViewModel.LoadImageData = { _ in },
                          performOnMainQueue: @escaping PerformOnMainQueue = { $0() }) -> ProductsListItemViewModel {
         ProductsListItemViewModel(product: product, loadImageData: loadImageData, performOnMainQueue: performOnMainQueue)
-    }
-    
-    private func makeProduct(id: String = "id", description: String?, name: String?, price: String?) -> Product {
-        Product(id: id, name: name, description: description, price: price, imagePath: nil)
     }
 }
