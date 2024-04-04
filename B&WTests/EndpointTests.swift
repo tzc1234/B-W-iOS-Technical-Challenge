@@ -16,10 +16,10 @@ final class EndpointTests: XCTestCase {
         let sut = makeSUT(baseURL: baseURLWithLastSlash, path: path)
         
         let request = try sut.urlRequest()
-        let receivedURL = try XCTUnwrap(request.url?.absoluteString)
+        let requestURL = try XCTUnwrap(request.url?.absoluteString)
         
         XCTAssertEqual(request.httpMethod, "GET")
-        XCTAssertEqual(receivedURL, "https://base-url.com/path")
+        XCTAssertEqual(requestURL, "https://base-url.com/path")
     }
     
     func test_urlRequest_deliversCorrectRequestWhenBaseURLWithoutLastSlash() throws {
@@ -28,10 +28,10 @@ final class EndpointTests: XCTestCase {
         let sut = makeSUT(baseURL: baseURLWithoutLastSlash, path: path)
         
         let request = try sut.urlRequest()
-        let receivedURL = try XCTUnwrap(request.url?.absoluteString)
+        let requestURL = try XCTUnwrap(request.url?.absoluteString)
         
         XCTAssertEqual(request.httpMethod, "GET")
-        XCTAssertEqual(receivedURL, "https://base-url.com/path")
+        XCTAssertEqual(requestURL, "https://base-url.com/path")
     }
     
     func test_urlRequest_deliversCorrectRequestWhenEmptyPath() throws {
@@ -40,10 +40,10 @@ final class EndpointTests: XCTestCase {
         let sut = makeSUT(baseURL: baseURL, path: emptyPath)
         
         let request = try sut.urlRequest()
-        let receivedURL = try XCTUnwrap(request.url?.absoluteString)
+        let requestURL = try XCTUnwrap(request.url?.absoluteString)
         
         XCTAssertEqual(request.httpMethod, "GET")
-        XCTAssertEqual(receivedURL, "https://base-url.com/")
+        XCTAssertEqual(requestURL, "https://base-url.com/")
     }
     
     func test_urlRequest_deliversCorrectRequestWhenIsFullPath() throws {
@@ -51,10 +51,10 @@ final class EndpointTests: XCTestCase {
         let sut = makeSUT(path: fullPath, isFullPath: true)
         
         let request = try sut.urlRequest()
-        let receivedURL = try XCTUnwrap(request.url?.absoluteString)
+        let requestURL = try XCTUnwrap(request.url?.absoluteString)
         
         XCTAssertEqual(request.httpMethod, "GET")
-        XCTAssertEqual(receivedURL, fullPath)
+        XCTAssertEqual(requestURL, fullPath)
     }
     
     func test_urlRequest_throwsRequestErrorWhenInvalidFullPath() {
