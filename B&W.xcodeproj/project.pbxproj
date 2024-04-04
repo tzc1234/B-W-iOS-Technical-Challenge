@@ -45,6 +45,7 @@
 		BE6B5F9B2BBEBD2400B608A1 /* ConfigStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F9A2BBEBD2400B608A1 /* ConfigStub.swift */; };
 		BE6B5F9D2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */; };
 		BE6B5F9F2BBEC8F100B608A1 /* DefaultImageDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F9E2BBEC8F100B608A1 /* DefaultImageDataRepositoryTests.swift */; };
+		BE6B5FA12BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		BE6B5F9A2BBEBD2400B608A1 /* ConfigStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStub.swift; sourceTree = "<group>"; };
 		BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsDependenciesContainerTests.swift; sourceTree = "<group>"; };
 		BE6B5F9E2BBEC8F100B608A1 /* DefaultImageDataRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepositoryTests.swift; sourceTree = "<group>"; };
+		BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				BE6B5F9A2BBEBD2400B608A1 /* ConfigStub.swift */,
+				BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				BE6B5F962BBEA43A00B608A1 /* EndpointTests.swift in Sources */,
 				BE6B5F982BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift in Sources */,
 				2B89125A251356A7004BC46D /* ProductsListViewModelTests.swift in Sources */,
+				BE6B5FA12BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				BE6B5F9F2BBEC8F100B608A1 /* DefaultImageDataRepositoryTests.swift in Sources */,
 				BE6B5F9D2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift in Sources */,
 				BE6B5F9B2BBEBD2400B608A1 /* ConfigStub.swift in Sources */,
@@ -741,7 +745,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 739Y89842X;
 				INFOPLIST_FILE = "B&WTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -763,7 +767,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 739Y89842X;
 				INFOPLIST_FILE = "B&WTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

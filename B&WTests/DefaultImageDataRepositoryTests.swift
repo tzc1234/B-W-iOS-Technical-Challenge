@@ -36,10 +36,15 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT() -> (sut: DefaultImageDataRepository, service: DataTransferServiceSpy) {
+    private func makeSUT(file: StaticString = #filePath,
+                         line: UInt = #line) -> (sut: DefaultImageDataRepository, service: DataTransferServiceSpy) {
         let endpoints = ImageDataRepositoryEndpoints()
         let service = DataTransferServiceSpy()
         let sut = DefaultImageDataRepository(endpoints: endpoints, dataTransferService: service)
+        
+        trackForMemoryLeaks(service, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        
         return (sut, service)
     }
     
