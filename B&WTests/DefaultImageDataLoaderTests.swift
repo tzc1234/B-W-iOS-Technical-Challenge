@@ -60,10 +60,7 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         let (sut, service) = makeSUT()
         let expectedURL = URL(string: "https://image-data.com")!
         
-        let exp = expectation(description: "Wait for completion")
-        sut.load(for: expectedURL) { _ in exp.fulfill() }
-        service.complete(with: .notConnected)
-        wait(for: [exp], timeout: 1)
+        sut.load(for: expectedURL) { _ in }
         
         let request = try service.endpoints.first?.urlRequest()
         XCTAssertEqual(request?.url, expectedURL)
@@ -73,37 +70,17 @@ final class DefaultImageDataLoaderTests: XCTestCase {
     func test_load_deliversFailedErrorOnServiceError() {
         let (sut, service) = makeSUT()
         
-        let exp = expectation(description: "Wait for completion")
-        sut.load(for: anyURL()) { result in
-            switch result {
-            case .success:
-                XCTFail("should not be here")
-            case let .failure(error):
-                XCTAssertEqual(error as? DefaultImageDataLoader.Error, .failed)
-            }
-            exp.fulfill()
-        }
-        
-        service.complete(with: .notConnected)
-        wait(for: [exp], timeout: 1)
+        expect(sut, completeWith: .failure(.failed), when: {
+            service.complete(with: .notConnected)
+        })
     }
     
     func test_load_deliversNoDataErrorWhenReceivedNilData() {
         let (sut, service) = makeSUT()
         
-        let exp = expectation(description: "Wait for completion")
-        sut.load(for: anyURL()) { result in
-            switch result {
-            case .success:
-                XCTFail("should not be here")
-            case let .failure(error):
-                XCTAssertEqual(error as? DefaultImageDataLoader.Error, .noData)
-            }
-            exp.fulfill()
-        }
-        
-        service.complete(with: nil)
-        wait(for: [exp], timeout: 1)
+        expect(sut, completeWith: .failure(.noData), when: {
+            service.complete(with: nil)
+        })
     }
     
     // MARK: - Helpers
@@ -115,6 +92,27 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         trackForMemoryLeaks(service, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, service)
+    }
+    
+    private func expect(_ sut: DefaultImageDataLoader,
+                        completeWith expectedResult: Result<Data, DefaultImageDataLoader.Error>,
+                        when action: () -> Void,
+                        file: StaticString = #filePath,
+                        line: UInt = #line) {
+        let exp = expectation(description: "Wait for completion")
+        sut.load(for: anyURL()) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case (.success, .success):
+                break
+            case let (.failure(receivedError), .failure(expectedError)):
+                XCTAssertEqual(receivedError as? DefaultImageDataLoader.Error, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expect a result: \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        action()
+        wait(for: [exp], timeout: 1)
     }
     
     private func anyURL() -> URL {
