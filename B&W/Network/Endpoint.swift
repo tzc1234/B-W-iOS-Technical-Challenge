@@ -29,11 +29,11 @@ public class Endpoint<R>: ResponseRequestable {
     private let method: HTTPMethodType
     public let responseDecoder: ResponseDecoder
 
-    init(config: RequestConfig,
-         path: String,
-         isFullPath: Bool = false,
-         method: HTTPMethodType,
-         responseDecoder: ResponseDecoder = JSONResponseDecoder()) {
+    public init(config: RequestConfig,
+                path: String,
+                isFullPath: Bool = false,
+                method: HTTPMethodType,
+                responseDecoder: ResponseDecoder = JSONResponseDecoder()) {
         self.config = config
         self.path = path
         self.isFullPath = isFullPath

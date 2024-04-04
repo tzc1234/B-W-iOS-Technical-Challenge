@@ -40,6 +40,7 @@
 		BE5857B42BBDD51A006FF630 /* NetworkSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */; };
 		BE5857B92BBDDD3A006FF630 /* DataTransferErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B82BBDDD3A006FF630 /* DataTransferErrorHandler.swift */; };
 		BE6B5F942BBE9D5D00B608A1 /* ProductsEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F932BBE9D5D00B608A1 /* ProductsEndpoints.swift */; };
+		BE6B5F962BBEA43A00B608A1 /* EndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F952BBEA43A00B608A1 /* EndpointTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionManager.swift; sourceTree = "<group>"; };
 		BE5857B82BBDDD3A006FF630 /* DataTransferErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransferErrorHandler.swift; sourceTree = "<group>"; };
 		BE6B5F932BBE9D5D00B608A1 /* ProductsEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsEndpoints.swift; sourceTree = "<group>"; };
+		BE6B5F952BBEA43A00B608A1 /* EndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			children = (
 				2B891259251356A7004BC46D /* ProductsListViewModelTests.swift */,
 				2B89125B251356A7004BC46D /* Info.plist */,
+				BE6B5F952BBEA43A00B608A1 /* EndpointTests.swift */,
 			);
 			path = "B&WTests";
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE6B5F962BBEA43A00B608A1 /* EndpointTests.swift in Sources */,
 				2B89125A251356A7004BC46D /* ProductsListViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
