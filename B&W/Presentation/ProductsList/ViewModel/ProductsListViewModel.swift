@@ -34,10 +34,12 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
 
     private let useCase: GetProductsUseCase
     private let actions: ProductsListViewModelActions
+    private let imageDataLoader: ImageDataLoader
     
-    init(useCase: GetProductsUseCase, actions: ProductsListViewModelActions) {
+    init(useCase: GetProductsUseCase, actions: ProductsListViewModelActions, imageDataLoader: ImageDataLoader) {
         self.useCase = useCase
         self.actions = actions
+        self.imageDataLoader = imageDataLoader
     }
     
     private func load(productQuery: ProductQuery) {
@@ -49,13 +51,29 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
                 switch result {
                 case .success(let data):
                     self.products = data.products
-                    self.items.value = data.products.map(ProductsListItemViewModel.init)
+                    self.items.value = data.products.map(self.makeProductsListItemViewModel)
                 case .failure(let error):
                     self.error.value = error.isInternetConnectionError ?
                         NSLocalizedString("No internet connection", comment: "") :
                         NSLocalizedString("Failed loading products", comment: "")
                 }
         })
+    }
+    
+    private func makeProductsListItemViewModel(product: Product) -> ProductsListItemViewModel {
+        ProductsListItemViewModel(product: product) { [weak self] loadImageData in
+            guard let imagePath = product.imagePath, let url = URL(string: imagePath) else { return }
+            
+            // The actual image data loading logic for ProductsListItemViewModel.
+            _ = self?.imageDataLoader.load(for: url) { result in
+                switch result {
+                case let .success(data):
+                    loadImageData(data)
+                case .failure:
+                    break
+                }
+            }
+        }
     }
     
     private func cancelCurrentPendingTaskBeforeAssigningNewTask() {

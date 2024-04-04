@@ -18,18 +18,22 @@ final class ProductListItemCell: UITableViewCell {
         nameLabel.text = viewModel.name
         priceLabel.text = viewModel.price.description
         descriptionLabel.text = viewModel.description
+        
+        bind(to: viewModel)
         updateImage()
+    }
+    
+    // Use binding to observe image data update, same as ProductDetailsViewController.
+    private func bind(to viewModel: ProductsListItemViewModel) {
+        viewModel.image.observe(on: self) { [weak self] data in
+            self?.productImageView.image = data.flatMap(UIImage.init)
+        }
     }
 
     private func updateImage() {
         productImageView.image = nil
-
-        let url = URL(string: viewModel.imagePath)!
-
-        // Fetch Image Data
-        if let data = try? Data(contentsOf: url) {
-            // Create Image and Update Image View
-            self.productImageView.image = UIImage(data: data)
-        }
+        
+        // Ask viewModel to load image for it, instead of directly using Data(contentsOf:).
+        viewModel.loadImage()
     }
 }

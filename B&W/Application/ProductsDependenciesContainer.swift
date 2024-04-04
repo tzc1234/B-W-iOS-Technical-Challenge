@@ -29,7 +29,11 @@ final class ProductsDependenciesContainer {
     // MARK: - View Models
 
     private func makeProductsListViewModel(actions: ProductsListViewModelActions) -> ProductsListViewModel {
-        return DefaultProductsListViewModel(useCase: makeGetProductsUseCase(), actions: actions)
+        return DefaultProductsListViewModel(
+            useCase: makeGetProductsUseCase(),
+            actions: actions,
+            imageDataLoader: imageDataLoader
+        )
     }
 
     private func makeProductDetailsViewModel(product: Product) -> ProductDetailsViewModel {

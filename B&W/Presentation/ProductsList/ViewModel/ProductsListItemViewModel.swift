@@ -1,17 +1,29 @@
 import Foundation
 
-struct ProductsListItemViewModel: Equatable {
+struct ProductsListItemViewModel {
+    typealias LoadImageData = (@escaping (Data) -> Void) -> Void
+    
+    let image: Observable<Data?> = Observable(nil)
+    
     let name: String
     let price: String
     let description: String
-    let imagePath: String
-}
-
-extension ProductsListItemViewModel {
-    init(product: Product) {
+    
+    // Holding a image Data callback closure injected from DefaultProductsListViewModel.
+    private let loadImageData: LoadImageData
+    
+    init(product: Product, loadImageData: @escaping LoadImageData) {
         self.name = product.name ?? ""
         self.price = product.price ?? ""
         self.description = product.description ?? ""
-        self.imagePath = product.imagePath ?? ""
+        self.loadImageData = loadImageData
+    }
+}
+
+extension ProductsListItemViewModel {
+    func loadImage() {
+        loadImageData { data in
+            image.value = data
+        }
     }
 }
