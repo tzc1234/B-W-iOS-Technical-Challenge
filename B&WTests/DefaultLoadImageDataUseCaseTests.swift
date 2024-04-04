@@ -112,10 +112,6 @@ final class DefaultLoadImageDataUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
-    private func anyURL() -> URL {
-        URL(string: "https://any-url.com")!
-    }
-    
     private final class NetworkServiceSpy: NetworkService {
         struct Request {
             let endpoint: Requestable

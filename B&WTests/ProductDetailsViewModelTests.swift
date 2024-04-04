@@ -52,28 +52,69 @@ final class ProductDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(loadImage.loadCallCount, 0)
     }
     
+    func test_updateImage_doesNotDeliverDataOnLoadImageDataError() {
+        let url = anyURL()
+        let product = makeProduct(imagePath: url.absoluteString)
+        let (sut, loadImage) = makeSUT(product: product)
+        
+        var loggedData = [Data?]()
+        sut.image.observe(on: self) { data in
+            loggedData.append(data)
+        }
+        
+        sut.updateImage()
+        loadImage.complete(with: anyNSError())
+        
+        XCTAssertEqual(loggedData, [nil])
+        XCTAssertEqual(loadImage.urls, [url])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(product: Product,
+                         performOnMainQueue: @escaping PerformOnMainQueue = { $0() },
                          file: StaticString = #filePath,
                          line: UInt = #line) -> (sut: DefaultProductDetailsViewModel, loadImage: LoadImageDataUseCaseSpy) {
         let loadImage = LoadImageDataUseCaseSpy()
-        let sut = DefaultProductDetailsViewModel(product: product, loadImageDataUseCase: loadImage)
+        let sut = DefaultProductDetailsViewModel(
+            product: product,
+            loadImageDataUseCase: loadImage,
+            performOnMainQueue: performOnMainQueue
+        )
         trackForMemoryLeaks(loadImage, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loadImage)
     }
     
+    private func anyNSError() -> NSError {
+        NSError(domain: "error", code: 0)
+    }
+    
     private class LoadImageDataUseCaseSpy: LoadImageDataUseCase {
+        struct Load {
+            let url: URL
+            let completion: Completion
+        }
+        
         private struct LoadImageCancellable: Cancellable {
             func cancel() {}
         }
         
-        private(set) var loadCallCount = 0
+        private var loads = [Load]()
+        var loadCallCount: Int {
+            loads.count
+        }
+        var urls: [URL] {
+            loads.map(\.url)
+        }
         
         func load(for url: URL, completion: @escaping Completion) -> Cancellable {
-            loadCallCount += 1
+            loads.append(Load(url: url, completion: completion))
             return LoadImageCancellable()
+        }
+        
+        func complete(with error: Error, at index: Int = 0) {
+            loads[index].completion(.failure(error))
         }
     }
 }

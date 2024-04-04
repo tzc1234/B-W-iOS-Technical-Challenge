@@ -17,7 +17,7 @@ typealias ProductDetailsViewModel = ProductDetailsViewModelInput & ProductDetail
 final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
     private var imageDataLoading: Cancellable?
 
-    let image: Observable<Data?> = Observable(nil)
+    let image: Observable<Data?>
     
     let name: String
     let description: String
@@ -25,12 +25,17 @@ final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
     let price: String
     private let loadImageDataUseCase: LoadImageDataUseCase
 
-    init(product: Product, loadImageDataUseCase: LoadImageDataUseCase) {
+    init(product: Product, 
+         loadImageDataUseCase: LoadImageDataUseCase,
+         performOnMainQueue: @escaping PerformOnMainQueue = { action in
+            DispatchQueue.main.async { action() }
+    }) {
         self.name = product.name ?? ""
         self.description = product.description ?? ""
         self.imagePath = product.imagePath
         self.price = product.price ?? ""
         self.loadImageDataUseCase = loadImageDataUseCase
+        self.image = Observable(nil, performOnMainQueue: performOnMainQueue)
     }
 }
 

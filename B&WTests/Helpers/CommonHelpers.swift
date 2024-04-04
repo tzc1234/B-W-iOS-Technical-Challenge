@@ -16,3 +16,7 @@ func makeProduct(id: String = "id",
                  imagePath: String? = nil) -> Product {
     Product(id: id, name: name, description: description, price: price, imagePath: imagePath)
 }
+
+func anyURL() -> URL {
+    URL(string: "https://any-url.com")!
+}
