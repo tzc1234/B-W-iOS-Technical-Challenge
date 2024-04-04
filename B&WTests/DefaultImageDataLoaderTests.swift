@@ -42,6 +42,7 @@ final class DefaultImageDataLoader {
                     return
                 }
                 
+                completion(.success(data))
             case .failure:
                 completion(.failure(Error.failed))
             }
@@ -83,6 +84,15 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         })
     }
     
+    func test_load_deliversDataWhenReceivedData() {
+        let (sut, service) = makeSUT()
+        let expectedData = Data("data".utf8)
+        
+        expect(sut, completeWith: .success(expectedData), when: {
+            service.complete(with: expectedData)
+        })
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
@@ -102,12 +112,15 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         let exp = expectation(description: "Wait for completion")
         sut.load(for: anyURL()) { receivedResult in
             switch (receivedResult, expectedResult) {
-            case (.success, .success):
-                break
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+                
             case let (.failure(receivedError), .failure(expectedError)):
                 XCTAssertEqual(receivedError as? DefaultImageDataLoader.Error, expectedError, file: file, line: line)
+                
             default:
                 XCTFail("Expect a result: \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+                
             }
             exp.fulfill()
         }
