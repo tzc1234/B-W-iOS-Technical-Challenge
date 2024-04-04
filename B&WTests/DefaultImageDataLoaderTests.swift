@@ -20,10 +20,14 @@ struct URLEndpoint: Requestable {
     }
 }
 
-final class DefaultImageDataLoader {
+protocol ImageDataLoader {
     typealias Result = Swift.Result<Data, Swift.Error>
     typealias Completion = (Result) -> Void
     
+    func load(for url: URL, completion: @escaping Completion) -> Cancellable
+}
+
+final class DefaultImageDataLoader: ImageDataLoader {
     private let service: NetworkService
     
     init(service: NetworkService) {
@@ -48,7 +52,7 @@ final class DefaultImageDataLoader {
             completion = nil
         }
         
-        func complete(with result: Result) {
+        func complete(with result: ImageDataLoader.Result) {
             completion?(result)
         }
     }
