@@ -27,14 +27,23 @@ final class DefaultImageDataLoader {
         self.service = service
     }
     
-    func load(for url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
+    enum Error: Swift.Error {
+        case failed
+        case noData
+    }
+    
+    func load(for url: URL, completion: @escaping (Result<Data, Swift.Error>) -> Void) {
         let endPoint = URLEndpoint(url: url)
         _ = service.request(endpoint: endPoint) { result in
             switch result {
-            case .success(_):
-                break
-            case let .failure(error):
-                completion(.failure(error))
+            case let .success(data):
+                guard let data else {
+                    completion(.failure(Error.noData))
+                    return
+                }
+                
+            case .failure:
+                completion(.failure(Error.failed))
             }
         }
     }
@@ -61,7 +70,7 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         XCTAssertEqual(request?.httpMethod, "GET")
     }
     
-    func test_load_deliversErrorWhenOnServiceError() {
+    func test_load_deliversFailedErrorOnServiceError() {
         let (sut, service) = makeSUT()
         
         let exp = expectation(description: "Wait for completion")
@@ -70,12 +79,30 @@ final class DefaultImageDataLoaderTests: XCTestCase {
             case .success:
                 XCTFail("should not be here")
             case let .failure(error):
-                break
+                XCTAssertEqual(error as? DefaultImageDataLoader.Error, .failed)
             }
             exp.fulfill()
         }
         
         service.complete(with: .notConnected)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func test_load_deliversNoDataErrorWhenReceivedNilData() {
+        let (sut, service) = makeSUT()
+        
+        let exp = expectation(description: "Wait for completion")
+        sut.load(for: anyURL()) { result in
+            switch result {
+            case .success:
+                XCTFail("should not be here")
+            case let .failure(error):
+                XCTAssertEqual(error as? DefaultImageDataLoader.Error, .noData)
+            }
+            exp.fulfill()
+        }
+        
+        service.complete(with: nil)
         wait(for: [exp], timeout: 1)
     }
     
@@ -115,6 +142,10 @@ final class DefaultImageDataLoaderTests: XCTestCase {
         
         func complete(with error: NetworkError, at index: Int = 0) {
             requests[index].completion(.failure(error))
+        }
+        
+        func complete(with data: Data?, at index: Int = 0) {
+            requests[index].completion(.success(data))
         }
     }
 }
