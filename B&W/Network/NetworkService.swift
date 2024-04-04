@@ -18,16 +18,12 @@ public protocol NetworkService {
     func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable?
 }
 
-// MARK: - Implementation
-
+// No need to carry a RequestConfig for Endpoint now.
 public final class DefaultNetworkService {
-
-    private let config: RequestConfig
     private let sessionManager: NetworkSessionManager
 
-    public init(config: RequestConfig, sessionManager: NetworkSessionManager = DefaultNetworkSessionManager()) {
+    public init(sessionManager: NetworkSessionManager = DefaultNetworkSessionManager()) {
         self.sessionManager = sessionManager
-        self.config = config
     }
 
     private func request(request: URLRequest, completion: @escaping CompletionHandler) -> NetworkCancellable {
@@ -62,7 +58,7 @@ public final class DefaultNetworkService {
 extension DefaultNetworkService: NetworkService {
     public func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable? {
         do {
-            let urlRequest = try endpoint.urlRequest(with: config)
+            let urlRequest = try endpoint.urlRequest()
             return request(request: urlRequest, completion: completion)
         } catch {
             completion(.failure(.urlGeneration))

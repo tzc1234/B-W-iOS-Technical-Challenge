@@ -1,9 +1,11 @@
 import Foundation
 
 final class DefaultProductsRepository {
+    private let endpoints: ProductsEndpoints
     private let dataTransferService: DataTransferService
 
-    init(dataTransferService: DataTransferService) {
+    init(endpoints: ProductsEndpoints, dataTransferService: DataTransferService) {
+        self.endpoints = endpoints
         self.dataTransferService = dataTransferService
     }
 }
@@ -16,7 +18,7 @@ extension DefaultProductsRepository: ProductsRepository {
         // Why do task.isCancelled guarding here just after task initialisation? It must be false.
         guard !task.isCancelled else { return nil }
 
-        let endpoint = APIEndpoints.getProducts()
+        let endpoint = endpoints.getProducts()
         task.networkTask = self.dataTransferService.request(with: endpoint) { result in
             switch result {
             case .success(let responseDTO):

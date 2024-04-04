@@ -4,18 +4,24 @@ import UIKit
 // Rename from DependencyContainer to ProductsDependenciesContainer, a more explicit name.
 final class ProductsDependenciesContainer {
     
-    // Remove Dependencies struct, an extra level abstraction, since only one dependency is needed at the moment.
+    // Remove Dependencies struct, an extra level abstraction, since only a few of dependencies is needed at the moment.
+    private let config: RequestConfig
     private let dataTransferService: DataTransferService
     
-    init(dataTransferService: DataTransferService) {
+    init(config: RequestConfig, dataTransferService: DataTransferService) {
+        self.config = config
         self.dataTransferService = dataTransferService
     }
     
     // MARK: - Flow Coordinators
     
-    func makeGetProductsFlowCoordinator(tabBarController: UITabBarController, navigationController: UINavigationController) -> GetProductsFlowCoordinator {
-        return GetProductsFlowCoordinator(tabBarController: tabBarController, navigationController: navigationController,
-                                          dependencies: self)
+    func makeGetProductsFlowCoordinator(tabBarController: UITabBarController, 
+                                        navigationController: UINavigationController) -> GetProductsFlowCoordinator {
+        return GetProductsFlowCoordinator(
+            tabBarController: tabBarController,
+            navigationController: navigationController,
+            dependencies: self
+        )
     }
 
     // MARK: - View Models
@@ -37,7 +43,13 @@ final class ProductsDependenciesContainer {
     // MARK: - Repositories
 
     private func makeProductsRepository() -> ProductsRepository {
-        return DefaultProductsRepository(dataTransferService: dataTransferService)
+        return DefaultProductsRepository(endpoints: makeProductsEndpoints(), dataTransferService: dataTransferService)
+    }
+    
+    // MARK: - Endpoints
+    
+    private func makeProductsEndpoints() -> ProductsEndpoints {
+        ProductsRepositoryEndpoints(config: config)
     }
 }
 
