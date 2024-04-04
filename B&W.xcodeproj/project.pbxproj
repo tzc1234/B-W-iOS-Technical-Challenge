@@ -149,8 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				2B891259251356A7004BC46D /* ProductsListViewModelTests.swift */,
-				2B89125B251356A7004BC46D /* Info.plist */,
 				BE6B5F952BBEA43A00B608A1 /* EndpointTests.swift */,
+				2B89125B251356A7004BC46D /* Info.plist */,
 			);
 			path = "B&WTests";
 			sourceTree = "<group>";
