@@ -91,17 +91,32 @@ final class ProductsListViewModelTests: XCTestCase {
         let (sut, getProducts, loadImage) = makeSUT()
         
         let item = extractItem(from: sut, with: getProducts, and: product)
-        item.loadImage()
-        
-        XCTAssertEqual(loadImage.loadCallCount, 1)
-        
         var loggedData = [Data?]()
         item.image.observe(on: self) { data in
             loggedData.append(data)
         }
+        item.loadImage()
         loadImage.complete(with: anyNSError())
         
         XCTAssertEqual(loggedData, [nil])
+        XCTAssertEqual(loadImage.urls, [url])
+    }
+    
+    func test_itemLoadImage_deliversDataWhenReceivedDataFromLoadImageDataUseCase() {
+        let url = anyURL()
+        let product = makeProduct(imagePath: url.absoluteString)
+        let expectedData = UIImage.make(withColor: .gray).pngData()!
+        let (sut, getProducts, loadImage) = makeSUT()
+        
+        let item = extractItem(from: sut, with: getProducts, and: product)
+        var loggedData = [Data?]()
+        item.image.observe(on: self) { data in
+            loggedData.append(data)
+        }
+        item.loadImage()
+        loadImage.complete(with: expectedData)
+        
+        XCTAssertEqual(loggedData, [nil, expectedData])
         XCTAssertEqual(loadImage.urls, [url])
     }
     

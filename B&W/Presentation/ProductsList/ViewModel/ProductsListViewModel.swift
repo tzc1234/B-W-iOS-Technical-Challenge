@@ -35,6 +35,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     private let useCase: GetProductsUseCase
     private let actions: ProductsListViewModelActions
     private let loadImageDataUseCase: LoadImageDataUseCase
+    private let performOnMainQueue: PerformOnMainQueue
     
     init(useCase: GetProductsUseCase,
          actions: ProductsListViewModelActions,
@@ -47,6 +48,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
         self.loadImageDataUseCase = loadImageDataUseCase
         self.error = Observable("", performOnMainQueue: performOnMainQueue)
         self.items = Observable([], performOnMainQueue: performOnMainQueue)
+        self.performOnMainQueue = performOnMainQueue
     }
     
     private func load(productQuery: ProductQuery) {
@@ -70,19 +72,23 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     }
     
     private func makeProductsListItemViewModel(product: Product) -> ProductsListItemViewModel {
-        ProductsListItemViewModel(product: product) { [weak self] loadImageData in
-            guard let imagePath = product.imagePath, let url = URL(string: imagePath) else { return }
-            
-            // The actual image data loading logic for ProductsListItemViewModel.
-            _ = self?.loadImageDataUseCase.load(for: url) { result in
-                switch result {
-                case let .success(data):
-                    loadImageData(data)
-                case .failure:
-                    break
+        ProductsListItemViewModel(
+            product: product,
+            loadImageData: { [weak self] loadImageData in
+                guard let imagePath = product.imagePath, let url = URL(string: imagePath) else { return }
+                
+                // The actual image data loading logic for ProductsListItemViewModel.
+                _ = self?.loadImageDataUseCase.load(for: url) { result in
+                    switch result {
+                    case let .success(data):
+                        loadImageData(data)
+                    case .failure:
+                        break
+                    }
                 }
-            }
-        }
+            }, 
+            performOnMainQueue: performOnMainQueue
+        )
     }
     
     private func cancelCurrentPendingTaskBeforeAssigningNewTask() {
