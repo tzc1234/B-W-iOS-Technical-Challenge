@@ -12,9 +12,15 @@ public final class Observable<Value> {
     public var value: Value {
         didSet { notifyObservers() }
     }
+    
+    private let performOnMain: (@escaping () -> Void) -> Void
 
-    public init(_ value: Value) {
+    public init(_ value: Value,
+                performOnMain: @escaping (@escaping () -> Void) -> Void = { action in
+                    DispatchQueue.main.async { action() }
+                }) {
         self.value = value
+        self.performOnMain = performOnMain
     }
 
     public func observe(on observer: AnyObject, observerBlock: @escaping (Value) -> Void) {
@@ -28,7 +34,7 @@ public final class Observable<Value> {
 
     private func notifyObservers() {
         for observer in observers {
-            DispatchQueue.main.async { observer.block(self.value) }
+            performOnMain { observer.block(self.value) }
         }
     }
 }

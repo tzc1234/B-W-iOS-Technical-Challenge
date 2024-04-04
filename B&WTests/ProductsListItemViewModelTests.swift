@@ -35,21 +35,21 @@ final class ProductsListItemViewModelTests: XCTestCase {
             loadImage(expectedData)
         })
         
-        sut.loadImage()
-        
         var loggedData = [Data?]()
         sut.image.observe(on: self) { data in
             loggedData.append(data)
         }
+        sut.loadImage()
         
-        XCTAssertEqual(loggedData, [expectedData])
+        XCTAssertEqual(loggedData, [nil, expectedData])
     }
     
     // MARK: - Helpers
     
     private func makeSUT(product: Product,
-                         loadImageData: @escaping ProductsListItemViewModel.LoadImageData = { _ in }) -> ProductsListItemViewModel {
-        ProductsListItemViewModel(product: product, loadImageData: loadImageData)
+                         loadImageData: @escaping ProductsListItemViewModel.LoadImageData = { _ in },
+                         performOnMain: @escaping (@escaping () -> Void) -> Void = { $0() }) -> ProductsListItemViewModel {
+        ProductsListItemViewModel(product: product, loadImageData: loadImageData, performOnMain: performOnMain)
     }
     
     private func makeProduct(id: String = "id", description: String?, name: String?, price: String?) -> Product {
