@@ -14,14 +14,14 @@ struct ProductsListItemViewModel {
     
     init(product: Product,
          loadImageData: @escaping LoadImageData,
-         performOnMain: @escaping (@escaping () -> Void) -> Void = { action in
+         performOnMainQueue: @escaping PerformOnMainQueue = { action in
             DispatchQueue.main.async { action() }
     }) {
         self.name = product.name ?? ""
         self.price = product.price ?? ""
         self.description = product.description ?? ""
         self.loadImageData = loadImageData
-        self.image = Observable(nil, performOnMain: performOnMain)
+        self.image = Observable(nil, performOnMainQueue: performOnMainQueue)
     }
 }
 

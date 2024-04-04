@@ -1,5 +1,7 @@
 import Foundation
 
+public typealias PerformOnMainQueue = (@escaping () -> Void) -> Void
+
 public final class Observable<Value> {
 
     struct Observer<V> {
@@ -13,14 +15,14 @@ public final class Observable<Value> {
         didSet { notifyObservers() }
     }
     
-    private let performOnMain: (@escaping () -> Void) -> Void
+    private let performOnMainQueue: PerformOnMainQueue
 
     public init(_ value: Value,
-                performOnMain: @escaping (@escaping () -> Void) -> Void = { action in
+                performOnMainQueue: @escaping PerformOnMainQueue = { action in
                     DispatchQueue.main.async { action() }
                 }) {
         self.value = value
-        self.performOnMain = performOnMain
+        self.performOnMainQueue = performOnMainQueue
     }
 
     public func observe(on observer: AnyObject, observerBlock: @escaping (Value) -> Void) {
@@ -34,7 +36,7 @@ public final class Observable<Value> {
 
     private func notifyObservers() {
         for observer in observers {
-            performOnMain { observer.block(self.value) }
+            performOnMainQueue { observer.block(self.value) }
         }
     }
 }

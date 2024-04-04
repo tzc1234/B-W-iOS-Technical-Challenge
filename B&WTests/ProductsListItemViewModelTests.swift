@@ -48,8 +48,8 @@ final class ProductsListItemViewModelTests: XCTestCase {
     
     private func makeSUT(product: Product,
                          loadImageData: @escaping ProductsListItemViewModel.LoadImageData = { _ in },
-                         performOnMain: @escaping (@escaping () -> Void) -> Void = { $0() }) -> ProductsListItemViewModel {
-        ProductsListItemViewModel(product: product, loadImageData: loadImageData, performOnMain: performOnMain)
+                         performOnMainQueue: @escaping PerformOnMainQueue = { $0() }) -> ProductsListItemViewModel {
+        ProductsListItemViewModel(product: product, loadImageData: loadImageData, performOnMainQueue: performOnMainQueue)
     }
     
     private func makeProduct(id: String = "id", description: String?, name: String?, price: String?) -> Product {
