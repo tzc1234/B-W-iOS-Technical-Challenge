@@ -69,6 +69,24 @@ final class ProductDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(loadImage.urls, [url])
     }
     
+    func test_updateImage_deliversDataWhenReceivedDataFromLoadImageDataUseCase() {
+        let url = anyURL()
+        let product = makeProduct(imagePath: url.absoluteString)
+        let (sut, loadImage) = makeSUT(product: product)
+        let expectedData = UIImage.make(withColor: .gray).pngData()!
+        
+        var loggedData = [Data?]()
+        sut.image.observe(on: self) { data in
+            loggedData.append(data)
+        }
+        
+        sut.updateImage()
+        loadImage.complete(with: expectedData)
+        
+        XCTAssertEqual(loggedData, [nil, expectedData])
+        XCTAssertEqual(loadImage.urls, [url])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(product: Product,
@@ -90,7 +108,7 @@ final class ProductDetailsViewModelTests: XCTestCase {
         NSError(domain: "error", code: 0)
     }
     
-    private class LoadImageDataUseCaseSpy: LoadImageDataUseCase {
+    private final class LoadImageDataUseCaseSpy: LoadImageDataUseCase {
         struct Load {
             let url: URL
             let completion: Completion
@@ -115,6 +133,10 @@ final class ProductDetailsViewModelTests: XCTestCase {
         
         func complete(with error: Error, at index: Int = 0) {
             loads[index].completion(.failure(error))
+        }
+        
+        func complete(with data: Data, at index: Int = 0) {
+            loads[index].completion(.success(data))
         }
     }
 }
