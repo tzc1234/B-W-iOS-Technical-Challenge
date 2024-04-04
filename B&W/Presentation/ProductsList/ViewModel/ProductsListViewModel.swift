@@ -21,7 +21,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     // MARK: - OUTPUT
 
     let items: Observable<[ProductsListItemViewModel]> = Observable([])
-    let error: Observable<String> = Observable("")
+    let error: Observable<String>
 
     private var query: String = "" // Set query to private, since it needn't to be exposed.
     private var products: [Product] = [] // Set products to private, since it needn't to be exposed.
@@ -38,10 +38,14 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     
     init(useCase: GetProductsUseCase,
          actions: ProductsListViewModelActions,
-         loadImageDataUseCase: LoadImageDataUseCase) {
+         loadImageDataUseCase: LoadImageDataUseCase,
+         performOnMainQueue: @escaping PerformOnMainQueue = { action in
+            DispatchQueue.main.async { action() }
+    }) {
         self.useCase = useCase
         self.actions = actions
         self.loadImageDataUseCase = loadImageDataUseCase
+        self.error = Observable("", performOnMainQueue: performOnMainQueue)
     }
     
     private func load(productQuery: ProductQuery) {
@@ -49,7 +53,9 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
 
         loadTask = useCase.execute(
             requestValue: .init(query: productQuery),
-            completion: { result in
+            completion: { [weak self] result in
+                guard let self else { return }
+                
                 switch result {
                 case .success(let data):
                     self.products = data.products

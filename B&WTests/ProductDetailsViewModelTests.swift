@@ -116,8 +116,4 @@ final class ProductDetailsViewModelTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loadImage)
     }
-    
-    private func anyNSError() -> NSError {
-        NSError(domain: "error", code: 0)
-    }
 }

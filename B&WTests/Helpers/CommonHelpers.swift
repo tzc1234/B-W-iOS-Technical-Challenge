@@ -19,3 +19,7 @@ func makeProduct(id: String = "id",
 func anyURL() -> URL {
     URL(string: "https://any-url.com")!
 }
+
+func anyNSError() -> NSError {
+    NSError(domain: "error", code: 0)
+}
