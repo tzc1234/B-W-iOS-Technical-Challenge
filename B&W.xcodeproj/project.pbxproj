@@ -46,6 +46,8 @@
 		BE6B5F9D2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */; };
 		BE6B5F9F2BBEC8F100B608A1 /* DefaultImageDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F9E2BBEC8F100B608A1 /* DefaultImageDataLoaderTests.swift */; };
 		BE6B5FA12BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */; };
+		BE6B5FA42BBEE4C400B608A1 /* DefaultImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA32BBEE4C400B608A1 /* DefaultImageDataLoader.swift */; };
+		BE6B5FA62BBEE5BA00B608A1 /* ImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA52BBEE5BA00B608A1 /* ImageDataLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +105,8 @@
 		BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsDependenciesContainerTests.swift; sourceTree = "<group>"; };
 		BE6B5F9E2BBEC8F100B608A1 /* DefaultImageDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataLoaderTests.swift; sourceTree = "<group>"; };
 		BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		BE6B5FA32BBEE4C400B608A1 /* DefaultImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataLoader.swift; sourceTree = "<group>"; };
+		BE6B5FA52BBEE5BA00B608A1 /* ImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +281,7 @@
 				BE6B5F922BBE9D4200B608A1 /* Endpoints */,
 				2B91C73C2513A84700F0957C /* Mapping */,
 				2B91C73B2513A82C00F0957C /* Repositories */,
+				BE6B5FA22BBEE49800B608A1 /* ImageDataLoader */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -335,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				2B91C7592513ACD000F0957C /* Repository */,
+				BE6B5FA52BBEE5BA00B608A1 /* ImageDataLoader.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -387,6 +393,14 @@
 				BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		BE6B5FA22BBEE49800B608A1 /* ImageDataLoader */ = {
+			isa = PBXGroup;
+			children = (
+				BE6B5FA32BBEE4C400B608A1 /* DefaultImageDataLoader.swift */,
+			);
+			path = ImageDataLoader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -499,6 +513,7 @@
 				2B891247251356A5004BC46D /* ProductDetailsViewController.swift in Sources */,
 				2B91C72525139E0500F0957C /* Endpoint.swift in Sources */,
 				2B91C7872514AF7900F0957C /* StoryboardInstantiable.swift in Sources */,
+				BE6B5FA62BBEE5BA00B608A1 /* ImageDataLoader.swift in Sources */,
 				2B91C7C62514F6DD00F0957C /* NetworkService.swift in Sources */,
 				2B91C7642513B11F00F0957C /* ProductQuery.swift in Sources */,
 				2B91C76C2513B26600F0957C /* Product.swift in Sources */,
@@ -512,6 +527,7 @@
 				2B89128D25136761004BC46D /* ProductsListViewModel.swift in Sources */,
 				2B91C7952514BE6400F0957C /* AppFlowCoordinator.swift in Sources */,
 				2B91C73E2513A88000F0957C /* DefaultProductsRepository.swift in Sources */,
+				BE6B5FA42BBEE4C400B608A1 /* DefaultImageDataLoader.swift in Sources */,
 				2B91C72A25139EFB00F0957C /* RequestConfig.swift in Sources */,
 				2B91C8522515285100F0957C /* Observable.swift in Sources */,
 				2B89128B251362D0004BC46D /* ProductListItemCell.swift in Sources */,
