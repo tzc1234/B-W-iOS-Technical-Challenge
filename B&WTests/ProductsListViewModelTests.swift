@@ -66,34 +66,20 @@ final class ProductsListViewModelTests: XCTestCase {
     }
     
     func test_itemLoadImage_ignoresWhenInvalidImagePath() {
-        let products = Products(products: [
-            makeProduct(imagePath: " : ")
-        ])
+        let product = makeProduct(imagePath: " : ")
         let (sut, getProducts, loadImage) = makeSUT()
         
-        var loggedItems = [[ProductsListItemViewModel]]()
-        sut.items.observe(on: self) { loggedItems.append($0) }
-        sut.viewDidLoad()
-        getProducts.complete(with: products)
-        
-        let item = loggedItems[1].last!
+        let item = extractItem(from: sut, with: getProducts, and: product)
         item.loadImage()
         
         XCTAssertEqual(loadImage.loadCallCount, 0)
     }
     
     func test_itemLoadImage_ignoresWhenEmptyImagePath() {
-        let products = Products(products: [
-            makeProduct(imagePath: "")
-        ])
+        let product = makeProduct(imagePath: "")
         let (sut, getProducts, loadImage) = makeSUT()
         
-        var loggedItems = [[ProductsListItemViewModel]]()
-        sut.items.observe(on: self) { loggedItems.append($0) }
-        sut.viewDidLoad()
-        getProducts.complete(with: products)
-        
-        let item = loggedItems[1].last!
+        let item = extractItem(from: sut, with: getProducts, and: product)
         item.loadImage()
         
         XCTAssertEqual(loadImage.loadCallCount, 0)
@@ -101,17 +87,10 @@ final class ProductsListViewModelTests: XCTestCase {
     
     func test_itemLoadImage_doesNotDeliverDataOnLoadImageDataError() {
         let url = anyURL()
-        let products = Products(products: [
-            makeProduct(imagePath: url.absoluteString)
-        ])
+        let product = makeProduct(imagePath: url.absoluteString)
         let (sut, getProducts, loadImage) = makeSUT()
         
-        var loggedItems = [[ProductsListItemViewModel]]()
-        sut.items.observe(on: self) { loggedItems.append($0) }
-        sut.viewDidLoad()
-        getProducts.complete(with: products)
-        
-        let item = loggedItems[1].last!
+        let item = extractItem(from: sut, with: getProducts, and: product)
         item.loadImage()
         
         XCTAssertEqual(loadImage.loadCallCount, 1)
@@ -145,6 +124,17 @@ final class ProductsListViewModelTests: XCTestCase {
         trackForMemoryLeaks(loadImage, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, getProducts, loadImage)
+    }
+    
+    private func extractItem(from sut: ProductsListViewModel,
+                             with getProducts: GetProductsUseCaseSpy,
+                             and product: Product) -> ProductsListItemViewModel {
+        var loggedItems = [[ProductsListItemViewModel]]()
+        sut.items.observe(on: self) { loggedItems.append($0) }
+        sut.viewDidLoad()
+        getProducts.complete(with: Products(products: [product]))
+        
+        return loggedItems[1].first!
     }
     
     private func assert(items: [ProductsListItemViewModel], 
