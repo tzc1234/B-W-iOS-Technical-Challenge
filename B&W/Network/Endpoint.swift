@@ -16,7 +16,7 @@ public protocol ResponseRequestable: Requestable {
     var responseDecoder: ResponseDecoder { get }
 }
 
-enum RequestError: Error {
+public enum RequestError: Error {
     case componentsError
 }
 
@@ -55,8 +55,9 @@ extension Endpoint {
         let baseURL = config.baseURL.absoluteString.last != "/" ? config.baseURL.absoluteString + "/" : config.baseURL.absoluteString
         let endpoint = isFullPath ? path : baseURL.appending(path)
 
-        guard let urlComponents = URLComponents(string: endpoint) else { throw RequestError.componentsError }
-        guard let url = urlComponents.url else { throw RequestError.componentsError }
+        guard let url = URLComponents(string: endpoint)?.url, !url.absoluteString.isEmpty else {
+            throw RequestError.componentsError
+        }
 
         return url
     }
