@@ -24,16 +24,21 @@ class ProductDetailsViewController: UIViewController, StoryboardInstantiable {
         super.viewWillAppear(animated)
         viewModel.updateImage()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.cancelImageLoading()
+    }
 
     private func bind(to viewModel: ProductDetailsViewModel) {
         viewModel.image.observe(on: self) { [weak self] in
-            self?.productImageView.image = $0.flatMap(UIImage.init) }
+            self?.productImageView.image = $0.flatMap(UIImage.init)
+        }
     }
 
     private func setupViews() {
         title = viewModel.name
         productPriceLabel.text = viewModel.price
         productDescriptionTextView.text = viewModel.description
-
     }
 }

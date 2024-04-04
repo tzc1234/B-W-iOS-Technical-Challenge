@@ -7,10 +7,12 @@ final class ProductsDependenciesContainer {
     // Remove Dependencies struct, an extra level abstraction, since only a few of dependencies is needed at the moment.
     private let config: RequestConfig
     private let dataTransferService: DataTransferService
+    private let imageDataLoader: ImageDataLoader
     
-    init(config: RequestConfig, dataTransferService: DataTransferService) {
+    init(config: RequestConfig, dataTransferService: DataTransferService, imageDataLoader: ImageDataLoader) {
         self.config = config
         self.dataTransferService = dataTransferService
+        self.imageDataLoader = imageDataLoader
     }
     
     // MARK: - Flow Coordinators
@@ -31,7 +33,7 @@ final class ProductsDependenciesContainer {
     }
 
     private func makeProductDetailsViewModel(product: Product) -> ProductDetailsViewModel {
-        return DefaultProductDetailsViewModel(product: product)
+        return DefaultProductDetailsViewModel(product: product, imageDataLoader: imageDataLoader)
     }
     
     // MARK: - Use Cases

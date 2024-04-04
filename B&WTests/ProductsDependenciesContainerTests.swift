@@ -42,7 +42,11 @@ final class ProductsDependenciesContainerTests: XCTestCase {
     
     private func makeSUT(baseURL: URL = URL(string: "https://base-url.com")!) -> ProductsDependenciesContainer {
         let config = ConfigStub(baseURL: baseURL)
-        return ProductsDependenciesContainer(config: config, dataTransferService: DummyDataTransferService())
+        return ProductsDependenciesContainer(
+            config: config,
+            dataTransferService: DummyDataTransferService(),
+            imageDataLoader: DummyImageDataLoader()
+        )
     }
     
     private class DummyDataTransferService: DataTransferService {
@@ -53,6 +57,16 @@ final class ProductsDependenciesContainerTests: XCTestCase {
         func request<T: Decodable, E: ResponseRequestable>(with endpoint: E,
                                                            completion: @escaping CompletionHandler<T>) -> NetworkCancellable? where E.Response == T {
             Cancellable()
+        }
+    }
+    
+    private class DummyImageDataLoader: ImageDataLoader {
+        private struct ImageDataLoaderCancellable: Cancellable {
+            func cancel() {}
+        }
+        
+        func load(for url: URL, completion: @escaping Completion) -> Cancellable {
+            ImageDataLoaderCancellable()
         }
     }
 }

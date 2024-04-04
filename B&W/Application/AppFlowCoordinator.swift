@@ -27,12 +27,15 @@ final class AppDependenciesContainer {
     private let baseURL = URL(string: "https://my-json-server.typicode.com/daliad007/iOS-tech-test/")!
     private lazy var config: RequestConfig = ApiRequestConfig(baseURL: baseURL)
     
-    private lazy var apiDataTransferService: DataTransferService = {
-        let apiDataNetwork = DefaultNetworkService()
-        return DefaultDataTransferService(with: apiDataNetwork)
-    }()
-
+    private let networkService: NetworkService = DefaultNetworkService() // networkService now can be shared.
+    private lazy var apiDataTransferService: DataTransferService = DefaultDataTransferService(with: networkService)
+    private lazy var imageDataLoader: ImageDataLoader = DefaultImageDataLoader(service: networkService)
+    
     func makeProductsDependenciesContainer() -> ProductsDependenciesContainer {
-        return ProductsDependenciesContainer(config: config, dataTransferService: apiDataTransferService)
+        return ProductsDependenciesContainer(
+            config: config,
+            dataTransferService: apiDataTransferService,
+            imageDataLoader: imageDataLoader
+        )
     }
 }
