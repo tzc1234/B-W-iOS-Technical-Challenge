@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import B_W
+@testable import B_W
 
 final class EndpointTests: XCTestCase {
     func test_urlRequest_deliversCorrectRequestWhenBaseURLWithLastSlash() throws {
@@ -43,6 +43,15 @@ final class EndpointTests: XCTestCase {
         
         XCTAssertEqual(request.httpMethod, "GET")
         XCTAssertEqual(receivedURL, fullPath)
+    }
+    
+    func test_urlRequest_throwsRequestErrorWhenInvalidFullPath() {
+        let invalidFullPath = "https://full-path.com[/]"
+        let sut = makeSUT(path: invalidFullPath, isFullPath: true)
+        
+        XCTAssertThrowsError(try sut.urlRequest()) { error in
+            XCTAssertEqual(error as? RequestError, .componentsError)
+        }
     }
 
     // MARK: - Helpers
