@@ -3,15 +3,12 @@ import UIKit
 
 // Rename from DependencyContainer to ProductsDependenciesContainer, a more explicit name.
 final class ProductsDependenciesContainer {
-
-    struct Dependencies {
-        let apiDataTransferService: DataTransferService
-    }
-
-    private let dependencies: Dependencies
-
-    init(dependencies: Dependencies) {
-        self.dependencies = dependencies
+    
+    // Remove Dependencies struct, an extra level abstraction, since only one dependency is needed at the moment.
+    private let dataTransferService: DataTransferService
+    
+    init(dataTransferService: DataTransferService) {
+        self.dataTransferService = dataTransferService
     }
     
     // MARK: - Flow Coordinators
@@ -40,7 +37,7 @@ final class ProductsDependenciesContainer {
     // MARK: - Repositories
 
     private func makeProductsRepository() -> ProductsRepository {
-        return DefaultProductsRepository(dataTransferService: dependencies.apiDataTransferService)
+        return DefaultProductsRepository(dataTransferService: dataTransferService)
     }
 }
 

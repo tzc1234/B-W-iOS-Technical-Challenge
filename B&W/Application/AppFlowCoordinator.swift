@@ -28,7 +28,6 @@ final class AppDependenciesContainer {
     }()
 
     func makeProductsDependenciesContainer() -> ProductsDependenciesContainer {
-        let dependencies = ProductsDependenciesContainer.Dependencies(apiDataTransferService: apiDataTransferService)
-        return ProductsDependenciesContainer(dependencies: dependencies)
+        return ProductsDependenciesContainer(dataTransferService: apiDataTransferService)
     }
 }
