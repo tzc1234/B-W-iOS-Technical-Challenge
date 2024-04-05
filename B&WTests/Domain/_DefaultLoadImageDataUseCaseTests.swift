@@ -3,19 +3,16 @@
 //  B&WTests
 //
 //  Created by Tsz-Lung on 05/04/2024.
-//  Copyright © 2024 Artemis Simple Solutions Ltd. All rights reserved.
 //
 
 import XCTest
 @testable import B_W
 
 final class _DefaultLoadImageDataUseCase: LoadImageDataUseCase {
-    private let service: NetworkService
-    private let makeRequestable: (URL) -> Requestable
+    private let repository: ImageDataRepository
     
-    init(service: NetworkService, makeRequestable: @escaping (URL) -> Requestable) {
-        self.service = service
-        self.makeRequestable = makeRequestable
+    init(repository: ImageDataRepository) {
+        self.repository = repository
     }
     
     enum Error: Swift.Error {
@@ -23,125 +20,87 @@ final class _DefaultLoadImageDataUseCase: LoadImageDataUseCase {
         case noData
     }
     
-    private final class Wrapper: Cancellable {
-        private var completion: Completion?
-        var cancellable: NetworkCancellable?
-        
-        init(_ completion: Completion?) {
-            self.completion = completion
-        }
-        
-        func cancel() {
-            cancellable?.cancel()
-            completion = nil
-        }
-        
-        func complete(with result: LoadImageDataUseCase.Result) {
-            completion?(result)
-        }
-    }
-    
     func load(for url: URL, completion: @escaping Completion) -> Cancellable {
-        let endPoint = makeRequestable(url)
-        let wrapped = Wrapper(completion)
-        
-        wrapped.cancellable = service.request(endpoint: endPoint) { result in
+        repository.fetchImageData(for: url) { result in
             switch result {
             case let .success(data):
                 guard let data else {
-                    wrapped.complete(with: .failure(Error.noData))
+                    completion(.failure(Error.noData))
                     return
                 }
                 
-                wrapped.complete(with: .success(data))
+                completion(.success(data))
             case .failure:
-                wrapped.complete(with: .failure(Error.failed))
+                completion(.failure(Error.failed))
             }
         }
-        return wrapped
     }
 }
 
 final class _DefaultLoadImageDataUseCaseTests: XCTestCase {
-    func test_init_doesNotNotifyService() {
-        let (_, service) = makeSUT()
+    func test_init_doesNotNotifyRepository() {
+        let (_, repository) = makeSUT()
         
-        XCTAssertEqual(service.requestCallCount, 0)
+        XCTAssertEqual(repository.fetchImageDataCallCount, 0)
     }
     
-    func test_load_passesCorrectParamsToService() throws {
-        let (sut, service) = makeSUT()
+    func test_load_passesURLToRepositoryCorrectly() throws {
+        let (sut, repository) = makeSUT()
         let expectedURL = URL(string: "https://image-data.com")!
         
         _ = sut.load(for: expectedURL) { _ in }
         
-        let request = try service.endpoints.first?.urlRequest()
-        XCTAssertEqual(request?.url, expectedURL)
-        XCTAssertEqual(request?.httpMethod, "GET")
+        XCTAssertEqual(repository.loggedURLs, [expectedURL])
     }
     
-    func test_load_deliversFailedErrorOnServiceError() {
-        let (sut, service) = makeSUT()
+    func test_load_deliversFailedErrorOnRepositoryError() {
+        let (sut, repository) = makeSUT()
         
         expect(sut, completeWith: .failure(.failed), when: {
-            service.complete(with: .notConnected)
+            repository.complete(with: .notConnected)
         })
     }
     
     func test_load_deliversNoDataErrorWhenReceivedNilData() {
-        let (sut, service) = makeSUT()
+        let (sut, repository) = makeSUT()
         
         expect(sut, completeWith: .failure(.noData), when: {
-            service.complete(with: nil)
+            repository.complete(with: nil)
         })
     }
     
-    func test_load_deliversDataWhenReceivedData() {
-        let (sut, service) = makeSUT()
-        let expectedData = Data("data".utf8)
+    func test_load_deliversImageDataWhenReceivedData() {
+        let (sut, repository) = makeSUT()
+        let expectedImageData = Data("image data".utf8)
         
-        expect(sut, completeWith: .success(expectedData), when: {
-            service.complete(with: expectedData)
+        expect(sut, completeWith: .success(expectedImageData), when: {
+            repository.complete(with: expectedImageData)
         })
     }
     
     func test_load_cancelsRequestSuccessfully() {
-        let (sut, service) = makeSUT()
+        let (sut, repository) = makeSUT()
         let anyData = Data("data".utf8)
         
         let task = sut.load(for: anyURL()) { _ in }
         
-        XCTAssertEqual(service.cancelCallCount, 0)
+        XCTAssertEqual(repository.cancelCallCount, 0)
         
         task.cancel()
-        service.complete(with: anyData)
+        repository.complete(with: anyData)
         
-        XCTAssertEqual(service.cancelCallCount, 1)
-    }
-    
-    func test_load_doesNotDeliverResultAfterRequestCancelled() {
-        let (sut, service) = makeSUT()
-        let anyData = Data("data".utf8)
-        
-        var completionCallCount = 0
-        let task = sut.load(for: anyURL()) { _ in completionCallCount += 1 }
-        task.cancel()
-        service.complete(with: anyData)
-        service.complete(with: nil)
-        service.complete(with: .notConnected)
-        
-        XCTAssertEqual(completionCallCount, 0)
+        XCTAssertEqual(repository.cancelCallCount, 1)
     }
     
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
-                         line: UInt = #line) -> (sut: _DefaultLoadImageDataUseCase, service: NetworkServiceSpy) {
-        let service = NetworkServiceSpy()
-        let sut = _DefaultLoadImageDataUseCase(service: service, makeRequestable: URLEndpoint.init)
-        trackForMemoryLeaks(service, file: file, line: line)
+                         line: UInt = #line) -> (sut: _DefaultLoadImageDataUseCase, repository: ImageDataRepositorySpy) {
+        let repository = ImageDataRepositorySpy()
+        let sut = _DefaultLoadImageDataUseCase(repository: repository)
+        trackForMemoryLeaks(repository, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
-        return (sut, service)
+        return (sut, repository)
     }
     
     private func expect(_ sut: _DefaultLoadImageDataUseCase,
@@ -168,21 +127,21 @@ final class _DefaultLoadImageDataUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
-    private final class NetworkServiceSpy: NetworkService {
-        struct Request {
-            let endpoint: Requestable
-            let completion: CompletionHandler
+    private final class ImageDataRepositorySpy: ImageDataRepository {
+        private struct Event {
+            let url: URL
+            let completion: Completion
         }
         
-        private var requests = [Request]()
-        var requestCallCount: Int {
-            requests.count
+        private var events = [Event]()
+        var fetchImageDataCallCount: Int {
+            events.count
         }
-        var endpoints: [Requestable] {
-            requests.map(\.endpoint)
+        var loggedURLs: [URL] {
+            events.map(\.url)
         }
         
-        struct Cancellable: NetworkCancellable {
+        private struct RepositoryCancellable: Cancellable {
             let afterCancel: () -> Void
             
             func cancel() {
@@ -192,19 +151,19 @@ final class _DefaultLoadImageDataUseCaseTests: XCTestCase {
         
         private(set) var cancelCallCount = 0
         
-        func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable? {
-            requests.append(Request(endpoint: endpoint, completion: completion))
-            return Cancellable(afterCancel: { [weak self] in
+        func fetchImageData(for url: URL, completion: @escaping Completion) -> Cancellable {
+            events.append(Event(url: url, completion: completion))
+            return RepositoryCancellable(afterCancel: { [weak self] in
                 self?.cancelCallCount += 1
             })
         }
         
         func complete(with error: NetworkError, at index: Int = 0) {
-            requests[index].completion(.failure(error))
+            events[index].completion(.failure(error))
         }
         
         func complete(with data: Data?, at index: Int = 0) {
-            requests[index].completion(.success(data))
+            events[index].completion(.success(data))
         }
     }
 }
