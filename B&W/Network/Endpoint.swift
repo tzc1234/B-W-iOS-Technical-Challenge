@@ -20,7 +20,7 @@ public enum RequestError: Error {
     case componentsError
 }
 
-public class Endpoint<R>: ResponseRequestable {
+public final class Endpoint<R>: ResponseRequestable {
     public typealias Response = R
 
     private let config: RequestConfig

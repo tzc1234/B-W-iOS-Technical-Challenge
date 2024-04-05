@@ -1,6 +1,6 @@
 import SwiftUI
 
-class ProductDetailsViewController: UIViewController, StoryboardInstantiable {
+final class ProductDetailsViewController: UIViewController, StoryboardInstantiable {
     private var viewModel: ProductDetailsViewModel!
 
     static func create(with viewModel: ProductDetailsViewModel) -> ProductDetailsViewController {

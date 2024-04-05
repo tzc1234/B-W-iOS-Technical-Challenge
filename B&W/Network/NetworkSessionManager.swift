@@ -13,7 +13,7 @@ public protocol NetworkSessionManager {
     func request(_ request: URLRequest, completion: @escaping CompletionHandler) -> NetworkCancellable
 }
 
-public class DefaultNetworkSessionManager: NetworkSessionManager {
+public final class DefaultNetworkSessionManager: NetworkSessionManager {
     public init() {}
     public func request(_ request: URLRequest,
                         completion: @escaping CompletionHandler) -> NetworkCancellable {

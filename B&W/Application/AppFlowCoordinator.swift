@@ -27,7 +27,7 @@ final class AppDependenciesContainer {
     private let baseURL = URL(string: "https://my-json-server.typicode.com/daliad007/iOS-tech-test/")!
     private lazy var config: RequestConfig = ApiRequestConfig(baseURL: baseURL)
     
-    private let networkService: NetworkService = DefaultNetworkService() // networkService now can be shared.
+    private let networkService: NetworkService = DefaultNetworkService()
     private lazy var apiDataTransferService: DataTransferService = DefaultDataTransferService(with: networkService)
     private lazy var loadImageDataUseCase: LoadImageDataUseCase = DefaultLoadImageDataUseCase(service: networkService)
     

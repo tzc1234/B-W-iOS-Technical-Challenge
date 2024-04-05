@@ -15,7 +15,7 @@ extension DefaultProductsRepository: ProductsRepository {
                                   completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable? {
         let task = RepositoryTask()
 
-        // Why do task.isCancelled guarding here just after task initialisation? It must be false.
+        // Why do task.isCancelled guarding here just after task initialisation? It must be false at this time.
         guard !task.isCancelled else { return nil }
 
         let endpoint = endpoints.getProducts()

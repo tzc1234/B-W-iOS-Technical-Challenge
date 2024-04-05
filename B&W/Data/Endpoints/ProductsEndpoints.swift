@@ -20,6 +20,7 @@ struct ProductsRepositoryEndpoints: ProductsEndpoints {
     }
     
     func getProducts() -> Endpoint<ProductResponseDTO> {
+        // Inject config into Endpoint from here.
         Endpoint(config: config, path: "db", method: .get)
     }
 }

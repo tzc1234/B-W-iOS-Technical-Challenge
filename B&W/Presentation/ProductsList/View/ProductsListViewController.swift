@@ -1,6 +1,6 @@
 import UIKit
 
-class ProductsListViewController: UITableViewController, StoryboardInstantiable {
+final class ProductsListViewController: UITableViewController, StoryboardInstantiable {
 
     var viewModel: ProductsListViewModel!
 

@@ -13,7 +13,7 @@ public protocol ResponseDecoder {
 
 // MARK: - JSONResponseDecoder
 
-public class JSONResponseDecoder: ResponseDecoder {
+public final class JSONResponseDecoder: ResponseDecoder {
     private let jsonDecoder = JSONDecoder()
     
     public init() { }
@@ -25,7 +25,7 @@ public class JSONResponseDecoder: ResponseDecoder {
 
 // MARK: - RawDataResponseDecoder
 
-public class RawDataResponseDecoder: ResponseDecoder {
+public final class RawDataResponseDecoder: ResponseDecoder {
     public init() { }
 
     enum CodingKeys: String, CodingKey {

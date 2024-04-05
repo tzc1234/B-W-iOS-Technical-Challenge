@@ -11,7 +11,7 @@ public protocol DataTransferErrorHandler {
     func handle(error: NetworkError) -> Error
 }
 
-public class DefaultDataTransferErrorHandler: DataTransferErrorHandler {
+public final class DefaultDataTransferErrorHandler: DataTransferErrorHandler {
     public init() { }
     public func handle(error: NetworkError) -> Error {
         return error
