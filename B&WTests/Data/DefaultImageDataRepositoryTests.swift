@@ -39,7 +39,7 @@ final class DefaultImageDataRepository {
         }
     }
     
-    func load(for url: URL, completion: @escaping Completion) -> Cancellable {
+    func fetchImageData(for url: URL, completion: @escaping Completion) -> Cancellable {
         let endPoint = makeRequestable(url)
         let wrapped = Wrapper(completion)
         
@@ -62,18 +62,18 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         XCTAssertEqual(service.requestCallCount, 0)
     }
     
-    func test_load_passesCorrectParamsToService() throws {
+    func test_fetchImageData_passesCorrectParamsToService() throws {
         let (sut, service) = makeSUT()
         let expectedURL = URL(string: "https://image-data.com")!
         
-        _ = sut.load(for: expectedURL) { _ in }
+        _ = sut.fetchImageData(for: expectedURL) { _ in }
         
         let request = try service.endpoints.first?.urlRequest()
         XCTAssertEqual(request?.url, expectedURL)
         XCTAssertEqual(request?.httpMethod, "GET")
     }
     
-    func test_load_deliversErrorOnServiceError() {
+    func test_fetchImageData_deliversErrorOnServiceError() {
         let (sut, service) = makeSUT()
         let anyError = anyNSError()
         
@@ -82,7 +82,7 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         })
     }
     
-    func test_load_deliversDataWhenReceivedData() {
+    func test_fetchImageData_deliversDataWhenReceivedData() {
         let (sut, service) = makeSUT()
         let expectedData = Data("data".utf8)
         
@@ -91,11 +91,11 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         })
     }
     
-    func test_load_cancelsRequestSuccessfully() {
+    func test_fetchImageData_cancelsRequestSuccessfully() {
         let (sut, service) = makeSUT()
         let anyData = Data("data".utf8)
         
-        let task = sut.load(for: anyURL()) { _ in }
+        let task = sut.fetchImageData(for: anyURL()) { _ in }
         
         XCTAssertEqual(service.cancelCallCount, 0)
         
@@ -105,12 +105,12 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         XCTAssertEqual(service.cancelCallCount, 1)
     }
     
-    func test_load_doesNotDeliverResultAfterRequestCancelled() {
+    func test_fetchImageData_doesNotDeliverResultAfterRequestCancelled() {
         let (sut, service) = makeSUT()
         let anyData = Data("data".utf8)
         
         var completionCallCount = 0
-        let task = sut.load(for: anyURL()) { _ in completionCallCount += 1 }
+        let task = sut.fetchImageData(for: anyURL()) { _ in completionCallCount += 1 }
         task.cancel()
         service.complete(with: anyData)
         service.complete(with: nil)
@@ -136,7 +136,7 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
                         file: StaticString = #filePath,
                         line: UInt = #line) {
         let exp = expectation(description: "Wait for completion")
-        _ = sut.load(for: anyURL()) { receivedResult in
+        _ = sut.fetchImageData(for: anyURL()) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedData), .success(expectedData)):
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
