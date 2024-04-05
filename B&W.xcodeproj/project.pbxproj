@@ -175,13 +175,11 @@
 			isa = PBXGroup;
 			children = (
 				BE6B5F992BBEBD0800B608A1 /* Helpers */,
-				2B891259251356A7004BC46D /* ProductsListViewModelTests.swift */,
-				BE04016C2BBF1EC5006BBE71 /* ProductsListItemViewModelTests.swift */,
-				BE0401702BBF29DE006BBE71 /* ProductDetailsViewModelTests.swift */,
-				BE6B5F952BBEA43A00B608A1 /* EndpointTests.swift */,
-				BE6B5F972BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift */,
-				BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */,
-				BE6B5F9E2BBEC8F100B608A1 /* DefaultLoadImageDataUseCaseTests.swift */,
+				BE5536242BBFD634006A416A /* Application */,
+				BE5536232BBFD5FF006A416A /* Data */,
+				BE5536252BBFD650006A416A /* Domain */,
+				BE5536212BBFD572006A416A /* Network */,
+				BE5536222BBFD59B006A416A /* Presentation */,
 				2B89125B251356A7004BC46D /* Info.plist */,
 			);
 			path = "B&WTests";
@@ -392,6 +390,48 @@
 				2B91C78C2514B5B800F0957C /* GetProductsFlowCoordinator.swift */,
 			);
 			path = Flow;
+			sourceTree = "<group>";
+		};
+		BE5536212BBFD572006A416A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BE6B5F952BBEA43A00B608A1 /* EndpointTests.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		BE5536222BBFD59B006A416A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				2B891259251356A7004BC46D /* ProductsListViewModelTests.swift */,
+				BE04016C2BBF1EC5006BBE71 /* ProductsListItemViewModelTests.swift */,
+				BE0401702BBF29DE006BBE71 /* ProductDetailsViewModelTests.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		BE5536232BBFD5FF006A416A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				BE6B5F972BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		BE5536242BBFD634006A416A /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		BE5536252BBFD650006A416A /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				BE6B5F9E2BBEC8F100B608A1 /* DefaultLoadImageDataUseCaseTests.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		BE6B5F922BBE9D4200B608A1 /* Endpoints */ = {

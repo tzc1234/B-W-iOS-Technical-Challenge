@@ -129,7 +129,6 @@ final class ProductsListViewModelTests: XCTestCase {
     }
     
     func test_cancelPendingLoadTask_cancelsGetProductsTaskBeforeAssignNewTask() {
-        let product = makeProduct(imagePath: anyURL())
         let (sut, getProducts, _) = makeSUT()
         
         sut.viewDidLoad()
