@@ -7,20 +7,6 @@
 
 import Foundation
 
-// I only need a tiny little component to fulfil my purpose: convert URL to URLRequest. A simple struct will do.
-// The original Endpoint is a bit too much in this case.
-struct URLEndpoint: Requestable {
-    private let url: URL
-    
-    init(url: URL) {
-        self.url = url
-    }
-    
-    func urlRequest() throws -> URLRequest {
-        URLRequest(url: url)
-    }
-}
-
 protocol LoadImageDataUseCase {
     typealias Result = Swift.Result<Data, Error>
     typealias Completion = (Result) -> Void
