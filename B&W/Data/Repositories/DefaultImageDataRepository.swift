@@ -7,6 +7,10 @@
 
 import Foundation
 
+// The implementation of ImageDataRepository is somewhat a supportive collaborator,
+// meeting the needs of the LoadImageDataUseCase's implementation.
+// It will know the low-level component protocol (NetworkService) or closure (makeRequestable),
+// communicate through the protocol/closure to those low-level concrete components (DefaultNetworkService and URLEndpoint).
 final class DefaultImageDataRepository: ImageDataRepository {
     private let service: NetworkService
     private let makeRequestable: (URL) -> Requestable
