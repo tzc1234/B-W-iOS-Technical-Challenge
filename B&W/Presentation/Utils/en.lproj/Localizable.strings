@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  B&W
+
+  Created by Tsz-Lung on 05/04/2024.
+*/
+
+"INTERNET_CONNECTION_ERROR" = "No internet connection";
+"LOAD_PRODUCTS_ERROR" = "Failed loading products";

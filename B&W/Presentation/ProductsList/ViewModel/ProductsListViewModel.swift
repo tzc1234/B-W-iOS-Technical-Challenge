@@ -63,8 +63,8 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
                     self.items.value = data.products.map(self.makeProductsListItemViewModel)
                 case .failure(let error):
                     self.error.value = error.isInternetConnectionError ?
-                        NSLocalizedString("No internet connection", comment: "") :
-                        NSLocalizedString("Failed loading products", comment: "")
+                        NSLocalizedString("INTERNET_CONNECTION_ERROR", comment: "") :
+                        NSLocalizedString("LOAD_PRODUCTS_ERROR", comment: "")
                 }
         })
     }

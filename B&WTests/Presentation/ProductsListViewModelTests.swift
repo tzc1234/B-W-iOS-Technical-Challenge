@@ -18,7 +18,7 @@ final class ProductsListViewModelTests: XCTestCase {
         sut.viewDidLoad()
         getProducts.complete(with: anyNSError())
         
-        XCTAssertEqual(loggedErrorMessage, ["", "Failed loading products"])
+        XCTAssertEqual(loggedErrorMessage, ["", NSLocalizedString("LOAD_PRODUCTS_ERROR", comment: "")])
     }
     
     func test_viewDidLoad_deliversErrorOnGetProductsConnectionError() {
@@ -30,7 +30,7 @@ final class ProductsListViewModelTests: XCTestCase {
         sut.viewDidLoad()
         getProducts.complete(with: DataTransferError.networkFailure(.notConnected))
         
-        XCTAssertEqual(loggedErrorMessage, ["", "No internet connection"])
+        XCTAssertEqual(loggedErrorMessage, ["", NSLocalizedString("INTERNET_CONNECTION_ERROR", comment: "")])
     }
     
     func test_viewDidLoad_deliversEmptyItemsWhenReceivedNoProducts() {
