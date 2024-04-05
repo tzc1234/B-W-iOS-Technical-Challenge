@@ -55,6 +55,7 @@
 		BE6B5FA12BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */; };
 		BE6B5FA62BBEE5BA00B608A1 /* LoadImageDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA52BBEE5BA00B608A1 /* LoadImageDataUseCase.swift */; };
 		BE6B5FA82BBEFF6E00B608A1 /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */; };
+		BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,7 @@
 		BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		BE6B5FA52BBEE5BA00B608A1 /* LoadImageDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageDataUseCase.swift; sourceTree = "<group>"; };
 		BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
+		BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepositoryTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +419,7 @@
 			isa = PBXGroup;
 			children = (
 				BE6B5F972BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift */,
+				BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -617,6 +620,7 @@
 				BE04016D2BBF1EC5006BBE71 /* ProductsListItemViewModelTests.swift in Sources */,
 				BE0401712BBF29DE006BBE71 /* ProductDetailsViewModelTests.swift in Sources */,
 				BE6B5F9D2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift in Sources */,
+				BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */,
 				BE0401732BBF2A46006BBE71 /* CommonHelpers.swift in Sources */,
 				BE6B5F9B2BBEBD2400B608A1 /* ConfigStub.swift in Sources */,
 			);
