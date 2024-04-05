@@ -82,12 +82,12 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         })
     }
     
-    func test_fetchImageData_deliversDataWhenReceivedData() {
+    func test_fetchImageData_deliversImageDataWhenReceivedImageData() {
         let (sut, service) = makeSUT()
-        let expectedData = Data("data".utf8)
+        let expectedImageData = UIImage.make(withColor: .gray).pngData()!
         
-        expect(sut, completeWith: .success(expectedData), when: {
-            service.complete(with: expectedData)
+        expect(sut, completeWith: .success(expectedImageData), when: {
+            service.complete(with: expectedImageData)
         })
     }
     
