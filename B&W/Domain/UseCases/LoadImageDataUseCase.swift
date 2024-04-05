@@ -8,8 +8,7 @@
 import Foundation
 
 protocol LoadImageDataUseCase {
-    typealias Result = Swift.Result<Data, Error>
-    typealias Completion = (Result) -> Void
+    typealias Completion = (Result<Data, Error>) -> Void
     
     func load(for url: URL, completion: @escaping Completion) -> Cancellable
 }
