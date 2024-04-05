@@ -82,6 +82,15 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         })
     }
     
+    func test_fetchImageData_deliversNilDataWhenReceivedNilData() {
+        let (sut, service) = makeSUT()
+        let nilData: Data? = nil
+        
+        expect(sut, completeWith: .success(nilData), when: {
+            service.complete(with: nilData)
+        })
+    }
+    
     func test_fetchImageData_deliversImageDataWhenReceivedImageData() {
         let (sut, service) = makeSUT()
         let expectedImageData = UIImage.make(withColor: .gray).pngData()!
@@ -131,7 +140,7 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
     }
     
     private func expect(_ sut: DefaultImageDataRepository,
-                        completeWith expectedResult: Result<Data, Error>,
+                        completeWith expectedResult: Result<Data?, Error>,
                         when action: () -> Void,
                         file: StaticString = #filePath,
                         line: UInt = #line) {
