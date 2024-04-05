@@ -57,6 +57,7 @@
 		BE6B5FA82BBEFF6E00B608A1 /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */; };
 		BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */; };
 		BE6E8D7D2BC08D1E003FE826 /* NetworkServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */; };
+		BE6E8D7F2BC08DA2003FE826 /* DefaultImageDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7E2BC08DA2003FE826 /* DefaultImageDataRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
 		BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepositoryTests.swift; sourceTree = "<group>"; };
 		BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceSpy.swift; sourceTree = "<group>"; };
+		BE6E8D7E2BC08DA2003FE826 /* DefaultImageDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +329,7 @@
 			children = (
 				2B91C7702513B38400F0957C /* Utils */,
 				2B91C73D2513A88000F0957C /* DefaultProductsRepository.swift */,
+				BE6E8D7E2BC08DA2003FE826 /* DefaultImageDataRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -582,6 +585,7 @@
 				2B91C7342513A28200F0957C /* ProductResponseDTO.swift in Sources */,
 				2B891247251356A5004BC46D /* ProductDetailsViewController.swift in Sources */,
 				2B91C72525139E0500F0957C /* Endpoint.swift in Sources */,
+				BE6E8D7F2BC08DA2003FE826 /* DefaultImageDataRepository.swift in Sources */,
 				2B91C7872514AF7900F0957C /* StoryboardInstantiable.swift in Sources */,
 				BE6B5FA62BBEE5BA00B608A1 /* LoadImageDataUseCase.swift in Sources */,
 				2B91C7C62514F6DD00F0957C /* NetworkService.swift in Sources */,
