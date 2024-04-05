@@ -51,10 +51,16 @@
 		BE6B5F982BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F972BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift */; };
 		BE6B5F9B2BBEBD2400B608A1 /* ConfigStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F9A2BBEBD2400B608A1 /* ConfigStub.swift */; };
 		BE6B5F9D2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */; };
-		BE6B5F9F2BBEC8F100B608A1 /* DefaultLoadImageDataUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5F9E2BBEC8F100B608A1 /* DefaultLoadImageDataUseCaseTests.swift */; };
 		BE6B5FA12BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */; };
 		BE6B5FA62BBEE5BA00B608A1 /* LoadImageDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA52BBEE5BA00B608A1 /* LoadImageDataUseCase.swift */; };
 		BE6B5FA82BBEFF6E00B608A1 /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */; };
+		BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */; };
+		BE6E8D7D2BC08D1E003FE826 /* NetworkServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */; };
+		BE6E8D7F2BC08DA2003FE826 /* DefaultImageDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7E2BC08DA2003FE826 /* DefaultImageDataRepository.swift */; };
+		BE6E8D812BC09580003FE826 /* URLEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D802BC09580003FE826 /* URLEndpoint.swift */; };
+		BE6E8D832BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D822BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift */; };
+		BE6E8D852BC09B87003FE826 /* ImageDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */; };
+		BE6E8D872BC0A1F8003FE826 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,10 +123,16 @@
 		BE6B5F972BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepositoryEndpointsTests.swift; sourceTree = "<group>"; };
 		BE6B5F9A2BBEBD2400B608A1 /* ConfigStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStub.swift; sourceTree = "<group>"; };
 		BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsDependenciesContainerTests.swift; sourceTree = "<group>"; };
-		BE6B5F9E2BBEC8F100B608A1 /* DefaultLoadImageDataUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoadImageDataUseCaseTests.swift; sourceTree = "<group>"; };
 		BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		BE6B5FA52BBEE5BA00B608A1 /* LoadImageDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageDataUseCase.swift; sourceTree = "<group>"; };
 		BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
+		BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepositoryTests.swift; sourceTree = "<group>"; };
+		BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceSpy.swift; sourceTree = "<group>"; };
+		BE6E8D7E2BC08DA2003FE826 /* DefaultImageDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepository.swift; sourceTree = "<group>"; };
+		BE6E8D802BC09580003FE826 /* URLEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEndpoint.swift; sourceTree = "<group>"; };
+		BE6E8D822BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoadImageDataUseCaseTests.swift; sourceTree = "<group>"; };
+		BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataRepository.swift; sourceTree = "<group>"; };
+		BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				2B91C72425139E0500F0957C /* Endpoint.swift */,
+				BE6E8D802BC09580003FE826 /* URLEndpoint.swift */,
 				BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */,
 				2B91C72925139EFB00F0957C /* RequestConfig.swift */,
 				2B91C7422513AA0E00F0957C /* DataTransferService.swift */,
@@ -323,6 +336,7 @@
 			children = (
 				2B91C7702513B38400F0957C /* Utils */,
 				2B91C73D2513A88000F0957C /* DefaultProductsRepository.swift */,
+				BE6E8D7E2BC08DA2003FE826 /* DefaultImageDataRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -358,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				2B91C7592513ACD000F0957C /* Repository */,
+				BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -366,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				2B91C75A2513ACDF00F0957C /* ProductsRepository.swift */,
+				BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -417,6 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				BE6B5F972BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift */,
+				BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -432,7 +449,7 @@
 		BE5536252BBFD650006A416A /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				BE6B5F9E2BBEC8F100B608A1 /* DefaultLoadImageDataUseCaseTests.swift */,
+				BE6E8D822BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -452,6 +469,7 @@
 				BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */,
 				BE0401722BBF2A46006BBE71 /* CommonHelpers.swift */,
 				BE0401742BBF3C1A006BBE71 /* LoadImageDataUseCaseSpy.swift */,
+				BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -574,8 +592,10 @@
 				2B91C7432513AA0E00F0957C /* DataTransferService.swift in Sources */,
 				BE5536202BBFCFBD006A416A /* DispatchQueue+PerformOnMainQueue.swift in Sources */,
 				2B91C7342513A28200F0957C /* ProductResponseDTO.swift in Sources */,
+				BE6E8D852BC09B87003FE826 /* ImageDataRepository.swift in Sources */,
 				2B891247251356A5004BC46D /* ProductDetailsViewController.swift in Sources */,
 				2B91C72525139E0500F0957C /* Endpoint.swift in Sources */,
+				BE6E8D7F2BC08DA2003FE826 /* DefaultImageDataRepository.swift in Sources */,
 				2B91C7872514AF7900F0957C /* StoryboardInstantiable.swift in Sources */,
 				BE6B5FA62BBEE5BA00B608A1 /* LoadImageDataUseCase.swift in Sources */,
 				2B91C7C62514F6DD00F0957C /* NetworkService.swift in Sources */,
@@ -585,6 +605,7 @@
 				BE6B5F942BBE9D5D00B608A1 /* ProductsEndpoints.swift in Sources */,
 				2B481AC8251686C400E72283 /* ConnectionError.swift in Sources */,
 				BE5857B42BBDD51A006FF630 /* NetworkSessionManager.swift in Sources */,
+				BE6E8D872BC0A1F8003FE826 /* Cancellable.swift in Sources */,
 				2B891243251356A5004BC46D /* AppDelegate.swift in Sources */,
 				2B91C77D2513B5AB00F0957C /* GetProductsUseCase.swift in Sources */,
 				2BFB4A62251655DB00BD4735 /* ProductDetailsViewModel.swift in Sources */,
@@ -598,6 +619,7 @@
 				2B89129225136CC3004BC46D /* ProductsListItemViewModel.swift in Sources */,
 				2B91C7722513B39600F0957C /* RepositoryTask.swift in Sources */,
 				2B91C7822514AC7000F0957C /* ProductsDependenciesContainer.swift in Sources */,
+				BE6E8D812BC09580003FE826 /* URLEndpoint.swift in Sources */,
 				BE5857B22BBDC7EF006FF630 /* ResponseDecoder.swift in Sources */,
 				2B91C75B2513ACDF00F0957C /* ProductsRepository.swift in Sources */,
 				2B89127325135907004BC46D /* ProductsListViewController.swift in Sources */,
@@ -609,14 +631,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE6B5F962BBEA43A00B608A1 /* EndpointTests.swift in Sources */,
+				BE6E8D7D2BC08D1E003FE826 /* NetworkServiceSpy.swift in Sources */,
 				BE6B5F982BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift in Sources */,
 				2B89125A251356A7004BC46D /* ProductsListViewModelTests.swift in Sources */,
 				BE6B5FA12BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+				BE6E8D832BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift in Sources */,
 				BE0401752BBF3C1A006BBE71 /* LoadImageDataUseCaseSpy.swift in Sources */,
-				BE6B5F9F2BBEC8F100B608A1 /* DefaultLoadImageDataUseCaseTests.swift in Sources */,
 				BE04016D2BBF1EC5006BBE71 /* ProductsListItemViewModelTests.swift in Sources */,
 				BE0401712BBF29DE006BBE71 /* ProductDetailsViewModelTests.swift in Sources */,
 				BE6B5F9D2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift in Sources */,
+				BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */,
 				BE0401732BBF2A46006BBE71 /* CommonHelpers.swift in Sources */,
 				BE6B5F9B2BBEBD2400B608A1 /* ConfigStub.swift in Sources */,
 			);

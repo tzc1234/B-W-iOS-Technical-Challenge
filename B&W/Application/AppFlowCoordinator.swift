@@ -25,14 +25,15 @@ final class AppFlowCoordinator {
 
 final class AppDependenciesContainer {
     private let baseURL = URL(string: "https://my-json-server.typicode.com/daliad007/iOS-tech-test/")!
-    private lazy var config: RequestConfig = ApiRequestConfig(baseURL: baseURL)
+    private lazy var config = ApiRequestConfig(baseURL: baseURL)
     
-    private let networkService: NetworkService = DefaultNetworkService()
-    private lazy var apiDataTransferService: DataTransferService = DefaultDataTransferService(with: networkService)
-    private lazy var loadImageDataUseCase: LoadImageDataUseCase = DefaultLoadImageDataUseCase(
-        service: networkService, 
+    private let networkService = DefaultNetworkService()
+    private lazy var apiDataTransferService = DefaultDataTransferService(with: networkService)
+    private lazy var imageDataRepository = DefaultImageDataRepository(
+        service: networkService,
         makeRequestable: URLEndpoint.init
     )
+    private lazy var loadImageDataUseCase = DefaultLoadImageDataUseCase(repository: imageDataRepository)
     
     func makeProductsDependenciesContainer() -> ProductsDependenciesContainer {
         return ProductsDependenciesContainer(
