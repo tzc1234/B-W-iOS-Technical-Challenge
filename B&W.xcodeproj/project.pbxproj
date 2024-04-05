@@ -56,6 +56,7 @@
 		BE6B5FA62BBEE5BA00B608A1 /* LoadImageDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA52BBEE5BA00B608A1 /* LoadImageDataUseCase.swift */; };
 		BE6B5FA82BBEFF6E00B608A1 /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */; };
 		BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */; };
+		BE6E8D7D2BC08D1E003FE826 /* NetworkServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		BE6B5FA52BBEE5BA00B608A1 /* LoadImageDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageDataUseCase.swift; sourceTree = "<group>"; };
 		BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
 		BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepositoryTests.swift; sourceTree = "<group>"; };
+		BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceSpy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,6 +457,7 @@
 				BE6B5FA02BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift */,
 				BE0401722BBF2A46006BBE71 /* CommonHelpers.swift */,
 				BE0401742BBF3C1A006BBE71 /* LoadImageDataUseCaseSpy.swift */,
+				BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -612,6 +615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE6B5F962BBEA43A00B608A1 /* EndpointTests.swift in Sources */,
+				BE6E8D7D2BC08D1E003FE826 /* NetworkServiceSpy.swift in Sources */,
 				BE6B5F982BBEBCA500B608A1 /* ProductsRepositoryEndpointsTests.swift in Sources */,
 				2B89125A251356A7004BC46D /* ProductsListViewModelTests.swift in Sources */,
 				BE6B5FA12BBECB4500B608A1 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
