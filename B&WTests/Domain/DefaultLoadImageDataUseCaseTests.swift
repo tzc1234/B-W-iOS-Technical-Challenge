@@ -84,7 +84,7 @@ final class DefaultLoadImageDataUseCaseTests: XCTestCase {
     private func makeSUT(file: StaticString = #filePath,
                          line: UInt = #line) -> (sut: LoadImageDataUseCase, service: NetworkServiceSpy) {
         let service = NetworkServiceSpy()
-        let sut = DefaultLoadImageDataUseCase(service: service)
+        let sut = DefaultLoadImageDataUseCase(service: service, makeRequestable: URLEndpoint.init)
         trackForMemoryLeaks(service, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, service)

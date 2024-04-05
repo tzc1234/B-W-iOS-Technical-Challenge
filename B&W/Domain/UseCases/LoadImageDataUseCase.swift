@@ -32,9 +32,11 @@ final class DefaultLoadImageDataUseCase: LoadImageDataUseCase {
     // I doubt using DataTransferService if I only need a raw data, don't need an extra conversion/error handling.
     // Using NetworkService is much more straightforward. I would like to listen different opinions of this.:)
     private let service: NetworkService
+    private let makeRequestable: (URL) -> Requestable
     
-    init(service: NetworkService) {
+    init(service: NetworkService, makeRequestable: @escaping (URL) -> Requestable) {
         self.service = service
+        self.makeRequestable = makeRequestable
     }
     
     enum Error: Swift.Error {
@@ -61,7 +63,7 @@ final class DefaultLoadImageDataUseCase: LoadImageDataUseCase {
     }
     
     func load(for url: URL, completion: @escaping Completion) -> Cancellable {
-        let endPoint = URLEndpoint(url: url)
+        let endPoint = makeRequestable(url)
         let wrapped = Wrapper(completion)
         
         wrapped.cancellable = service.request(endpoint: endPoint) { result in

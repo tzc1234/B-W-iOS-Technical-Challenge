@@ -29,7 +29,10 @@ final class AppDependenciesContainer {
     
     private let networkService: NetworkService = DefaultNetworkService()
     private lazy var apiDataTransferService: DataTransferService = DefaultDataTransferService(with: networkService)
-    private lazy var loadImageDataUseCase: LoadImageDataUseCase = DefaultLoadImageDataUseCase(service: networkService)
+    private lazy var loadImageDataUseCase: LoadImageDataUseCase = DefaultLoadImageDataUseCase(
+        service: networkService, 
+        makeRequestable: URLEndpoint.init
+    )
     
     func makeProductsDependenciesContainer() -> ProductsDependenciesContainer {
         return ProductsDependenciesContainer(
