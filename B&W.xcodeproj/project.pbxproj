@@ -60,6 +60,7 @@
 		BE6E8D812BC09580003FE826 /* URLEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D802BC09580003FE826 /* URLEndpoint.swift */; };
 		BE6E8D832BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D822BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift */; };
 		BE6E8D852BC09B87003FE826 /* ImageDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */; };
+		BE6E8D872BC0A1F8003FE826 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		BE6E8D802BC09580003FE826 /* URLEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEndpoint.swift; sourceTree = "<group>"; };
 		BE6E8D822BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoadImageDataUseCaseTests.swift; sourceTree = "<group>"; };
 		BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataRepository.swift; sourceTree = "<group>"; };
+		BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				2B91C7592513ACD000F0957C /* Repository */,
+				BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				BE6B5F942BBE9D5D00B608A1 /* ProductsEndpoints.swift in Sources */,
 				2B481AC8251686C400E72283 /* ConnectionError.swift in Sources */,
 				BE5857B42BBDD51A006FF630 /* NetworkSessionManager.swift in Sources */,
+				BE6E8D872BC0A1F8003FE826 /* Cancellable.swift in Sources */,
 				2B891243251356A5004BC46D /* AppDelegate.swift in Sources */,
 				2B91C77D2513B5AB00F0957C /* GetProductsUseCase.swift in Sources */,
 				2BFB4A62251655DB00BD4735 /* ProductDetailsViewModel.swift in Sources */,

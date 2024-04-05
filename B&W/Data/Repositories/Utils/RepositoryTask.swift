@@ -9,7 +9,3 @@ final class RepositoryTask: Cancellable {
         isCancelled = true
     }
 }
-
-public protocol Cancellable {
-    func cancel()
-}
