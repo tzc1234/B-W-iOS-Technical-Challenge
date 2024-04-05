@@ -30,7 +30,7 @@ protocol LoadImageDataUseCase {
 
 final class DefaultLoadImageDataUseCase: LoadImageDataUseCase {
     // I doubt using DataTransferService if I only need a raw data, don't need an extra conversion/error handling.
-    // Using NetworkService is much more straightforward. I would like to listen a different idea of this.:)
+    // Using NetworkService is much more straightforward. I would like to listen different opinions of this.:)
     private let service: NetworkService
     
     init(service: NetworkService) {

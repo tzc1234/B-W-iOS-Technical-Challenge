@@ -1,34 +1,26 @@
-# iOS Technical Test
-Welcome!
+# Bloom & Wild iOS Technical Challenge
+Thank you for your time to go through my code. If you have any problems encountered during running this app, feel free to contact me.
+***Xcode 15.3 and iPhone 15(17.4) simulator is used for completing this app.***
 
-Thank you for taking the time to complete this technical challenge. The project is written in Swift and follows the Clean Architecture pattern. It retrieves a list of products and displays a detailed product screen.
+## Checklist
 
-Once completed, please share your code either in github repository, or email the zipped folder to aleksandar@bloomandwild.com
+- [x] Fix the crash when tapping on a product cell.
+- [x] Migrate product details page from UIKit to SwiftUI.
+- [x] Improve the image loadings.
+- [x] Write unit tests for my changes.
+- [x] Comments for the reason of making changes.
 
-## Tasks
+## Retrospective
+I would like to write down some of my reflections after this technical test.
 
-- Crash Fix: We've identified a crash that occurs when tapping on a product cell. Your task is to diagnose and fix this issue.
-- SwiftUI Migration: The current product details screen is built using UIKit. We'd like you to migrate it to SwiftUI, maintaining the existing functionality.
-- Image Loading Review: Identify any potential issues with the way the project loads images for products. If you find areas for improvement, refactor the code to optimize image loading while adhering to the project's Clean Architecture structure.
+### About the generic Response type and ResponseDecoder in Endpoint
+I think `Endpoint` should not hold the reference of `ResponseDecoder` and also decide the `Response` generic type. It is because `Endpoint` doesn't need them itself. But if I want to move them away, I can find a good place. Putting them into `DataTransferService` is not quite right... Hoping to have a further discussion on this.
 
-## Bonus Points
+### About image caching
+If the image received from API is static, I would like to do caching for it, for improving the performance. It is rather easy to implement under clean architecture. Utilise the `decorator pattern`, wrapping my `DefaultLoadImageDataUseCase` class, conform to the same protocol. Then, it can intercept the message before and after the network API call. Check any cache before making an API call, and cache after image data response. The cache itself can be an in-memory one, starting from simple.
 
-- Implement unit tests for any code you modify or create.
-- Improve code readability by adding clear and concise comments throughout your changes.
-- Feel free to suggest any other improvements you see within the project's scope.
+### About the ProductsListItemViewModel and ProductListItemCell
+Now the `ProductsListItemViewModel` is created by `DefaultProductsListViewModel`. And because of that, `DefaultProductsListViewModel` has to carry the dependency which `ProductsListItemViewModel` needs only. Ideally, the component should only hold dependencies it needs. The root cause is that `ProductListItemCell` is created by `ProductsListViewController`, leading to their view models also being coupled. I've thought of decoupling them, however, due to the time limit, I've given up.
 
-
-## Benefits
-
-By completing these tasks, you'll showcase your skills in:
-- Swift development
-- Clean Architecture principles
-- UIKit and SwiftUI UI development
-- Code optimization
-- Unit testing
-
-This will help us assess your suitability for the role.
-
-### Additional Notes
-Feel free to ask any clarifying questions you may have during the test.
-If successful you will be invited to walk through your solution with a couple of engineers and explain your architecture style and the decisions you have made. Please make sure you have the solution set up and ready to demo.
+### About unit tests
+If I have time, I would write unit tests for ALL components (except SwiftUI view, no official way to do unit test for SwiftUI). I am very satisfied to see more and more lines of code being covered, as an advocate of automated tests.:)
