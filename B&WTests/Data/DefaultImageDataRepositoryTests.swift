@@ -10,7 +10,7 @@ import XCTest
 @testable import B_W
 
 final class DefaultImageDataRepository {
-    typealias Result = Swift.Result<Data, Error>
+    typealias Result = Swift.Result<Data?, Error>
     typealias Completion = (Result) -> Void
     
     private let service: NetworkService
@@ -19,11 +19,6 @@ final class DefaultImageDataRepository {
     init(service: NetworkService, makeRequestable: @escaping (URL) -> Requestable) {
         self.service = service
         self.makeRequestable = makeRequestable
-    }
-    
-    enum Error: Swift.Error {
-        case failed
-        case noData
     }
     
     private final class Wrapper: Cancellable {
@@ -51,14 +46,9 @@ final class DefaultImageDataRepository {
         wrapped.cancellable = service.request(endpoint: endPoint) { result in
             switch result {
             case let .success(data):
-                guard let data else {
-                    wrapped.complete(with: .failure(Error.noData))
-                    return
-                }
-                
                 wrapped.complete(with: .success(data))
-            case .failure:
-                wrapped.complete(with: .failure(Error.failed))
+            case let .failure(error):
+                wrapped.complete(with: .failure(error))
             }
         }
         return wrapped
@@ -83,19 +73,12 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         XCTAssertEqual(request?.httpMethod, "GET")
     }
     
-    func test_load_deliversFailedErrorOnServiceError() {
+    func test_load_deliversErrorOnServiceError() {
         let (sut, service) = makeSUT()
+        let anyError = anyNSError()
         
-        expect(sut, completeWith: .failure(.failed), when: {
+        expect(sut, completeWith: .failure(anyError), when: {
             service.complete(with: .notConnected)
-        })
-    }
-    
-    func test_load_deliversNoDataErrorWhenReceivedNilData() {
-        let (sut, service) = makeSUT()
-        
-        expect(sut, completeWith: .failure(.noData), when: {
-            service.complete(with: nil)
         })
     }
     
@@ -148,7 +131,7 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
     }
     
     private func expect(_ sut: DefaultImageDataRepository,
-                        completeWith expectedResult: Result<Data, DefaultImageDataRepository.Error>,
+                        completeWith expectedResult: Result<Data, Error>,
                         when action: () -> Void,
                         file: StaticString = #filePath,
                         line: UInt = #line) {
@@ -158,8 +141,8 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
             case let (.success(receivedData), .success(expectedData)):
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
                 
-            case let (.failure(receivedError), .failure(expectedError)):
-                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            case (.failure, .failure):
+                break
                 
             default:
                 XCTFail("Expect a result: \(expectedResult), got \(receivedResult) instead", file: file, line: line)
