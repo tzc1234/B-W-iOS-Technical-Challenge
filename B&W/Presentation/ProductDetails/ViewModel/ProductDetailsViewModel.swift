@@ -27,9 +27,7 @@ final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
 
     init(product: Product, 
          loadImageDataUseCase: LoadImageDataUseCase,
-         performOnMainQueue: @escaping PerformOnMainQueue = { action in
-            DispatchQueue.main.async { action() }
-    }) {
+         performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
         self.name = product.name ?? ""
         self.description = product.description ?? ""
         self.imagePath = product.imagePath

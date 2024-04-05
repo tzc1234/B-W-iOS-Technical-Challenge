@@ -14,9 +14,7 @@ struct ProductsListItemViewModel {
     
     init(product: Product,
          loadImageData: @escaping LoadImageData,
-         performOnMainQueue: @escaping PerformOnMainQueue = { action in
-            DispatchQueue.main.async { action() }
-    }) {
+         performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
         self.name = product.name ?? ""
         self.price = product.price ?? ""
         self.description = product.description ?? ""

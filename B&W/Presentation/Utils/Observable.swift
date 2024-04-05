@@ -1,7 +1,5 @@
 import Foundation
 
-public typealias PerformOnMainQueue = (@escaping () -> Void) -> Void
-
 public final class Observable<Value> {
 
     struct Observer<V> {
@@ -20,9 +18,7 @@ public final class Observable<Value> {
     public init(_ value: Value,
                 // Add default param for performOnMainQueue, enable testability.
                 // Code inside DispatchQueue.main.async is hard to test.
-                performOnMainQueue: @escaping PerformOnMainQueue = { action in
-                    DispatchQueue.main.async { action() }
-                }) {
+                performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
         self.value = value
         self.performOnMainQueue = performOnMainQueue
     }

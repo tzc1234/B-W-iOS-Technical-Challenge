@@ -40,9 +40,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     init(useCase: GetProductsUseCase,
          actions: ProductsListViewModelActions,
          loadImageDataUseCase: LoadImageDataUseCase,
-         performOnMainQueue: @escaping PerformOnMainQueue = { action in
-            DispatchQueue.main.async { action() }
-    }) {
+         performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
         self.useCase = useCase
         self.actions = actions
         self.loadImageDataUseCase = loadImageDataUseCase
