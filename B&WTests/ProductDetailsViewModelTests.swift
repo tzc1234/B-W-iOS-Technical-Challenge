@@ -34,17 +34,8 @@ final class ProductDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.price, product.price)
     }
     
-    func test_updateImage_ignoresWhenInvalidImagePath() {
-        let product = makeProduct(imagePath: " : ")
-        let (sut, loadImage) = makeSUT(product: product)
-        
-        sut.updateImage()
-        
-        XCTAssertEqual(loadImage.loadCallCount, 0)
-    }
-    
-    func test_updateImage_ignoresWhenEmptyImagePath() {
-        let product = makeProduct(imagePath: "")
+    func test_updateImage_ignoresWhenNilImagePath() {
+        let product = makeProduct(imagePath: nil)
         let (sut, loadImage) = makeSUT(product: product)
         
         sut.updateImage()
@@ -54,7 +45,7 @@ final class ProductDetailsViewModelTests: XCTestCase {
     
     func test_updateImage_doesNotDeliverDataOnLoadImageDataError() {
         let url = anyURL()
-        let product = makeProduct(imagePath: url.absoluteString)
+        let product = makeProduct(imagePath: url)
         let (sut, loadImage) = makeSUT(product: product)
         
         var loggedData = [Data?]()
@@ -71,7 +62,7 @@ final class ProductDetailsViewModelTests: XCTestCase {
     
     func test_updateImage_deliversDataWhenReceivedDataFromLoadImageDataUseCase() {
         let url = anyURL()
-        let product = makeProduct(imagePath: url.absoluteString)
+        let product = makeProduct(imagePath: url)
         let (sut, loadImage) = makeSUT(product: product)
         let expectedData = UIImage.make(withColor: .gray).pngData()!
         
@@ -88,7 +79,7 @@ final class ProductDetailsViewModelTests: XCTestCase {
     }
     
     func test_cancelImageLoading_cancelsLoadImageDataProperly() {
-        let product = makeProduct(imagePath: anyURL().absoluteString)
+        let product = makeProduct(imagePath: anyURL())
         let (sut, loadImage) = makeSUT(product: product)
         
         sut.updateImage()

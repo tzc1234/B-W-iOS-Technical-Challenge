@@ -73,10 +73,10 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
         ProductsListItemViewModel(
             product: product,
             loadImageData: { [weak self] loadImageData in
-                guard let imagePath = product.imagePath, let url = URL(string: imagePath) else { return }
+                guard let imagePath = product.imagePath else { return }
                 
                 // The actual image data loading logic for ProductsListItemViewModel.
-                _ = self?.loadImageDataUseCase.load(for: url) { result in
+                _ = self?.loadImageDataUseCase.load(for: imagePath) { result in
                     switch result {
                     case let .success(data):
                         loadImageData(data)

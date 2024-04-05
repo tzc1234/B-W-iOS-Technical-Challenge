@@ -21,7 +21,7 @@ final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
     
     let name: String
     let description: String
-    private let imagePath: String?
+    private let imagePath: URL?
     let price: String
     private let loadImageDataUseCase: LoadImageDataUseCase
 
@@ -39,11 +39,11 @@ final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
 
 extension DefaultProductDetailsViewModel {
     func updateImage() {
-        guard let imagePath, !imagePath.isEmpty, let url = URL(string: imagePath) else { return }
+        guard let imagePath else { return }
         
         // Use LoadImageDataUseCase for image loading on background queue,
         // instead of directly using Data(contentsOf:)
-        imageDataLoading = loadImageDataUseCase.load(for: url) { [weak self] result in
+        imageDataLoading = loadImageDataUseCase.load(for: imagePath) { [weak self] result in
             switch result {
             case let .success(data):
                 self?.image.value = data

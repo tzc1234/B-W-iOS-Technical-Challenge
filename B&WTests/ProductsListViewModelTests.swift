@@ -65,18 +65,8 @@ final class ProductsListViewModelTests: XCTestCase {
         assert(items: loggedItems[1], asExpectedProducts: products)
     }
     
-    func test_itemLoadImage_ignoresWhenInvalidImagePath() {
-        let product = makeProduct(imagePath: " : ")
-        let (sut, getProducts, loadImage) = makeSUT()
-        
-        let item = extractItem(from: sut, with: getProducts, and: product)
-        item.loadImage()
-        
-        XCTAssertEqual(loadImage.loadCallCount, 0)
-    }
-    
-    func test_itemLoadImage_ignoresWhenEmptyImagePath() {
-        let product = makeProduct(imagePath: "")
+    func test_itemLoadImage_ignoresWhenNilImagePath() {
+        let product = makeProduct(imagePath: nil)
         let (sut, getProducts, loadImage) = makeSUT()
         
         let item = extractItem(from: sut, with: getProducts, and: product)
@@ -87,7 +77,7 @@ final class ProductsListViewModelTests: XCTestCase {
     
     func test_itemLoadImage_doesNotDeliverDataOnLoadImageDataError() {
         let url = anyURL()
-        let product = makeProduct(imagePath: url.absoluteString)
+        let product = makeProduct(imagePath: url)
         let (sut, getProducts, loadImage) = makeSUT()
         
         let item = extractItem(from: sut, with: getProducts, and: product)
@@ -104,7 +94,7 @@ final class ProductsListViewModelTests: XCTestCase {
     
     func test_itemLoadImage_deliversDataWhenReceivedDataFromLoadImageDataUseCase() {
         let url = anyURL()
-        let product = makeProduct(imagePath: url.absoluteString)
+        let product = makeProduct(imagePath: url)
         let expectedData = UIImage.make(withColor: .gray).pngData()!
         let (sut, getProducts, loadImage) = makeSUT()
         
@@ -139,7 +129,7 @@ final class ProductsListViewModelTests: XCTestCase {
     }
     
     func test_cancelPendingLoadTask_cancelsGetProductsTaskBeforeAssignNewTask() {
-        let product = makeProduct(imagePath: anyURL().absoluteString)
+        let product = makeProduct(imagePath: anyURL())
         let (sut, getProducts, _) = makeSUT()
         
         sut.viewDidLoad()

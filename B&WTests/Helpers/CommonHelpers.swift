@@ -12,7 +12,7 @@ func makeProduct(id: String = "id",
                  description: String? = nil,
                  name: String? = nil,
                  price: String? = nil,
-                 imagePath: String? = nil) -> Product {
+                 imagePath: URL? = nil) -> Product {
     Product(id: id, name: name, description: description, price: price, imagePath: imagePath)
 }
 

@@ -46,7 +46,7 @@ extension ProductResponseDTO {
             case url
         }
 
-        let url: String?
+        let url: URL?
     }
 }
 
