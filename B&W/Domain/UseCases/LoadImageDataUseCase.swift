@@ -7,6 +7,8 @@
 
 import Foundation
 
+// I only need a tiny little component to fulfil my purpose: convert URL to URLRequest. A simple struct will do.
+// The original Endpoint is a bit too much in this case.
 struct URLEndpoint: Requestable {
     private let url: URL
     
@@ -27,6 +29,8 @@ protocol LoadImageDataUseCase {
 }
 
 final class DefaultLoadImageDataUseCase: LoadImageDataUseCase {
+    // I doubt using DataTransferService if I only need a raw data, don't need an extra conversion/error handling.
+    // Using NetworkService is much more straightforward. I would like to listen a different idea of this.:)
     private let service: NetworkService
     
     init(service: NetworkService) {

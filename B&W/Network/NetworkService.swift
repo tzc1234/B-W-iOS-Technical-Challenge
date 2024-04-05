@@ -18,7 +18,7 @@ public protocol NetworkService {
     func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable?
 }
 
-// No need to carry a RequestConfig for Endpoint now.
+// No need to carry a RequestConfig for Endpoint.
 public final class DefaultNetworkService {
     private let sessionManager: NetworkSessionManager
 
