@@ -7,10 +7,14 @@
 
 import Foundation
 
-final class DefaultImageDataRepository {
+protocol ImageDataRepository {
     typealias Result = Swift.Result<Data?, Error>
     typealias Completion = (Result) -> Void
     
+    func fetchImageData(for url: URL, completion: @escaping Completion) -> Cancellable
+}
+
+final class DefaultImageDataRepository: ImageDataRepository {
     private let service: NetworkService
     private let makeRequestable: (URL) -> Requestable
     
@@ -32,7 +36,7 @@ final class DefaultImageDataRepository {
             completion = nil
         }
         
-        func complete(with result: Result) {
+        func complete(with result: ImageDataRepository.Result) {
             completion?(result)
         }
     }

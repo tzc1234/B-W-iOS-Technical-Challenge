@@ -85,7 +85,7 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
-                         line: UInt = #line) -> (sut: DefaultImageDataRepository, service: NetworkServiceSpy) {
+                         line: UInt = #line) -> (sut: ImageDataRepository, service: NetworkServiceSpy) {
         let service = NetworkServiceSpy()
         let sut = DefaultImageDataRepository(service: service, makeRequestable: URLEndpoint.init)
         trackForMemoryLeaks(service, file: file, line: line)
@@ -93,7 +93,7 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         return (sut, service)
     }
     
-    private func expect(_ sut: DefaultImageDataRepository,
+    private func expect(_ sut: ImageDataRepository,
                         completeWith expectedResult: Result<Data?, Error>,
                         when action: () -> Void,
                         file: StaticString = #filePath,
