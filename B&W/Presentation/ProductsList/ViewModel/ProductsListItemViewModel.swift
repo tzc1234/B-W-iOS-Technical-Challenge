@@ -25,7 +25,6 @@ extension ProductsListItemViewModel {
     func loadImage() {
         guard let imagePath else { return }
         
-        // The actual image data loading logic encapsulated in ProductsListItemViewModel.loadImageData.
         _ = loadImageDataUseCase.load(for: imagePath) { [weak self] result in
             switch result {
             case let .success(data):
