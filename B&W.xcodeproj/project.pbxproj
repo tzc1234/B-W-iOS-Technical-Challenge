@@ -62,6 +62,7 @@
 		BE6E8D852BC09B87003FE826 /* ImageDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */; };
 		BE6E8D872BC0A1F8003FE826 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */; };
 		BE82DB612BC12DFE006EF9C6 /* FullPathEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */; };
+		BE82DB632BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82DB622BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 		BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataRepository.swift; sourceTree = "<group>"; };
 		BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 		BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPathEndpointTests.swift; sourceTree = "<group>"; };
+		BE82DB622BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDataTransferServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -418,6 +420,7 @@
 			children = (
 				BE6B5F952BBEA43A00B608A1 /* EndpointTests.swift */,
 				BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */,
+				BE82DB622BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				BE0401712BBF29DE006BBE71 /* ProductDetailsViewModelTests.swift in Sources */,
 				BE6B5F9D2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift in Sources */,
 				BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */,
+				BE82DB632BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift in Sources */,
 				BE0401732BBF2A46006BBE71 /* CommonHelpers.swift in Sources */,
 				BE6B5F9B2BBEBD2400B608A1 /* ConfigStub.swift in Sources */,
 			);
