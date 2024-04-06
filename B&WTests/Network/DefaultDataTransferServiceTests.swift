@@ -87,6 +87,19 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         XCTAssertEqual(decodedValue, expectedValue)
     }
     
+    func test_cancelTask_cancelsANetworkTaskProperly() {
+        let (sut, service) = makeSUT()
+        let endpoint = makeEndpoint()
+        
+        let task = sut.request(with: endpoint) { _ in }
+        
+        XCTAssertEqual(service.cancelCallCount, 0)
+        
+        task?.cancel()
+        
+        XCTAssertEqual(service.cancelCallCount, 1)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(errorHandler: DataTransferErrorHandler = DefaultDataTransferErrorHandler(),
@@ -107,7 +120,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         switch result(on: sut, with: endpoint, when: action, file: file, line: line) {
         case let .success(value):
             return value
-        case let .failure(error):
+        case .failure:
             XCTFail("Should not fail", file: file, line: line)
             return nil
         }
