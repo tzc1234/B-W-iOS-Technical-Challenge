@@ -10,12 +10,6 @@ public protocol Requestable {
     func urlRequest() throws -> URLRequest
 }
 
-public protocol ResponseRequestable: Requestable {
-    associatedtype Response
-
-    var responseDecoder: ResponseDecoder { get }
-}
-
 public enum RequestError: Error {
     case componentsError
 }
