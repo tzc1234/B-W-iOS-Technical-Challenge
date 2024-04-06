@@ -59,6 +59,18 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         XCTFail("Should be a noResponse error")
     }
     
+    func test_request_deliversDecodedValueProperly() {
+        let (sut, service) = makeSUT()
+        let endpoint = makeEndpoint()
+        let expectedValue = 123
+        
+        let decodedValue = decodedValue(on: sut, with: endpoint, when: {
+            service.complete(with: Data("\(expectedValue)".utf8))
+        })
+        
+        XCTAssertEqual(decodedValue, expectedValue)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
@@ -70,26 +82,49 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         return (sut, service)
     }
     
+    private func decodedValue(on sut: DefaultDataTransferService,
+                              with endpoint: Endpoint<Int>,
+                              when action: () -> Void,
+                              file: StaticString = #filePath,
+                              line: UInt = #line) -> Int? {
+        switch result(on: sut, with: endpoint, when: action, file: file, line: line) {
+        case let .success(value):
+            return value
+        case let .failure(error):
+            XCTFail("Should not fail", file: file, line: line)
+            return nil
+        }
+    }
+    
     private func dataTransferError(on sut: DefaultDataTransferService,
                                    with endpoint: Endpoint<Int>,
                                    when action: () -> Void,
                                    file: StaticString = #filePath,
                                    line: UInt = #line) -> DataTransferError? {
+        switch result(on: sut, with: endpoint, when: action, file: file, line: line) {
+        case .success:
+            XCTFail("Should not be success", file: file, line: line)
+            return nil
+        case let .failure(error):
+            return error
+        }
+    }
+    
+    private func result(on sut: DefaultDataTransferService,
+                        with endpoint: Endpoint<Int>,
+                        when action: () -> Void,
+                        file: StaticString = #filePath,
+                        line: UInt = #line) -> Result<Int, DataTransferError> {
         let exp = expectation(description: "Wait for completion")
-        var receivedError: DataTransferError?
+        var receivedResult: Result<Int, DataTransferError>!
         _ = sut.request(with: endpoint) { result in
-            switch result {
-            case .success:
-                XCTFail("Should not be success", file: file, line: line)
-            case let .failure(error):
-                receivedError = error
-            }
+            receivedResult = result
             exp.fulfill()
         }
         action()
         wait(for: [exp], timeout: 1)
         
-        return receivedError
+        return receivedResult
     }
     
     private func makeEndpoint(baseURL: URL = anyURL()) -> Endpoint<Int> {
