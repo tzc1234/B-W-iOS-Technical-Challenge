@@ -25,18 +25,15 @@ public final class Endpoint<R>: ResponseRequestable {
 
     private let config: RequestConfig
     private let path: String
-    private let isFullPath: Bool
     private let method: HTTPMethodType
     public let responseDecoder: ResponseDecoder
 
     public init(config: RequestConfig,
                 path: String,
-                isFullPath: Bool = false,
                 method: HTTPMethodType,
                 responseDecoder: ResponseDecoder = JSONResponseDecoder()) {
         self.config = config
         self.path = path
-        self.isFullPath = isFullPath
         self.method = method
         self.responseDecoder = responseDecoder
     }
@@ -52,10 +49,8 @@ extension Endpoint {
     }
     
     private func url() throws -> URL {
-        let baseURL = config.baseURL.absoluteString.last != "/" ? config.baseURL.absoluteString + "/" : config.baseURL.absoluteString
-        let endpoint = isFullPath ? path : baseURL.appending(path)
-
-        guard let url = URLComponents(string: endpoint)?.url, !url.absoluteString.isEmpty else {
+        let endpoint = config.baseURL.appendingPathComponent(path)
+        guard let url = URLComponents(url: endpoint, resolvingAgainstBaseURL: true)?.url else {
             throw RequestError.componentsError
         }
 

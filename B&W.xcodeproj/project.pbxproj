@@ -57,10 +57,11 @@
 		BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */; };
 		BE6E8D7D2BC08D1E003FE826 /* NetworkServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */; };
 		BE6E8D7F2BC08DA2003FE826 /* DefaultImageDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D7E2BC08DA2003FE826 /* DefaultImageDataRepository.swift */; };
-		BE6E8D812BC09580003FE826 /* URLEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D802BC09580003FE826 /* URLEndpoint.swift */; };
+		BE6E8D812BC09580003FE826 /* FullPathEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D802BC09580003FE826 /* FullPathEndpoint.swift */; };
 		BE6E8D832BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D822BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift */; };
 		BE6E8D852BC09B87003FE826 /* ImageDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */; };
 		BE6E8D872BC0A1F8003FE826 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */; };
+		BE82DB612BC12DFE006EF9C6 /* FullPathEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,10 +130,11 @@
 		BE6E8D7A2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepositoryTests.swift; sourceTree = "<group>"; };
 		BE6E8D7C2BC08D1E003FE826 /* NetworkServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceSpy.swift; sourceTree = "<group>"; };
 		BE6E8D7E2BC08DA2003FE826 /* DefaultImageDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageDataRepository.swift; sourceTree = "<group>"; };
-		BE6E8D802BC09580003FE826 /* URLEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEndpoint.swift; sourceTree = "<group>"; };
+		BE6E8D802BC09580003FE826 /* FullPathEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPathEndpoint.swift; sourceTree = "<group>"; };
 		BE6E8D822BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoadImageDataUseCaseTests.swift; sourceTree = "<group>"; };
 		BE6E8D842BC09B87003FE826 /* ImageDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataRepository.swift; sourceTree = "<group>"; };
 		BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
+		BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPathEndpointTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,7 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				2B91C72425139E0500F0957C /* Endpoint.swift */,
-				BE6E8D802BC09580003FE826 /* URLEndpoint.swift */,
+				BE6E8D802BC09580003FE826 /* FullPathEndpoint.swift */,
 				BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */,
 				2B91C72925139EFB00F0957C /* RequestConfig.swift */,
 				2B91C7422513AA0E00F0957C /* DataTransferService.swift */,
@@ -415,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				BE6B5F952BBEA43A00B608A1 /* EndpointTests.swift */,
+				BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -619,7 +622,7 @@
 				2B89129225136CC3004BC46D /* ProductsListItemViewModel.swift in Sources */,
 				2B91C7722513B39600F0957C /* RepositoryTask.swift in Sources */,
 				2B91C7822514AC7000F0957C /* ProductsDependenciesContainer.swift in Sources */,
-				BE6E8D812BC09580003FE826 /* URLEndpoint.swift in Sources */,
+				BE6E8D812BC09580003FE826 /* FullPathEndpoint.swift in Sources */,
 				BE5857B22BBDC7EF006FF630 /* ResponseDecoder.swift in Sources */,
 				2B91C75B2513ACDF00F0957C /* ProductsRepository.swift in Sources */,
 				2B89127325135907004BC46D /* ProductsListViewController.swift in Sources */,
@@ -638,6 +641,7 @@
 				BE6E8D832BC095F8003FE826 /* DefaultLoadImageDataUseCaseTests.swift in Sources */,
 				BE0401752BBF3C1A006BBE71 /* LoadImageDataUseCaseSpy.swift in Sources */,
 				BE04016D2BBF1EC5006BBE71 /* ProductsListItemViewModelTests.swift in Sources */,
+				BE82DB612BC12DFE006EF9C6 /* FullPathEndpointTests.swift in Sources */,
 				BE0401712BBF29DE006BBE71 /* ProductDetailsViewModelTests.swift in Sources */,
 				BE6B5F9D2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift in Sources */,
 				BE6E8D7B2BC087B0003FE826 /* DefaultImageDataRepositoryTests.swift in Sources */,
