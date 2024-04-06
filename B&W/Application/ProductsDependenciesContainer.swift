@@ -29,11 +29,11 @@ final class ProductsDependenciesContainer {
     // MARK: - View Models
 
     private func makeProductsListViewModel(actions: ProductsListViewModelActions) -> ProductsListViewModel {
-        return DefaultProductsListViewModel(
-            useCase: makeGetProductsUseCase(),
-            actions: actions,
-            loadImageDataUseCase: loadImageDataUseCase
-        )
+        return DefaultProductsListViewModel(useCase: makeGetProductsUseCase(), actions: actions)
+    }
+    
+    private func makeProductsListItemViewModel(product: Product) -> ProductsListItemViewModel {
+        return ProductsListItemViewModel(product: product, loadImageDataUseCase: loadImageDataUseCase)
     }
 
     private func makeProductDetailsViewModel(product: Product) -> ProductDetailsViewModel {
@@ -63,7 +63,17 @@ extension ProductsDependenciesContainer: GetProductsFlowCoordinatorDependencies 
     // MARK: - Controllers
     
     func makeProductsListViewController(actions: ProductsListViewModelActions) -> ProductsListViewController {
-        return ProductsListViewController.create(with: makeProductsListViewModel(actions: actions))
+        let viewModel = makeProductsListViewModel(actions: actions)
+        let listVC = ProductsListViewController.create(with: viewModel)
+        listVC.didCellForRow = { [weak self] tableView, product in
+            guard let self else { return nil }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductListItemCell.reuseIdentifier) as? ProductListItemCell
+            cell?.fill(with: makeProductsListItemViewModel(product: product))
+            return cell
+        }
+        
+        return listVC
     }
 
     func makeProductDetailsViewController(product: Product) -> ProductDetailsViewController {

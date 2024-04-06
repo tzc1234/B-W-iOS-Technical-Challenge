@@ -11,7 +11,7 @@ import XCTest
 final class ProductsListItemViewModelTests: XCTestCase {
     func test_init_setsAllPropertiesToEmptyWhenAllNil() {
         let product = makeProduct(description: nil, name: nil, price: nil)
-        let sut = makeSUT(product: product)
+        let (sut, _) = makeSUT(product: product)
         
         XCTAssertEqual(sut.description, "")
         XCTAssertEqual(sut.name, "")
@@ -20,25 +20,45 @@ final class ProductsListItemViewModelTests: XCTestCase {
     
     func test_init_setsAllPropertiesCorrectly() {
         let product = makeProduct(description: "Some Description", name: "a name", price: "£111")
-        let sut = makeSUT(product: product)
+        let (sut, _) = makeSUT(product: product)
         
         XCTAssertEqual(sut.description, product.description)
         XCTAssertEqual(sut.name, product.name)
         XCTAssertEqual(sut.price, product.price)
     }
     
-    func test_image_deliversImageDataAfterLoadImage() {
-        let anyProduct = makeProduct(description: "Some Description", name: "a name", price: "£111")
-        let expectedData = UIImage.make(withColor: .red).pngData()!
-        let sut = makeSUT(product: anyProduct, loadImageData: { loadImage in
-            loadImage(expectedData)
-        })
+    func test_image_ignoresWhenNilImagePath() {
+        let nilImagePathProduct = makeProduct(imagePath: nil)
+        let (sut, loadImage) = makeSUT(product: nilImagePathProduct)
         
         var loggedData = [Data?]()
-        sut.image.observe(on: self) { data in
-            loggedData.append(data)
-        }
+        sut.image.observe(on: self) { loggedData.append($0) }
         sut.loadImage()
+        
+        XCTAssertEqual(loadImage.loadCallCount, 0)
+    }
+    
+    func test_image_ignoresOnLoadImageError() {
+        let withImagePathProduct = makeProduct(imagePath: anyURL())
+        let (sut, loadImage) = makeSUT(product: withImagePathProduct)
+        
+        var loggedData = [Data?]()
+        sut.image.observe(on: self) { loggedData.append($0) }
+        sut.loadImage()
+        loadImage.complete(with: anyNSError())
+        
+        XCTAssertEqual(loggedData, [nil])
+    }
+    
+    func test_image_deliversImageDataAfterLoadImage() {
+        let withImagePathProduct = makeProduct(imagePath: anyURL())
+        let expectedData = UIImage.make(withColor: .red).pngData()!
+        let (sut, loadImage) = makeSUT(product: withImagePathProduct)
+        
+        var loggedData = [Data?]()
+        sut.image.observe(on: self) { loggedData.append($0) }
+        sut.loadImage()
+        loadImage.complete(with: expectedData)
         
         XCTAssertEqual(loggedData, [nil, expectedData])
     }
@@ -46,8 +66,17 @@ final class ProductsListItemViewModelTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(product: Product,
-                         loadImageData: @escaping ProductsListItemViewModel.LoadImageData = { _ in },
-                         performOnMainQueue: @escaping PerformOnMainQueue = { $0() }) -> ProductsListItemViewModel {
-        ProductsListItemViewModel(product: product, loadImageData: loadImageData, performOnMainQueue: performOnMainQueue)
+                         performOnMainQueue: @escaping PerformOnMainQueue = { $0() },
+                         file: StaticString = #filePath,
+                         line: UInt = #line) -> (sut: ProductsListItemViewModel, loadImage: LoadImageDataUseCaseSpy) {
+        let loadImage = LoadImageDataUseCaseSpy()
+        let sut = ProductsListItemViewModel(
+            product: product,
+            loadImageDataUseCase: loadImage,
+            performOnMainQueue: performOnMainQueue
+        )
+        trackForMemoryLeaks(loadImage, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return (sut, loadImage)
     }
 }

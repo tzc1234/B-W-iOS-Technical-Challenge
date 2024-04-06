@@ -1,38 +1,38 @@
 import Foundation
 
-struct ProductsListItemViewModel {
-    typealias LoadImageData = (@escaping (Data) -> Void) -> Void
-    
+final class ProductsListItemViewModel {
     let image: Observable<Data?>
     
     let name: String
     let price: String
     let description: String
-    
-    // Holding a image Data callback closure injected from DefaultProductsListViewModel.
-    private let loadImageData: LoadImageData
+    private let imagePath: URL?
+    private let loadImageDataUseCase: LoadImageDataUseCase
     
     init(product: Product,
-         loadImageData: @escaping LoadImageData,
+         loadImageDataUseCase: LoadImageDataUseCase,
          performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
         self.name = product.name ?? ""
         self.price = product.price ?? ""
         self.description = product.description ?? ""
-        self.loadImageData = loadImageData
+        self.imagePath = product.imagePath
+        self.loadImageDataUseCase = loadImageDataUseCase
         self.image = Observable(nil, performOnMainQueue: performOnMainQueue)
-    }
-}
-
-extension ProductsListItemViewModel: Equatable {
-    static func == (lhs: ProductsListItemViewModel, rhs: ProductsListItemViewModel) -> Bool {
-        lhs.name == rhs.name && lhs.description == rhs.description && lhs.price == rhs.price && lhs.image === rhs.image
     }
 }
 
 extension ProductsListItemViewModel {
     func loadImage() {
-        loadImageData { data in
-            image.value = data
+        guard let imagePath else { return }
+        
+        // The actual image data loading logic encapsulated in ProductsListItemViewModel.loadImageData.
+        _ = loadImageDataUseCase.load(for: imagePath) { [weak self] result in
+            switch result {
+            case let .success(data):
+                self?.image.value = data
+            case .failure:
+                break
+            }
         }
     }
 }

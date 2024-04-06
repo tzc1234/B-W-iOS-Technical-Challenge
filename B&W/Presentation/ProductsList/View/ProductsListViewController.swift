@@ -1,8 +1,8 @@
 import UIKit
 
 final class ProductsListViewController: UITableViewController, StoryboardInstantiable {
-
     var viewModel: ProductsListViewModel!
+    var didCellForRow: ((UITableView, Product) -> UITableViewCell?)?
 
     // MARK: - Lifecycle
 
@@ -13,7 +13,7 @@ final class ProductsListViewController: UITableViewController, StoryboardInstant
     }
 
     private func bind(to viewModel: ProductsListViewModel) {
-        viewModel.items.observe(on: self) { [weak self] _ in self?.tableView.reloadData() }
+        viewModel.products.observe(on: self) { [weak self] _ in self?.tableView.reloadData() }
         viewModel.error.observe(on: self) { [weak self] in self?.showError($0) }
     }
 
@@ -30,25 +30,21 @@ final class ProductsListViewController: UITableViewController, StoryboardInstant
         view.viewModel = viewModel
         return view
     }
-
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension ProductsListViewController {
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.items.value.count
+        return viewModel.products.value.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductListItemCell.reuseIdentifier,
-                                                       for: indexPath) as? ProductListItemCell else {
+        let product = viewModel.products.value[indexPath.row]
+        guard let cell = didCellForRow?(tableView, product) else {
             assertionFailure("Cannot dequeue reusable cell \(ProductListItemCell.self) with reuseIdentifier: \(ProductListItemCell.reuseIdentifier)")
             return UITableViewCell()
         }
-
-        cell.fill(with: viewModel.items.value[indexPath.row])
 
         return cell
     }
