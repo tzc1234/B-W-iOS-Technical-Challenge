@@ -30,6 +30,22 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         XCTFail("Should be a network error")
     }
     
+    func test_request_deliversResolvedNetworkFailureErrorWhenErrorHandlerUnresolvedAnError() {
+        let alwaysReturnNSErrorHandler = AlwaysReturnNSErrorHandler()
+        let (sut, service) = makeSUT(errorHandler: alwaysReturnNSErrorHandler)
+        let endpoint = makeEndpoint()
+        
+        let receivedError = dataTransferError(on: sut, with: endpoint, when: {
+            let anyNetworkError = NetworkError.urlGeneration
+            service.complete(with: anyNetworkError)
+        })
+        
+        if case .resolvedNetworkFailure = receivedError {
+            return
+        }
+        XCTFail("Should be a resolvedNetworkFailure error")
+    }
+    
     func test_request_deliversParsingErrorOnDecodeError() {
         let (sut, service) = makeSUT()
         let endpoint = makeEndpoint()
@@ -73,10 +89,11 @@ final class DefaultDataTransferServiceTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #filePath,
+    private func makeSUT(errorHandler: DataTransferErrorHandler = DefaultDataTransferErrorHandler(),
+                         file: StaticString = #filePath,
                          line: UInt = #line) -> (sut: DefaultDataTransferService, service: NetworkServiceSpy) {
         let service = NetworkServiceSpy()
-        let sut = DefaultDataTransferService(with: service)
+        let sut = DefaultDataTransferService(with: service, errorHandler: errorHandler)
         trackForMemoryLeaks(service, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, service)
@@ -130,5 +147,11 @@ final class DefaultDataTransferServiceTests: XCTestCase {
     private func makeEndpoint(baseURL: URL = anyURL()) -> Endpoint<Int> {
         let config = ApiRequestConfig(baseURL: anyURL())
         return Endpoint<Int>(config: config, path: "", method: .get)
+    }
+    
+    private final class AlwaysReturnNSErrorHandler: DataTransferErrorHandler {
+        func handle(error: NetworkError) -> Error {
+            anyNSError()
+        }
     }
 }
