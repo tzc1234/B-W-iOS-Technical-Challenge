@@ -17,8 +17,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
     
     func test_request_deliversNetworkErrorOnServiceError() {
         let (sut, service) = makeSUT()
-        let config = ApiRequestConfig(baseURL: anyURL())
-        let endpoint = Endpoint<String>(config: config, path: "", method: .get)
+        let endpoint = makeEndpoint()
         let anyNetworkError = NetworkError.urlGeneration
         
         let exp = expectation(description: "Wait for completion")
@@ -48,5 +47,10 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         trackForMemoryLeaks(service, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, service)
+    }
+    
+    private func makeEndpoint(baseURL: URL = anyURL()) -> Endpoint<String> {
+        let config = ApiRequestConfig(baseURL: anyURL())
+        return Endpoint<String>(config: config, path: "", method: .get)
     }
 }
