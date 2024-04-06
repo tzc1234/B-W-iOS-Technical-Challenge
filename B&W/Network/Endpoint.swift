@@ -49,10 +49,8 @@ extension Endpoint {
     }
     
     private func url() throws -> URL {
-        let baseURL = config.baseURL.absoluteString.last != "/" ? config.baseURL.absoluteString + "/" : config.baseURL.absoluteString
-        let endpoint = baseURL.appending(path)
-
-        guard let url = URLComponents(string: endpoint)?.url, !url.absoluteString.isEmpty else {
+        let endpoint = config.baseURL.appendingPathComponent(path)
+        guard let url = URLComponents(url: endpoint, resolvingAgainstBaseURL: true)?.url else {
             throw RequestError.componentsError
         }
 
