@@ -29,10 +29,11 @@ final class ProductsDependenciesContainer {
     // MARK: - View Models
 
     private func makeProductsListViewModel(actions: ProductsListViewModelActions) -> ProductsListViewModel {
-        return DefaultProductsListViewModel(
-            useCase: makeGetProductsUseCase(),
-            actions: actions
-        )
+        return DefaultProductsListViewModel(useCase: makeGetProductsUseCase(), actions: actions)
+    }
+    
+    private func makeProductsListItemViewModel(product: Product) -> ProductsListItemViewModel {
+        return ProductsListItemViewModel(product: product, loadImageDataUseCase: loadImageDataUseCase)
     }
 
     private func makeProductDetailsViewModel(product: Product) -> ProductDetailsViewModel {
@@ -69,30 +70,10 @@ extension ProductsDependenciesContainer: GetProductsFlowCoordinatorDependencies 
             
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductListItemCell.reuseIdentifier) as? ProductListItemCell
             cell?.fill(with: makeProductsListItemViewModel(product: product))
-            
             return cell
         }
         
         return listVC
-    }
-    
-    private func makeProductsListItemViewModel(product: Product) -> ProductsListItemViewModel {
-        return ProductsListItemViewModel(
-            product: product,
-            loadImageData: { [weak self] loadImageData in
-                guard let imagePath = product.imagePath else { return }
-                
-                // The actual image data loading logic encapsulated in ProductsListItemViewModel.loadImageData.
-                _ = self?.loadImageDataUseCase.load(for: imagePath) { result in
-                    switch result {
-                    case let .success(data):
-                        loadImageData(data)
-                    case .failure:
-                        break
-                    }
-                }
-            }
-        )
     }
 
     func makeProductDetailsViewController(product: Product) -> ProductDetailsViewController {
