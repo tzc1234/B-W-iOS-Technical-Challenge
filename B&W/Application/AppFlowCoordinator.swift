@@ -31,7 +31,7 @@ final class AppDependenciesContainer {
     private lazy var apiDataTransferService = DefaultDataTransferService(with: networkService)
     private lazy var imageDataRepository = DefaultImageDataRepository(
         service: networkService,
-        makeRequestable: URLEndpoint.init
+        makeRequestable: FullPathEndpoint.init
     )
     private lazy var loadImageDataUseCase = DefaultLoadImageDataUseCase(repository: imageDataRepository)
     
