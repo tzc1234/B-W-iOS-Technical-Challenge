@@ -23,7 +23,11 @@ Updated on 06/04/2024:
 If the images received from API is static, I would like to do caching, for improving the performance. It is rather easy to implement under clean architecture. Utilise the `decorator pattern`, wrapping my `DefaultLoadImageDataUseCase` class, conform to the same protocol. Then, I can intercept the message before and after the network API call. Check any cache before making an API call, and cache after image data response. The cache itself can be an in-memory one, starting from simple.
 
 ### About the ProductsListItemViewModel and ProductListItemCell
-Now the `ProductsListItemViewModel` is created by `DefaultProductsListViewModel`. And because of that, `DefaultProductsListViewModel` has to carry the dependency which `ProductsListItemViewModel` needs only. Ideally, the component should only hold dependencies it needs. The root cause is that `ProductListItemCell` is created by `ProductsListViewController`, leading to their view models also being coupled. I've thought of decoupling them, however, due to the time limit, I can't do it at the moment.
+~~Now the `ProductsListItemViewModel` is created by `DefaultProductsListViewModel`. And because of that, `DefaultProductsListViewModel` has to carry the dependency which `ProductsListItemViewModel` needs only. Ideally, the component should only hold dependencies it needs. The root cause is that `ProductListItemCell` is created by `ProductsListViewController`, leading to their view models also being coupled. I've thought of decoupling them, however, due to the time limit, I can't do it at the moment.~~
+
+Updated on 06/04/2024:
+Now `ProductListItemCell` is created outside `ProductsListViewController`, unlocked the possibility of injecting a `ProductsListItemViewModel` into it.
+And also `ProductsListItemViewModel` is created outside `DefaultProductsListViewModel`, `DefaultProductsListViewModel` needn't to carry the dependency for `ProductsListItemViewModel` any more.
 
 ### About unit tests
 If I have time, I would write unit tests for ALL components (except SwiftUI view, no good ways to do unit test for SwiftUI). I am very satisfied to see more and more lines of code being covered, as an advocate of automated tests.:)
