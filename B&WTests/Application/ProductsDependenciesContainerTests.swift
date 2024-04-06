@@ -54,8 +54,9 @@ final class ProductsDependenciesContainerTests: XCTestCase {
             func cancel() {}
         }
         
-        func request<T: Decodable, E: ResponseRequestable>(with endpoint: E,
-                                                           completion: @escaping CompletionHandler<T>) -> NetworkCancellable? where E.Response == T {
+        func request<T: Decodable>(with endpoint: Requestable,
+                                   responseType: T.Type,
+                                   completion: @escaping CompletionHandler<T>) -> NetworkCancellable? {
             Cancellable()
         }
     }

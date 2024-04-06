@@ -10,38 +10,29 @@ public protocol Requestable {
     func urlRequest() throws -> URLRequest
 }
 
-public protocol ResponseRequestable: Requestable {
-    associatedtype Response
-
-    var responseDecoder: ResponseDecoder { get }
-}
-
 public enum RequestError: Error {
     case componentsError
 }
 
-public final class Endpoint<R>: ResponseRequestable {
-    public typealias Response = R
+// Endpoint should not hold the reference of ResponseDecoder and also define the Response generic type 
+// because Endpoint itself doesn't need them.
 
+// Endpoint is a tiny struct now.
+public struct Endpoint {
     private let config: RequestConfig
     private let path: String
     private let method: HTTPMethodType
-    public let responseDecoder: ResponseDecoder
 
-    public init(config: RequestConfig,
-                path: String,
-                method: HTTPMethodType,
-                responseDecoder: ResponseDecoder = JSONResponseDecoder()) {
+    public init(config: RequestConfig, path: String, method: HTTPMethodType) {
         self.config = config
         self.path = path
         self.method = method
-        self.responseDecoder = responseDecoder
     }
 }
 
 // Move config from method injection to constructor injection.
 // Config shouldn't change frequently, if config has to be changed, I would rather create a new one.
-extension Endpoint {
+extension Endpoint: Requestable {
     public func urlRequest() throws -> URLRequest {
         var urlRequest = URLRequest(url: try url())
         urlRequest.httpMethod = method.rawValue
