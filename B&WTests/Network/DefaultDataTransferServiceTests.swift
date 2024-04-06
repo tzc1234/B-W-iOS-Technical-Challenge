@@ -113,7 +113,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
     }
     
     private func decodedValue(on sut: DefaultDataTransferService,
-                              with endpoint: Endpoint<Int>,
+                              with endpoint: Endpoint,
                               when action: () -> Void,
                               file: StaticString = #filePath,
                               line: UInt = #line) -> Int? {
@@ -127,7 +127,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
     }
     
     private func dataTransferError(on sut: DefaultDataTransferService,
-                                   with endpoint: Endpoint<Int>,
+                                   with endpoint: Endpoint,
                                    when action: () -> Void,
                                    file: StaticString = #filePath,
                                    line: UInt = #line) -> DataTransferError? {
@@ -141,7 +141,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
     }
     
     private func result(on sut: DefaultDataTransferService,
-                        with endpoint: Endpoint<Int>,
+                        with endpoint: Endpoint,
                         when action: () -> Void,
                         file: StaticString = #filePath,
                         line: UInt = #line) -> Result<Int, DataTransferError> {
@@ -157,9 +157,9 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         return receivedResult
     }
     
-    private func makeEndpoint(baseURL: URL = anyURL()) -> Endpoint<Int> {
+    private func makeEndpoint(baseURL: URL = anyURL()) -> Endpoint {
         let config = ApiRequestConfig(baseURL: anyURL())
-        return Endpoint<Int>(config: config, path: "", method: .get)
+        return Endpoint(config: config, path: "", method: .get)
     }
     
     private final class AlwaysReturnNSErrorHandler: DataTransferErrorHandler {

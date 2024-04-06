@@ -9,7 +9,7 @@ import Foundation
 
 /// The collection of products end points required by ProductsRepository.
 protocol ProductsEndpoints {
-    func getProducts() -> Endpoint<ProductResponseDTO>
+    func getProducts() -> Endpoint
 }
 
 struct ProductsRepositoryEndpoints: ProductsEndpoints {
@@ -19,7 +19,7 @@ struct ProductsRepositoryEndpoints: ProductsEndpoints {
         self.config = config
     }
     
-    func getProducts() -> Endpoint<ProductResponseDTO> {
+    func getProducts() -> Endpoint {
         // Inject config into Endpoint from here.
         Endpoint(config: config, path: "db", method: .get)
     }
