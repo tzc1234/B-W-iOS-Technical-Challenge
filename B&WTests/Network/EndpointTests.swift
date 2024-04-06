@@ -45,35 +45,6 @@ final class EndpointTests: XCTestCase {
         XCTAssertEqual(requestURL, "https://base-url.com/")
     }
     
-    func test_urlRequest_deliversCorrectRequestWhenIsFullPath() throws {
-        let fullPath = "https://full-path.com/"
-        let sut = makeSUT(path: fullPath, isFullPath: true)
-        
-        let request = try sut.urlRequest()
-        let requestURL = try XCTUnwrap(request.url?.absoluteString)
-        
-        XCTAssertEqual(request.httpMethod, "GET")
-        XCTAssertEqual(requestURL, fullPath)
-    }
-    
-    func test_urlRequest_throwsRequestErrorWhenInvalidFullPath() {
-        let invalidFullPath = "https://full-path.com[/]"
-        let sut = makeSUT(path: invalidFullPath, isFullPath: true)
-        
-        XCTAssertThrowsError(try sut.urlRequest()) { error in
-            XCTAssertEqual(error as? RequestError, .componentsError)
-        }
-    }
-    
-    func test_urlRequest_throwsRequestErrorWhenEmptyFullPath() {
-        let emptyFullPath = ""
-        let sut = makeSUT(path: emptyFullPath, isFullPath: true)
-        
-        XCTAssertThrowsError(try sut.urlRequest()) { error in
-            XCTAssertEqual(error as? RequestError, .componentsError)
-        }
-    }
-
     // MARK: - Helpers
     
     private func makeSUT(baseURL: URL = URL(string: "https://any-url.com/")!,
@@ -81,6 +52,6 @@ final class EndpointTests: XCTestCase {
                          isFullPath: Bool = false,
                          method: HTTPMethodType = .get) -> Endpoint<Any> {
         let config = ConfigStub(baseURL: baseURL)
-        return Endpoint(config: config, path: path, isFullPath: isFullPath, method: method)
+        return Endpoint(config: config, path: path, method: method)
     }
 }
