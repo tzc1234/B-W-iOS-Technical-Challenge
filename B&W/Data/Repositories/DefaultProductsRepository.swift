@@ -19,14 +19,15 @@ extension DefaultProductsRepository: ProductsRepository {
         guard !task.isCancelled else { return nil }
 
         let endpoint = endpoints.getProducts()
-        task.networkTask = self.dataTransferService.request(with: endpoint) { result in
-            switch result {
-            case .success(let responseDTO):
-                completion(.success(responseDTO.toDomain()))
-            case .failure(let error):
-                completion(.failure(error))
+        task.networkTask = dataTransferService
+            .request(with: endpoint, responseType: ProductResponseDTO.self) { result in
+                switch result {
+                case .success(let responseDTO):
+                    completion(.success(responseDTO.toDomain()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
-        }
         return task
     }
 }

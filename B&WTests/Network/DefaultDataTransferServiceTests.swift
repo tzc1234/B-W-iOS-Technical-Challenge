@@ -91,7 +91,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         let (sut, service) = makeSUT()
         let endpoint = makeEndpoint()
         
-        let task = sut.request(with: endpoint) { _ in }
+        let task = sut.request(with: endpoint, responseType: Int.self) { _ in }
         
         XCTAssertEqual(service.cancelCallCount, 0)
         
@@ -147,7 +147,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
                         line: UInt = #line) -> Result<Int, DataTransferError> {
         let exp = expectation(description: "Wait for completion")
         var receivedResult: Result<Int, DataTransferError>!
-        _ = sut.request(with: endpoint) { result in
+        _ = sut.request(with: endpoint, responseType: Int.self) { result in
             receivedResult = result
             exp.fulfill()
         }
