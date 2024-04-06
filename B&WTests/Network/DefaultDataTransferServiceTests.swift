@@ -18,46 +18,30 @@ final class DefaultDataTransferServiceTests: XCTestCase {
     func test_request_deliversNetworkErrorOnServiceError() {
         let (sut, service) = makeSUT()
         let endpoint = makeEndpoint()
-        let anyNetworkError = NetworkError.urlGeneration
         
-        let exp = expectation(description: "Wait for completion")
-        _ = sut.request(with: endpoint) { result in
-            switch result {
-            case .success:
-                XCTFail("Should not be here")
-                
-            case let .failure(error):
-                guard case .networkFailure = error else {
-                    XCTFail("Should be a network error")
-                    return
-                }
-            }
-            exp.fulfill()
+        let receivedError = dataTransferError(on: sut, with: endpoint, when: {
+            let anyNetworkError = NetworkError.urlGeneration
+            service.complete(with: anyNetworkError)
+        })
+        
+        if case .networkFailure = receivedError {
+            return
         }
-        service.complete(with: anyNetworkError)
-        wait(for: [exp], timeout: 1)
+        XCTFail("Should be a network error")
     }
     
     func test_request_deliversParsingErrorOnDecodeError() {
         let (sut, service) = makeSUT()
         let endpoint = makeEndpoint()
         
-        let exp = expectation(description: "Wait for completion")
-        _ = sut.request(with: endpoint) { result in
-            switch result {
-            case .success:
-                XCTFail("Should not be here")
-                
-            case let .failure(error):
-                guard case .parsing = error else {
-                    XCTFail("Should be a parsing error")
-                    return
-                }
-            }
-            exp.fulfill()
+        let receivedError = dataTransferError(on: sut, with: endpoint, when: {
+            service.complete(with: Data("?".utf8))
+        })
+        
+        if case .parsing = receivedError {
+            return
         }
-        service.complete(with: Data("?".utf8))
-        wait(for: [exp], timeout: 1)
+        XCTFail("Should be a parsing error")
     }
     
     // MARK: - Helpers
@@ -69,6 +53,28 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         trackForMemoryLeaks(service, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, service)
+    }
+    
+    private func dataTransferError(on sut: DefaultDataTransferService,
+                                   with endpoint: Endpoint<Int>,
+                                   when action: () -> Void,
+                                   file: StaticString = #filePath,
+                                   line: UInt = #line) -> DataTransferError? {
+        let exp = expectation(description: "Wait for completion")
+        var receivedError: DataTransferError?
+        _ = sut.request(with: endpoint) { result in
+            switch result {
+            case .success:
+                XCTFail("Should not be success", file: file, line: line)
+            case let .failure(error):
+                receivedError = error
+            }
+            exp.fulfill()
+        }
+        action()
+        wait(for: [exp], timeout: 1)
+        
+        return receivedError
     }
     
     private func makeEndpoint(baseURL: URL = anyURL()) -> Endpoint<Int> {
