@@ -44,6 +44,21 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         XCTFail("Should be a parsing error")
     }
     
+    func test_request_deliversNoResponseErrorWhenReceivedNoData() {
+        let (sut, service) = makeSUT()
+        let endpoint = makeEndpoint()
+        let noData: Data? = nil
+        
+        let receivedError = dataTransferError(on: sut, with: endpoint, when: {
+            service.complete(with: noData)
+        })
+        
+        if case .noResponse = receivedError {
+            return
+        }
+        XCTFail("Should be a noResponse error")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
