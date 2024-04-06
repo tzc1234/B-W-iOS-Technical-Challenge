@@ -53,7 +53,7 @@ extension DefaultDataTransferService: DataTransferService {
     }
 
     private func resolve(networkError error: NetworkError) -> DataTransferError {
-        let resolvedError = self.errorHandler.handle(error: error)
+        let resolvedError = errorHandler.handle(error: error)
         return resolvedError is NetworkError ? .networkFailure(error) : .resolvedNetworkFailure(resolvedError)
     }
 }

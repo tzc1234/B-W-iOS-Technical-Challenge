@@ -38,6 +38,28 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
+    func test_request_deliversParsingErrorOnDecodeError() {
+        let (sut, service) = makeSUT()
+        let endpoint = makeEndpoint()
+        
+        let exp = expectation(description: "Wait for completion")
+        _ = sut.request(with: endpoint) { result in
+            switch result {
+            case .success:
+                XCTFail("Should not be here")
+                
+            case let .failure(error):
+                guard case .parsing = error else {
+                    XCTFail("Should be a parsing error")
+                    return
+                }
+            }
+            exp.fulfill()
+        }
+        service.complete(with: Data("?".utf8))
+        wait(for: [exp], timeout: 1)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
@@ -49,8 +71,8 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         return (sut, service)
     }
     
-    private func makeEndpoint(baseURL: URL = anyURL()) -> Endpoint<String> {
+    private func makeEndpoint(baseURL: URL = anyURL()) -> Endpoint<Int> {
         let config = ApiRequestConfig(baseURL: anyURL())
-        return Endpoint<String>(config: config, path: "", method: .get)
+        return Endpoint<Int>(config: config, path: "", method: .get)
     }
 }
