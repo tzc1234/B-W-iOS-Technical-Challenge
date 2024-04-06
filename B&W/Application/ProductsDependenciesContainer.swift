@@ -31,8 +31,7 @@ final class ProductsDependenciesContainer {
     private func makeProductsListViewModel(actions: ProductsListViewModelActions) -> ProductsListViewModel {
         return DefaultProductsListViewModel(
             useCase: makeGetProductsUseCase(),
-            actions: actions,
-            loadImageDataUseCase: loadImageDataUseCase
+            actions: actions
         )
     }
 
@@ -63,7 +62,37 @@ extension ProductsDependenciesContainer: GetProductsFlowCoordinatorDependencies 
     // MARK: - Controllers
     
     func makeProductsListViewController(actions: ProductsListViewModelActions) -> ProductsListViewController {
-        return ProductsListViewController.create(with: makeProductsListViewModel(actions: actions))
+        let viewModel = makeProductsListViewModel(actions: actions)
+        let listVC = ProductsListViewController.create(with: viewModel)
+        listVC.didCellForRow = { [weak self] tableView, product in
+            guard let self else { return nil }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductListItemCell.reuseIdentifier) as? ProductListItemCell
+            cell?.fill(with: makeProductsListItemViewModel(product: product))
+            
+            return cell
+        }
+        
+        return listVC
+    }
+    
+    private func makeProductsListItemViewModel(product: Product) -> ProductsListItemViewModel {
+        return ProductsListItemViewModel(
+            product: product,
+            loadImageData: { [weak self] loadImageData in
+                guard let imagePath = product.imagePath else { return }
+                
+                // The actual image data loading logic encapsulated in ProductsListItemViewModel.loadImageData.
+                _ = self?.loadImageDataUseCase.load(for: imagePath) { result in
+                    switch result {
+                    case let .success(data):
+                        loadImageData(data)
+                    case .failure:
+                        break
+                    }
+                }
+            }
+        )
     }
 
     func makeProductDetailsViewController(product: Product) -> ProductDetailsViewController {

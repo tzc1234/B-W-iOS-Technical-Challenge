@@ -10,7 +10,7 @@ protocol ProductsListViewModelInput {
 }
 
 protocol ProductsListViewModelOutput {
-    var items: Observable<[ProductsListItemViewModel]> { get }
+    var products: Observable<[Product]> { get }
     var error: Observable<String> { get }
 }
 
@@ -20,11 +20,10 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     
     // MARK: - OUTPUT
 
-    let items: Observable<[ProductsListItemViewModel]>
+    let products: Observable<[Product]>
     let error: Observable<String>
 
     private var query: String = "" // Set query to private, since it needn't to be exposed.
-    private var products: [Product] = [] // Set products to private, since it needn't to be exposed.
     private var loadTask: Cancellable? {
         willSet {
             // State the intention precisely.
@@ -34,19 +33,14 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
 
     private let useCase: GetProductsUseCase
     private let actions: ProductsListViewModelActions
-    private let loadImageDataUseCase: LoadImageDataUseCase
-    private let performOnMainQueue: PerformOnMainQueue
     
     init(useCase: GetProductsUseCase,
          actions: ProductsListViewModelActions,
-         loadImageDataUseCase: LoadImageDataUseCase,
          performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
         self.useCase = useCase
         self.actions = actions
-        self.loadImageDataUseCase = loadImageDataUseCase
+        self.products = Observable([], performOnMainQueue: performOnMainQueue)
         self.error = Observable("", performOnMainQueue: performOnMainQueue)
-        self.items = Observable([], performOnMainQueue: performOnMainQueue)
-        self.performOnMainQueue = performOnMainQueue
     }
     
     private func load(productQuery: ProductQuery) {
@@ -59,34 +53,13 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
                 
                 switch result {
                 case .success(let data):
-                    self.products = data.products
-                    self.items.value = data.products.map(self.makeProductsListItemViewModel)
+                    self.products.value = data.products
                 case .failure(let error):
                     self.error.value = error.isInternetConnectionError ?
                         NSLocalizedString("INTERNET_CONNECTION_ERROR", comment: "") :
                         NSLocalizedString("LOAD_PRODUCTS_ERROR", comment: "")
                 }
         })
-    }
-    
-    private func makeProductsListItemViewModel(product: Product) -> ProductsListItemViewModel {
-        ProductsListItemViewModel(
-            product: product,
-            loadImageData: { [weak self] loadImageData in
-                guard let imagePath = product.imagePath else { return }
-                
-                // The actual image data loading logic encapsulated in ProductsListItemViewModel.loadImageData.
-                _ = self?.loadImageDataUseCase.load(for: imagePath) { result in
-                    switch result {
-                    case let .success(data):
-                        loadImageData(data)
-                    case .failure:
-                        break
-                    }
-                }
-            }, 
-            performOnMainQueue: performOnMainQueue
-        )
     }
     
     private func cancelCurrentPendingTaskBeforeAssigningNewTask() {
@@ -102,6 +75,6 @@ extension DefaultProductsListViewModel {
     }
 
     func didSelectItem(at index: Int) {
-        actions.showProductDetails(products[index])
+        actions.showProductDetails(products.value[index])
     }
 }

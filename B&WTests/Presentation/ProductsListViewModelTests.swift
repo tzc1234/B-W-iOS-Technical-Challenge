@@ -3,14 +3,13 @@ import XCTest
 
 final class ProductsListViewModelTests: XCTestCase {
     func test_init_doesNotNotifyCollaborators() {
-        let (_, getProducts, loadImage) = makeSUT()
+        let (_, getProducts) = makeSUT()
         
         XCTAssertEqual(getProducts.executeCallCount, 0)
-        XCTAssertEqual(loadImage.loadCallCount, 0)
     }
     
     func test_viewDidLoad_deliversErrorOnGetProductsError() {
-        let (sut, getProducts, _) = makeSUT()
+        let (sut, getProducts) = makeSUT()
         
         var loggedErrorMessage = [String]()
         sut.error.observe(on: self) { loggedErrorMessage.append($0) }
@@ -22,7 +21,7 @@ final class ProductsListViewModelTests: XCTestCase {
     }
     
     func test_viewDidLoad_deliversErrorOnGetProductsConnectionError() {
-        let (sut, getProducts, _) = makeSUT()
+        let (sut, getProducts) = makeSUT()
         
         var loggedErrorMessage = [String]()
         sut.error.observe(on: self) { loggedErrorMessage.append($0) }
@@ -33,17 +32,17 @@ final class ProductsListViewModelTests: XCTestCase {
         XCTAssertEqual(loggedErrorMessage, ["", NSLocalizedString("INTERNET_CONNECTION_ERROR", comment: "")])
     }
     
-    func test_viewDidLoad_deliversEmptyItemsWhenReceivedNoProducts() {
+    func test_viewDidLoad_deliversEmptyProductsWhenReceivedNoProducts() {
         let emptyProducts = Products(products: [])
-        let (sut, getProducts, _) = makeSUT()
+        let (sut, getProducts) = makeSUT()
         
-        var loggedItems = [[ProductsListItemViewModel]]()
-        sut.items.observe(on: self) { loggedItems.append($0) }
+        var loggedProducts = [[Product]]()
+        sut.products.observe(on: self) { loggedProducts.append($0) }
         
         sut.viewDidLoad()
         getProducts.complete(with: emptyProducts)
         
-        XCTAssertEqual(loggedItems, [[], []])
+        XCTAssertEqual(loggedProducts, [[], []])
     }
     
     func test_viewDidLoad_deliversItemsWhenReceivedProducts() {
@@ -52,62 +51,15 @@ final class ProductsListViewModelTests: XCTestCase {
             makeProduct(description: "some descriptions", name: "a name", price: "£100"),
             makeProduct(description: "another descriptions", name: "another name", price: "£99")
         ])
-        let (sut, getProducts, _) = makeSUT()
+        let (sut, getProducts) = makeSUT()
         
-        var loggedItems = [[ProductsListItemViewModel]]()
-        sut.items.observe(on: self) { loggedItems.append($0) }
+        var loggedProducts = [[Product]]()
+        sut.products.observe(on: self) { loggedProducts.append($0) }
         
         sut.viewDidLoad()
         getProducts.complete(with: products)
         
-        XCTAssertEqual(loggedItems.count, 2)
-        XCTAssertEqual(loggedItems[0], [])
-        assert(items: loggedItems[1], asExpectedProducts: products)
-    }
-    
-    func test_itemLoadImage_ignoresWhenNilImagePath() {
-        let product = makeProduct(imagePath: nil)
-        let (sut, getProducts, loadImage) = makeSUT()
-        
-        let item = extractItem(from: sut, with: getProducts, and: product)
-        item.loadImage()
-        
-        XCTAssertEqual(loadImage.loadCallCount, 0)
-    }
-    
-    func test_itemLoadImage_doesNotDeliverDataOnLoadImageDataError() {
-        let url = anyURL()
-        let product = makeProduct(imagePath: url)
-        let (sut, getProducts, loadImage) = makeSUT()
-        
-        let item = extractItem(from: sut, with: getProducts, and: product)
-        var loggedData = [Data?]()
-        item.image.observe(on: self) { data in
-            loggedData.append(data)
-        }
-        item.loadImage()
-        loadImage.complete(with: anyNSError())
-        
-        XCTAssertEqual(loggedData, [nil])
-        XCTAssertEqual(loadImage.urls, [url])
-    }
-    
-    func test_itemLoadImage_deliversDataWhenReceivedDataFromLoadImageDataUseCase() {
-        let url = anyURL()
-        let product = makeProduct(imagePath: url)
-        let expectedData = UIImage.make(withColor: .gray).pngData()!
-        let (sut, getProducts, loadImage) = makeSUT()
-        
-        let item = extractItem(from: sut, with: getProducts, and: product)
-        var loggedData = [Data?]()
-        item.image.observe(on: self) { data in
-            loggedData.append(data)
-        }
-        item.loadImage()
-        loadImage.complete(with: expectedData)
-        
-        XCTAssertEqual(loggedData, [nil, expectedData])
-        XCTAssertEqual(loadImage.urls, [url])
+        XCTAssertEqual(loggedProducts, [[], products.products])
     }
     
     func test_didSelectItem_triggersShowProductDetails() {
@@ -116,7 +68,7 @@ final class ProductsListViewModelTests: XCTestCase {
         let product2 = makeProduct(id: "2")
         let products = Products(products: [product0, product1, product2])
         var loggedProducts = [Product]()
-        let (sut, getProducts, _) = makeSUT(showProductDetails: { loggedProducts.append($0) })
+        let (sut, getProducts) = makeSUT(showProductDetails: { loggedProducts.append($0) })
         
         sut.viewDidLoad()
         getProducts.complete(with: products)
@@ -129,7 +81,7 @@ final class ProductsListViewModelTests: XCTestCase {
     }
     
     func test_cancelPendingLoadTask_cancelsGetProductsTaskBeforeAssignNewTask() {
-        let (sut, getProducts, _) = makeSUT()
+        let (sut, getProducts) = makeSUT()
         
         sut.viewDidLoad()
         
@@ -145,49 +97,17 @@ final class ProductsListViewModelTests: XCTestCase {
     private func makeSUT(showProductDetails: @escaping (Product) -> Void = { _ in },
                          performOnMainQueue: @escaping PerformOnMainQueue = { $0() },
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> (sut: ProductsListViewModel, getProducts: GetProductsUseCaseSpy, loadImage: LoadImageDataUseCaseSpy) {
+                         line: UInt = #line) -> (sut: ProductsListViewModel, getProducts: GetProductsUseCaseSpy) {
         let actions = ProductsListViewModelActions(showProductDetails: showProductDetails)
         let getProducts = GetProductsUseCaseSpy()
-        let loadImage = LoadImageDataUseCaseSpy()
         let sut = DefaultProductsListViewModel(
             useCase: getProducts,
-            actions: actions, 
-            loadImageDataUseCase: loadImage,
+            actions: actions,
             performOnMainQueue: performOnMainQueue
         )
         trackForMemoryLeaks(getProducts, file: file, line: line)
-        trackForMemoryLeaks(loadImage, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
-        return (sut, getProducts, loadImage)
-    }
-    
-    private func extractItem(from sut: ProductsListViewModel,
-                             with getProducts: GetProductsUseCaseSpy,
-                             and product: Product) -> ProductsListItemViewModel {
-        var loggedItems = [[ProductsListItemViewModel]]()
-        sut.items.observe(on: self) { loggedItems.append($0) }
-        sut.viewDidLoad()
-        getProducts.complete(with: Products(products: [product]))
-        
-        return loggedItems[1].first!
-    }
-    
-    private func assert(items: [ProductsListItemViewModel], 
-                        asExpectedProducts expectedProducts: Products,
-                        file: StaticString = #filePath,
-                        line: UInt = #line) {
-        let products = expectedProducts.products
-        guard products.count == items.count else {
-            XCTFail("Item count: \(items.count) not match expected product count: \(products.count)", file: file, line: line)
-            return
-        }
-        
-        items.enumerated().forEach { index, item in
-            let product = products[index]
-            XCTAssertEqual(item.name, product.name ?? "", "item(\(index) name not matched", file: file, line: line)
-            XCTAssertEqual(item.description, product.description ?? "", "item(\(index) name not matched", file: file, line: line)
-            XCTAssertEqual(item.price, product.price ?? "", "item(\(index) name not matched", file: file, line: line)
-        }
+        return (sut, getProducts)
     }
     
     private final class GetProductsUseCaseSpy: GetProductsUseCase {
