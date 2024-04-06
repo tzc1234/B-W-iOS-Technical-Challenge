@@ -28,13 +28,15 @@ public final class DefaultDataTransferService {
 extension DefaultDataTransferService: DataTransferService {
     public func request<T: Decodable, E: ResponseRequestable>(with endpoint: E,
                                                               completion: @escaping CompletionHandler<T>) -> NetworkCancellable? where E.Response == T {
-        return self.networkService.request(endpoint: endpoint) { result in
+        return self.networkService.request(endpoint: endpoint) { [weak self] result in
+            guard let self else { return }
+            
             switch result {
             case .success(let data):
-                let result: Result<T, DataTransferError> = self.decode(data: data, decoder: endpoint.responseDecoder)
+                let result: Result<T, DataTransferError> = decode(data: data, decoder: endpoint.responseDecoder)
                 DispatchQueue.main.async { return completion(result) }
             case .failure(let error):
-                let error = self.resolve(networkError: error)
+                let error = resolve(networkError: error)
                 DispatchQueue.main.async { return completion(.failure(error)) }
             }
         }
