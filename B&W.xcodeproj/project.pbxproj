@@ -25,7 +25,7 @@
 		2B91C73E2513A88000F0957C /* DefaultProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C73D2513A88000F0957C /* DefaultProductsRepository.swift */; };
 		2B91C7432513AA0E00F0957C /* DataTransferService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C7422513AA0E00F0957C /* DataTransferService.swift */; };
 		2B91C75B2513ACDF00F0957C /* ProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C75A2513ACDF00F0957C /* ProductsRepository.swift */; };
-		2B91C7642513B11F00F0957C /* ProductQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C7632513B11F00F0957C /* ProductQuery.swift */; };
+		2B91C7642513B11F00F0957C /* Refinement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C7632513B11F00F0957C /* Refinement.swift */; };
 		2B91C76C2513B26600F0957C /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C76B2513B26600F0957C /* Product.swift */; };
 		2B91C7722513B39600F0957C /* RepositoryTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C7712513B39600F0957C /* RepositoryTask.swift */; };
 		2B91C77D2513B5AB00F0957C /* GetProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C77C2513B5AB00F0957C /* GetProductsUseCase.swift */; };
@@ -98,7 +98,7 @@
 		2B91C73D2513A88000F0957C /* DefaultProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProductsRepository.swift; sourceTree = "<group>"; };
 		2B91C7422513AA0E00F0957C /* DataTransferService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransferService.swift; sourceTree = "<group>"; };
 		2B91C75A2513ACDF00F0957C /* ProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepository.swift; sourceTree = "<group>"; };
-		2B91C7632513B11F00F0957C /* ProductQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductQuery.swift; sourceTree = "<group>"; };
+		2B91C7632513B11F00F0957C /* Refinement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refinement.swift; sourceTree = "<group>"; };
 		2B91C76B2513B26600F0957C /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		2B91C7712513B39600F0957C /* RepositoryTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTask.swift; sourceTree = "<group>"; };
 		2B91C77C2513B5AB00F0957C /* GetProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProductsUseCase.swift; sourceTree = "<group>"; };
@@ -357,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				2B91C7622513B11000F0957C /* Entities */,
+				BE89BA8B2BC2C68E00F77A7A /* Value Objects */,
 				2B91C74C2513ACB000F0957C /* Interfaces */,
 				2B91C74B2513ACA900F0957C /* UseCases */,
 			);
@@ -393,7 +394,6 @@
 		2B91C7622513B11000F0957C /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				2B91C7632513B11F00F0957C /* ProductQuery.swift */,
 				2B91C76B2513B26600F0957C /* Product.swift */,
 			);
 			path = Entities;
@@ -486,6 +486,14 @@
 				BE6B5FA72BBEFF6E00B608A1 /* ProductDetailsView.swift */,
 			);
 			path = "SwiftUI View";
+			sourceTree = "<group>";
+		};
+		BE89BA8B2BC2C68E00F77A7A /* Value Objects */ = {
+			isa = PBXGroup;
+			children = (
+				2B91C7632513B11F00F0957C /* Refinement.swift */,
+			);
+			path = "Value Objects";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -605,7 +613,7 @@
 				2B91C7872514AF7900F0957C /* StoryboardInstantiable.swift in Sources */,
 				BE6B5FA62BBEE5BA00B608A1 /* LoadImageDataUseCase.swift in Sources */,
 				2B91C7C62514F6DD00F0957C /* NetworkService.swift in Sources */,
-				2B91C7642513B11F00F0957C /* ProductQuery.swift in Sources */,
+				2B91C7642513B11F00F0957C /* Refinement.swift in Sources */,
 				2B91C76C2513B26600F0957C /* Product.swift in Sources */,
 				BE04016F2BBF2519006BBE71 /* UIImage+Helpers.swift in Sources */,
 				BE6B5F942BBE9D5D00B608A1 /* ProductsEndpoints.swift in Sources */,

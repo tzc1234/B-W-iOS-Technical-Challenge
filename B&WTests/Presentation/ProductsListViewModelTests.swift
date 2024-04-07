@@ -112,7 +112,7 @@ final class ProductsListViewModelTests: XCTestCase {
     
     private final class GetProductsUseCaseSpy: GetProductsUseCase {
         struct ExecuteEvent {
-            let requestValue: GetProductsUseCaseRequestValue
+            let refinement: Refinement
             let completion: (Result<Products, Error>) -> Void
         }
         
@@ -131,9 +131,9 @@ final class ProductsListViewModelTests: XCTestCase {
         
         private(set) var cancelCallCount = 0
         
-        func execute(requestValue: GetProductsUseCaseRequestValue, 
-                     completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable? {
-            executes.append(ExecuteEvent(requestValue: requestValue, completion: completion))
+        func getProducts(with refinement: Refinement,
+                         completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable? {
+            executes.append(ExecuteEvent(refinement: refinement, completion: completion))
             return GetProductsCancellable { [weak self] in
                 self?.cancelCallCount += 1
             }

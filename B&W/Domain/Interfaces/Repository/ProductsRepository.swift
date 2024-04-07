@@ -1,6 +1,6 @@
 import Foundation
 
 protocol ProductsRepository {
-    func fetchProductsList(query: ProductQuery,
+    func fetchProductsList(refinement: Refinement,
                            completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable?
 }

@@ -11,7 +11,7 @@ final class DefaultProductsRepository {
 }
 
 extension DefaultProductsRepository: ProductsRepository {
-    public func fetchProductsList(query: ProductQuery,
+    public func fetchProductsList(refinement: Refinement,
                                   completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable? {
         let task = RepositoryTask()
 
@@ -19,6 +19,8 @@ extension DefaultProductsRepository: ProductsRepository {
         guard !task.isCancelled else { return nil }
 
         let endpoint = endpoints.getProducts()
+        // I guess the refinement.query will be appended to endpoint in real scenario.
+        
         task.networkTask = dataTransferService
             .request(with: endpoint, responseType: ProductResponseDTO.self) { result in
                 switch result {

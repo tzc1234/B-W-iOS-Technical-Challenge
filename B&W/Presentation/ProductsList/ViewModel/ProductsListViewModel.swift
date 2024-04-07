@@ -23,7 +23,10 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     let products: Observable<[Product]>
     let error: Observable<String>
 
-    private var query: String = "" // Set query to private, since it needn't to be exposed.
+    // I guess the view will update this query when choosing different filters in real scenario.
+    // Although it's not used in this challenge.
+    var query: String = ""
+    
     private var loadTask: Cancellable? {
         willSet {
             // State the intention precisely.
@@ -43,11 +46,11 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
         self.error = Observable("", performOnMainQueue: performOnMainQueue)
     }
     
-    private func load(productQuery: ProductQuery) {
-        query = productQuery.query
+    private func load(with refinement: Refinement) {
+        query = refinement.query
 
-        loadTask = useCase.execute(
-            requestValue: .init(query: productQuery),
+        loadTask = useCase.getProducts(
+            with: refinement,
             completion: { [weak self] result in
                 guard let self else { return }
                 
@@ -71,7 +74,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
 
 extension DefaultProductsListViewModel {
     func viewDidLoad() {
-        load(productQuery: .init(query: query))
+        load(with: Refinement(query: query))
     }
 
     func didSelectItem(at index: Int) {
