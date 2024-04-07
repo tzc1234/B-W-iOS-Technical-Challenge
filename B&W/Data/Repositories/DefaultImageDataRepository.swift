@@ -38,8 +38,8 @@ final class DefaultImageDataRepository: ImageDataRepository {
         }
     }
     
-    func fetchImageData(for url: URL, completion: @escaping Completion) -> Cancellable {
-        let endPoint = makeRequestable(url)
+    func fetchImageData(for imagePath: URL, completion: @escaping Completion) -> Cancellable {
+        let endPoint = makeRequestable(imagePath)
         let wrapped = Wrapper(completion)
         
         wrapped.cancellable = service.request(endpoint: endPoint) { result in

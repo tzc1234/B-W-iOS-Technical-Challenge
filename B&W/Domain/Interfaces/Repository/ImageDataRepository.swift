@@ -11,5 +11,5 @@ protocol ImageDataRepository {
     typealias Result = Swift.Result<Data?, Error>
     typealias Completion = (Result) -> Void
     
-    func fetchImageData(for url: URL, completion: @escaping Completion) -> Cancellable
+    func fetchImageData(for imagePath: URL, completion: @escaping Completion) -> Cancellable
 }
