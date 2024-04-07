@@ -10,7 +10,7 @@ import Foundation
 protocol LoadImageDataUseCase {
     typealias Completion = (Result<Data, Error>) -> Void
     
-    func load(for url: URL, completion: @escaping Completion) -> Cancellable
+    func load(for imagePath: URL, completion: @escaping Completion) -> Cancellable
 }
 
 // DefaultLoadImageDataUseCase will encapsulate the business logic/rules, knowing "what to do".
