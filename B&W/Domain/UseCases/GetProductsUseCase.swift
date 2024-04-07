@@ -1,12 +1,16 @@
 import Foundation
 
 protocol GetProductsUseCase {
+    // I prefer directly use `ProductQuery` instead of one level extra abstraction, `GetProductsUseCaseRequestValue`.
+    // And the names of this function/param should be more "business", `execute` and `requestValue` is a bit technical,
+    // because a use case embodies business logic/rules.
+    // Maybe use `getProducts` instead of `execute`,
+    // and `refinement`(the reason of choosing refinement is stated in `ProductQuery`) for "requestValue".
     func execute(requestValue: GetProductsUseCaseRequestValue,
                  completion: @escaping (Result<Products, Error>) -> Void) -> Cancellable?
 }
 
 final class DefaultGetProductsUseCase: GetProductsUseCase {
-
     private let productsRepository: ProductsRepository
 
     init(productsRepository: ProductsRepository) {
