@@ -8,17 +8,6 @@
 import XCTest
 @testable import B_W
 
-final class DispatchOnMainQueueDecorator<T> {
-    private let decoratee: T
-    private let performOnMainQueue: PerformOnMainQueue
-    
-    init(decoratee: T, 
-         performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
-        self.decoratee = decoratee
-        self.performOnMainQueue = performOnMainQueue
-    }
-}
-
 final class DispatchOnMainQueueDecoratorTests: XCTestCase {
     func test_init_doesNotNotifyDecoratee() {
         var performOnMainQueueCount = 0
