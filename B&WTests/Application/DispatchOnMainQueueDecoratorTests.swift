@@ -38,6 +38,18 @@ final class DispatchOnMainQueueDecoratorTests: XCTestCase {
         
         wait(for: [exp], timeout: 1)
     }
+    
+    func test_cancelTask_cancelsRequestForwardToDecorateeCancellable() {
+        let (sut, decoratee) = makeSUT()
+        
+        let task = sut.request(endpoint: FullPathEndpoint(url: anyURL())) { _ in }
+        
+        XCTAssertEqual(decoratee.cancelCallCount, 0)
+        
+        task?.cancel()
+        
+        XCTAssertEqual(decoratee.cancelCallCount, 1)
+    }
 
     // MARK: - Helpers
     
