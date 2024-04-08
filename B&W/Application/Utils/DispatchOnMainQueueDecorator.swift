@@ -9,12 +9,18 @@ import Foundation
 
 final class DispatchOnMainQueueDecorator<T> {
     let decoratee: T
-    let performOnMainQueue: PerformOnMainQueue
     
-    init(decoratee: T,
-         performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
+    init(decoratee: T) {
         self.decoratee = decoratee
-        self.performOnMainQueue = performOnMainQueue
+    }
+    
+    func performOnMainQueue(action: @escaping () -> Void) {
+        guard Thread.isMainThread else {
+            DispatchQueue.main.async { action() }
+            return
+        }
+        
+        action()
     }
 }
 

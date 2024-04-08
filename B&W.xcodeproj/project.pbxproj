@@ -41,7 +41,6 @@
 		BE0401712BBF29DE006BBE71 /* ProductDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0401702BBF29DE006BBE71 /* ProductDetailsViewModelTests.swift */; };
 		BE0401732BBF2A46006BBE71 /* CommonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0401722BBF2A46006BBE71 /* CommonHelpers.swift */; };
 		BE0401752BBF3C1A006BBE71 /* LoadImageDataUseCaseSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0401742BBF3C1A006BBE71 /* LoadImageDataUseCaseSpy.swift */; };
-		BE5536202BBFCFBD006A416A /* DispatchQueue+PerformOnMainQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE55361F2BBFCFBD006A416A /* DispatchQueue+PerformOnMainQueue.swift */; };
 		BE5536282BBFD7CB006A416A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE5536262BBFD7CB006A416A /* Localizable.strings */; };
 		BE5857B22BBDC7EF006FF630 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */; };
 		BE5857B42BBDD51A006FF630 /* NetworkSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */; };
@@ -117,7 +116,6 @@
 		BE0401722BBF2A46006BBE71 /* CommonHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHelpers.swift; sourceTree = "<group>"; };
 		BE0401742BBF3C1A006BBE71 /* LoadImageDataUseCaseSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageDataUseCaseSpy.swift; sourceTree = "<group>"; };
 		BE4119E82BBD8937003E05F5 /* B&W.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "B&W.xctestplan"; sourceTree = "<group>"; };
-		BE55361F2BBFCFBD006A416A /* DispatchQueue+PerformOnMainQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+PerformOnMainQueue.swift"; sourceTree = "<group>"; };
 		BE5536272BBFD7CB006A416A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BE5857B12BBDC7EF006FF630 /* ResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
 		BE5857B32BBDD51A006FF630 /* NetworkSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionManager.swift; sourceTree = "<group>"; };
@@ -308,7 +306,6 @@
 				2B91C7862514AF7900F0957C /* StoryboardInstantiable.swift */,
 				2B91C8512515285100F0957C /* Observable.swift */,
 				BE04016E2BBF2519006BBE71 /* UIImage+Helpers.swift */,
-				BE55361F2BBFCFBD006A416A /* DispatchQueue+PerformOnMainQueue.swift */,
 				BE5536262BBFD7CB006A416A /* Localizable.strings */,
 			);
 			path = Utils;
@@ -618,7 +615,6 @@
 				BE6B5FA82BBEFF6E00B608A1 /* ProductDetailsView.swift in Sources */,
 				BE5857B92BBDDD3A006FF630 /* DataTransferErrorHandler.swift in Sources */,
 				2B91C7432513AA0E00F0957C /* DataTransferService.swift in Sources */,
-				BE5536202BBFCFBD006A416A /* DispatchQueue+PerformOnMainQueue.swift in Sources */,
 				2B91C7342513A28200F0957C /* ProductResponseDTO.swift in Sources */,
 				BE6E8D852BC09B87003FE826 /* ImageDataRepository.swift in Sources */,
 				BEF5C7E12BC427C9008DEAC5 /* DispatchOnMainQueueDecorator.swift in Sources */,

@@ -10,40 +10,41 @@ import XCTest
 
 final class DispatchOnMainQueueDecoratorTests: XCTestCase {
     func test_init_doesNotNotifyDecoratee() {
-        var performOnMainQueueCount = 0
-        let (_, decoratee) = makeSUT(performOnMainQueue: { action in
-            action()
-            performOnMainQueueCount += 1
-        })
+        let (_, decoratee) = makeSUT()
         
-        XCTAssertEqual(performOnMainQueueCount, 0)
         XCTAssertEqual(decoratee.requestCallCount, 0)
     }
     
-    func test_performOnMainQueue_dispatchesDecorateeActionOnMainQueue() {
-        var performOnMainQueueCount = 0
-        let (sut, decoratee) = makeSUT(performOnMainQueue: { action in
-            action()
-            performOnMainQueueCount += 1
-        })
+    func test_performOnMainQueue_dispatchesDecorateeResultOnMainQueue() {
+        let (sut, decoratee) = makeSUT()
+        let expectedData = Data("expected data".utf8)
         
-        _ = sut.request(endpoint: FullPathEndpoint(url: anyURL())) { _ in }
-        decoratee.complete(with: nil)
+        let exp = expectation(description: "Wait for completion")
+        _ = sut.request(endpoint: FullPathEndpoint(url: anyURL())) { result in
+            XCTAssertTrue(Thread.isMainThread)
+            
+            switch result {
+            case let .success(data):
+                XCTAssertEqual(data, expectedData)
+            case .failure:
+                XCTFail("Should not be failure")
+            }
+            exp.fulfill()
+        }
         
-        XCTAssertEqual(performOnMainQueueCount, 1)
-        XCTAssertEqual(decoratee.requestCallCount, 1)
+        DispatchQueue.global().async {
+            decoratee.complete(with: expectedData)
+        }
+        
+        wait(for: [exp], timeout: 1)
     }
 
     // MARK: - Helpers
     
-    private func makeSUT(performOnMainQueue: @escaping PerformOnMainQueue = { $0() },
-                         file: StaticString = #filePath,
+    private func makeSUT(file: StaticString = #filePath,
                          line: UInt = #line) -> (sut: DispatchOnMainQueueDecorator<NetworkService>, decoratee: NetworkServiceSpy) {
         let decoratee = NetworkServiceSpy()
-        let sut = DispatchOnMainQueueDecorator<NetworkService>(
-            decoratee: decoratee,
-            performOnMainQueue: performOnMainQueue
-        )
+        let sut = DispatchOnMainQueueDecorator<NetworkService>(decoratee: decoratee)
         trackForMemoryLeaks(decoratee, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, decoratee)
