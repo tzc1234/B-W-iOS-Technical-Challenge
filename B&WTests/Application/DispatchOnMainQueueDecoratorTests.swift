@@ -42,7 +42,7 @@ final class DispatchOnMainQueueDecoratorTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
-                         line: UInt = #line) -> (sut: DispatchOnMainQueueDecorator<NetworkService>, decoratee: NetworkServiceSpy) {
+                         line: UInt = #line) -> (sut: NetworkService, decoratee: NetworkServiceSpy) {
         let decoratee = NetworkServiceSpy()
         let sut = DispatchOnMainQueueDecorator<NetworkService>(decoratee: decoratee)
         trackForMemoryLeaks(decoratee, file: file, line: line)
