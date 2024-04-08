@@ -17,7 +17,7 @@ final class DispatchOnMainQueueDecoratorTests: XCTestCase {
         })
         
         XCTAssertEqual(performOnMainQueueCount, 0)
-        XCTAssertEqual(decoratee.callCount, 0)
+        XCTAssertEqual(decoratee.requestCallCount, 0)
     }
     
     func test_performOnMainQueue_dispatchesDecorateeActionOnMainQueue() {
@@ -27,40 +27,25 @@ final class DispatchOnMainQueueDecoratorTests: XCTestCase {
             performOnMainQueueCount += 1
         })
         
-        sut.run()
+        _ = sut.request(endpoint: FullPathEndpoint(url: anyURL())) { _ in }
+        decoratee.complete(with: nil)
         
         XCTAssertEqual(performOnMainQueueCount, 1)
-        XCTAssertEqual(decoratee.callCount, 1)
+        XCTAssertEqual(decoratee.requestCallCount, 1)
     }
 
     // MARK: - Helpers
     
     private func makeSUT(performOnMainQueue: @escaping PerformOnMainQueue = { $0() },
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> (sut: DispatchOnMainQueueDecorator<DecorateeSpy>, decoratee: DecorateeSpy) {
-        let decoratee = DecorateeSpy()
-        let sut = DispatchOnMainQueueDecorator<DecorateeSpy>(
+                         line: UInt = #line) -> (sut: DispatchOnMainQueueDecorator<NetworkService>, decoratee: NetworkServiceSpy) {
+        let decoratee = NetworkServiceSpy()
+        let sut = DispatchOnMainQueueDecorator<NetworkService>(
             decoratee: decoratee,
             performOnMainQueue: performOnMainQueue
         )
         trackForMemoryLeaks(decoratee, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, decoratee)
-    }
-}
-
-final class DecorateeSpy {
-    private(set) var callCount = 0
-    
-    func run() {
-        callCount += 1
-    }
-}
-
-extension DispatchOnMainQueueDecorator where T == DecorateeSpy {
-    func run() {
-        performOnMainQueue { [weak self] in
-            self?.decoratee.run()
-        }
     }
 }
