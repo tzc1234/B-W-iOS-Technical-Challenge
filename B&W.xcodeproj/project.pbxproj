@@ -63,6 +63,8 @@
 		BE6E8D872BC0A1F8003FE826 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */; };
 		BE82DB612BC12DFE006EF9C6 /* FullPathEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */; };
 		BE82DB632BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82DB622BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift */; };
+		BEF5C7DF2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF5C7DE2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift */; };
+		BEF5C7E12BC427C9008DEAC5 /* DispatchOnMainQueueDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF5C7E02BC427C9008DEAC5 /* DispatchOnMainQueueDecorator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +139,8 @@
 		BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 		BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPathEndpointTests.swift; sourceTree = "<group>"; };
 		BE82DB622BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDataTransferServiceTests.swift; sourceTree = "<group>"; };
+		BEF5C7DE2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchOnMainQueueDecoratorTests.swift; sourceTree = "<group>"; };
+		BEF5C7E02BC427C9008DEAC5 /* DispatchOnMainQueueDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchOnMainQueueDecorator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,7 @@
 		2B89127725135E38004BC46D /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				BEF5C7E22BC4282B008DEAC5 /* Utils */,
 				2B891242251356A5004BC46D /* AppDelegate.swift */,
 				2B91C7942514BE6400F0957C /* AppFlowCoordinator.swift */,
 				2B91C7812514AC7000F0957C /* ProductsDependenciesContainer.swift */,
@@ -448,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */,
+				BEF5C7DE2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -494,6 +500,14 @@
 				2B91C7632513B11F00F0957C /* Refinement.swift */,
 			);
 			path = "Value Objects";
+			sourceTree = "<group>";
+		};
+		BEF5C7E22BC4282B008DEAC5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BEF5C7E02BC427C9008DEAC5 /* DispatchOnMainQueueDecorator.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -607,6 +621,7 @@
 				BE5536202BBFCFBD006A416A /* DispatchQueue+PerformOnMainQueue.swift in Sources */,
 				2B91C7342513A28200F0957C /* ProductResponseDTO.swift in Sources */,
 				BE6E8D852BC09B87003FE826 /* ImageDataRepository.swift in Sources */,
+				BEF5C7E12BC427C9008DEAC5 /* DispatchOnMainQueueDecorator.swift in Sources */,
 				2B891247251356A5004BC46D /* ProductDetailsViewController.swift in Sources */,
 				2B91C72525139E0500F0957C /* Endpoint.swift in Sources */,
 				BE6E8D7F2BC08DA2003FE826 /* DefaultImageDataRepository.swift in Sources */,
@@ -659,6 +674,7 @@
 				BE82DB632BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift in Sources */,
 				BE0401732BBF2A46006BBE71 /* CommonHelpers.swift in Sources */,
 				BE6B5F9B2BBEBD2400B608A1 /* ConfigStub.swift in Sources */,
+				BEF5C7DF2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

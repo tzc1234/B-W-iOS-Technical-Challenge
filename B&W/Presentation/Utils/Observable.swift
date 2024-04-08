@@ -1,7 +1,6 @@
 import Foundation
 
 public final class Observable<Value> {
-
     struct Observer<V> {
         weak var observer: AnyObject?
         let block: (V) -> Void
@@ -12,29 +11,25 @@ public final class Observable<Value> {
     public var value: Value {
         didSet { notifyObservers() }
     }
-    
-    private let performOnMainQueue: PerformOnMainQueue
 
-    public init(_ value: Value,
-                // Add default param for performOnMainQueue, enable testability.
-                // Code inside DispatchQueue.main.async is hard to test.
-                performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
+    public init(_ value: Value) {
         self.value = value
-        self.performOnMainQueue = performOnMainQueue
     }
 
     public func observe(on observer: AnyObject, observerBlock: @escaping (Value) -> Void) {
         observers.append(Observer(observer: observer, block: observerBlock))
-        observerBlock(self.value)
+        observerBlock(value)
     }
 
     public func remove(observer: AnyObject) {
         observers = observers.filter { $0.observer !== observer }
     }
 
+    // Move all the dispatch queue concerns to Application, using DispatchOnMainQueueDecorator.
+    // Other components need not to care about this.
     private func notifyObservers() {
         for observer in observers {
-            performOnMainQueue { observer.block(self.value) }
+            observer.block(value)
         }
     }
 }

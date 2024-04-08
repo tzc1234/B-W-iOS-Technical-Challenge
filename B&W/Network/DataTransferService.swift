@@ -36,13 +36,15 @@ extension DefaultDataTransferService: DataTransferService {
         return self.networkService.request(endpoint: endpoint) { [weak self] result in
             guard let self else { return }
             
+            // Move all the dispatch queue concerns to Application, using DispatchOnMainQueueDecorator.
+            // Other components need not to care about this.
             switch result {
             case .success(let data):
                 let result: Result<T, DataTransferError> = decode(data: data)
-                DispatchQueue.main.async { return completion(result) }
+                completion(result)
             case .failure(let error):
                 let error = resolve(networkError: error)
-                DispatchQueue.main.async { return completion(.failure(error)) }
+                completion(.failure(error))
             }
         }
     }

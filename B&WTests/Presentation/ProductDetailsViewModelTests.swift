@@ -94,14 +94,12 @@ final class ProductDetailsViewModelTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(product: Product,
-                         performOnMainQueue: @escaping PerformOnMainQueue = { $0() },
                          file: StaticString = #filePath,
                          line: UInt = #line) -> (sut: ProductDetailsViewModel, loadImage: LoadImageDataUseCaseSpy) {
         let loadImage = LoadImageDataUseCaseSpy()
         let sut = DefaultProductDetailsViewModel(
             product: product,
-            loadImageDataUseCase: loadImage,
-            performOnMainQueue: performOnMainQueue
+            loadImageDataUseCase: loadImage
         )
         trackForMemoryLeaks(loadImage, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)

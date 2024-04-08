@@ -9,15 +9,13 @@ final class ProductsListItemViewModel {
     private let imagePath: URL?
     private let loadImageDataUseCase: LoadImageDataUseCase
     
-    init(product: Product,
-         loadImageDataUseCase: LoadImageDataUseCase,
-         performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
+    init(product: Product, loadImageDataUseCase: LoadImageDataUseCase) {
         self.name = product.name ?? ""
         self.price = product.price ?? ""
         self.description = product.description ?? ""
         self.imagePath = product.imagePath
         self.loadImageDataUseCase = loadImageDataUseCase
-        self.image = Observable(nil, performOnMainQueue: performOnMainQueue)
+        self.image = Observable(nil)
     }
 }
 

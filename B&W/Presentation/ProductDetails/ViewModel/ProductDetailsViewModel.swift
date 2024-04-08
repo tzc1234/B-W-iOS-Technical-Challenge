@@ -25,15 +25,13 @@ final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
     let price: String
     private let loadImageDataUseCase: LoadImageDataUseCase
 
-    init(product: Product, 
-         loadImageDataUseCase: LoadImageDataUseCase,
-         performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
+    init(product: Product, loadImageDataUseCase: LoadImageDataUseCase) {
         self.name = product.name ?? ""
         self.description = product.description ?? ""
         self.imagePath = product.imagePath
         self.price = product.price ?? ""
         self.loadImageDataUseCase = loadImageDataUseCase
-        self.image = Observable(nil, performOnMainQueue: performOnMainQueue)
+        self.image = Observable(nil)
     }
 }
 
