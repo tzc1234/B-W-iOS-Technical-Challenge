@@ -63,6 +63,7 @@
 		BE6E8D872BC0A1F8003FE826 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */; };
 		BE82DB612BC12DFE006EF9C6 /* FullPathEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */; };
 		BE82DB632BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82DB622BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift */; };
+		BEF5C7DF2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF5C7DE2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		BE6E8D862BC0A1F8003FE826 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 		BE82DB602BC12DFE006EF9C6 /* FullPathEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPathEndpointTests.swift; sourceTree = "<group>"; };
 		BE82DB622BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDataTransferServiceTests.swift; sourceTree = "<group>"; };
+		BEF5C7DE2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchOnMainQueueDecoratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -448,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */,
+				BEF5C7DE2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -659,6 +662,7 @@
 				BE82DB632BC16A7D006EF9C6 /* DefaultDataTransferServiceTests.swift in Sources */,
 				BE0401732BBF2A46006BBE71 /* CommonHelpers.swift in Sources */,
 				BE6B5F9B2BBEBD2400B608A1 /* ConfigStub.swift in Sources */,
+				BEF5C7DF2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
