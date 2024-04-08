@@ -27,15 +27,3 @@ extension DispatchOnMainQueueDecorator: NetworkService where T == NetworkService
         }
     }
 }
-
-extension DispatchOnMainQueueDecorator: DataTransferService where T == DataTransferService {
-    func request<R: Decodable>(with endpoint: Requestable,
-                               responseType: R.Type,
-                               completion: @escaping (Result<R, DataTransferError>) -> Void) -> NetworkCancellable? {
-        return decoratee.request(with: endpoint, responseType: responseType) { [weak self] result in
-            self?.performOnMainQueue {
-                completion(result)
-            }
-        }
-    }
-}
