@@ -37,13 +37,11 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     private let useCase: GetProductsUseCase
     private let actions: ProductsListViewModelActions
     
-    init(useCase: GetProductsUseCase,
-         actions: ProductsListViewModelActions,
-         performOnMainQueue: @escaping PerformOnMainQueue = DispatchQueue.performOnMainQueue()) {
+    init(useCase: GetProductsUseCase, actions: ProductsListViewModelActions) {
         self.useCase = useCase
         self.actions = actions
-        self.products = Observable([], performOnMainQueue: performOnMainQueue)
-        self.error = Observable("", performOnMainQueue: performOnMainQueue)
+        self.products = Observable([])
+        self.error = Observable("")
     }
     
     private func load(with refinement: Refinement) {

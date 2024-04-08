@@ -28,9 +28,9 @@ final class AppDependenciesContainer {
     private lazy var config = ApiRequestConfig(baseURL: baseURL)
     
     private let networkService = DefaultNetworkService()
-    private lazy var apiDataTransferService = DefaultDataTransferService(with: networkService)
+    private lazy var dataTransferService = DefaultDataTransferService(with: networkService)
     private lazy var imageDataRepository = DefaultImageDataRepository(
-        service: networkService,
+        service: DispatchOnMainQueueDecorator(decoratee: networkService),
         makeRequestable: FullPathEndpoint.init
     )
     private lazy var loadImageDataUseCase = DefaultLoadImageDataUseCase(repository: imageDataRepository)
@@ -38,7 +38,7 @@ final class AppDependenciesContainer {
     func makeProductsDependenciesContainer() -> ProductsDependenciesContainer {
         return ProductsDependenciesContainer(
             config: config,
-            dataTransferService: apiDataTransferService,
+            dataTransferService: DispatchOnMainQueueDecorator(decoratee: dataTransferService),
             loadImageDataUseCase: loadImageDataUseCase
         )
     }
