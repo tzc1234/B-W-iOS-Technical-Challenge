@@ -20,8 +20,8 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     
     // MARK: - OUTPUT
 
-    let products: Observable<[Product]>
-    let error: Observable<String>
+    let products: Observable<[Product]> = Observable([])
+    let error: Observable<String> = Observable("")
 
     // I guess the view will update this query when choosing different filters in real scenario.
     // Although it's not used in this challenge.
@@ -40,8 +40,6 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     init(useCase: GetProductsUseCase, actions: ProductsListViewModelActions) {
         self.useCase = useCase
         self.actions = actions
-        self.products = Observable([])
-        self.error = Observable("")
     }
     
     private func load(with refinement: Refinement) {

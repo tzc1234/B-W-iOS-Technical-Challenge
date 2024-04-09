@@ -1,7 +1,7 @@
 import Foundation
 
 final class ProductsListItemViewModel {
-    let image: Observable<Data?>
+    let image: Observable<Data?> = Observable(nil)
     
     let name: String
     let price: String
@@ -15,7 +15,6 @@ final class ProductsListItemViewModel {
         self.description = product.description ?? ""
         self.imagePath = product.imagePath
         self.loadImageDataUseCase = loadImageDataUseCase
-        self.image = Observable(nil)
     }
 }
 

@@ -17,21 +17,20 @@ typealias ProductDetailsViewModel = ProductDetailsViewModelInput & ProductDetail
 final class DefaultProductDetailsViewModel: ProductDetailsViewModel {
     private var imageDataLoading: Cancellable?
 
-    let image: Observable<Data?>
+    let image: Observable<Data?> = Observable(nil)
     
     let name: String
     let description: String
-    private let imagePath: URL?
     let price: String
+    private let imagePath: URL?
     private let loadImageDataUseCase: LoadImageDataUseCase
 
     init(product: Product, loadImageDataUseCase: LoadImageDataUseCase) {
         self.name = product.name ?? ""
         self.description = product.description ?? ""
-        self.imagePath = product.imagePath
         self.price = product.price ?? ""
+        self.imagePath = product.imagePath
         self.loadImageDataUseCase = loadImageDataUseCase
-        self.image = Observable(nil)
     }
 }
 
