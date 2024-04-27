@@ -183,7 +183,7 @@
 		2B891241251356A5004BC46D /* B&W */ = {
 			isa = PBXGroup;
 			children = (
-				2B89127725135E38004BC46D /* Application */,
+				2B89127725135E38004BC46D /* Main */,
 				2B91C722251398F800F0957C /* Data */,
 				2B91C74A2513ACA400F0957C /* Domain */,
 				2B91C723251398FE00F0957C /* Network */,
@@ -197,7 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				BE6B5F992BBEBD0800B608A1 /* Helpers */,
-				BE5536242BBFD634006A416A /* Application */,
+				BE5536242BBFD634006A416A /* Main */,
 				BE5536232BBFD5FF006A416A /* Data */,
 				BE5536252BBFD650006A416A /* Domain */,
 				BE5536212BBFD572006A416A /* Network */,
@@ -207,7 +207,7 @@
 			path = "B&WTests";
 			sourceTree = "<group>";
 		};
-		2B89127725135E38004BC46D /* Application */ = {
+		2B89127725135E38004BC46D /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				BEF5C7E22BC4282B008DEAC5 /* Utils */,
@@ -215,7 +215,7 @@
 				2B91C7942514BE6400F0957C /* AppFlowCoordinator.swift */,
 				2B91C7812514AC7000F0957C /* ProductsDependenciesContainer.swift */,
 			);
-			path = Application;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		2B89127825135E66004BC46D /* Presentation */ = {
@@ -449,13 +449,13 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		BE5536242BBFD634006A416A /* Application */ = {
+		BE5536242BBFD634006A416A /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				BE6B5F9C2BBEC23F00B608A1 /* ProductsDependenciesContainerTests.swift */,
 				BEF5C7DE2BC421D0008DEAC5 /* DispatchOnMainQueueDecoratorTests.swift */,
 			);
-			path = Application;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		BE5536252BBFD650006A416A /* Domain */ = {
