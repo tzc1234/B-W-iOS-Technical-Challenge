@@ -25,7 +25,7 @@ final class DispatchOnMainQueueDecorator<T> {
 }
 
 extension DispatchOnMainQueueDecorator: NetworkService where T == NetworkService {
-    func request(endpoint: Requestable, completion: @escaping NetworkService.CompletionHandler) -> NetworkCancellable? {
+    func request(endpoint: Requestable, completion: @escaping NetworkService.CompletionHandler) -> NetworkCancellable {
         return decoratee.request(endpoint: endpoint) { [weak self] result in
             self?.performOnMainQueue {
                 completion(result)

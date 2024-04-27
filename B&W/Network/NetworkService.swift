@@ -14,7 +14,7 @@ public protocol NetworkCancellable {
 public protocol NetworkService {
     typealias CompletionHandler = (Result<Data?, NetworkError>) -> Void
 
-    func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable?
+    func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable
 }
 
 // No need to carry a RequestConfig for Endpoint.
@@ -57,7 +57,7 @@ public final class DefaultNetworkService {
 }
 
 extension DefaultNetworkService: NetworkService {
-    public func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable? {
+    public func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable {
         let urlRequest = endpoint.urlRequest()
         return request(request: urlRequest, completion: completion)
     }

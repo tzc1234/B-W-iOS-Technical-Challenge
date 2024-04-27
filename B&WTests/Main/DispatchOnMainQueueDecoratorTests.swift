@@ -46,7 +46,7 @@ final class DispatchOnMainQueueDecoratorTests: XCTestCase {
         
         XCTAssertEqual(decoratee.cancelCallCount, 0)
         
-        task?.cancel()
+        task.cancel()
         
         XCTAssertEqual(decoratee.cancelCallCount, 1)
     }

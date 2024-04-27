@@ -32,7 +32,7 @@ final class NetworkServiceSpy: NetworkService {
     
     private(set) var cancelCallCount = 0
     
-    func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable? {
+    func request(endpoint: Requestable, completion: @escaping CompletionHandler) -> NetworkCancellable {
         requests.append(Request(endpoint: endpoint, completion: completion))
         return Cancellable(afterCancel: { [weak self] in
             self?.cancelCallCount += 1
