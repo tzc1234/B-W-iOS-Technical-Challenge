@@ -16,7 +16,7 @@ public struct FullPathEndpoint: Requestable {
         self.url = url
     }
     
-    public func urlRequest() throws -> URLRequest {
+    public func urlRequest() -> URLRequest {
         URLRequest(url: url)
     }
 }

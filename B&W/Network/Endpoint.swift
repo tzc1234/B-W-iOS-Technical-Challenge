@@ -7,7 +7,7 @@ public enum HTTPMethodType: String {
 // Move the Requestable extension functions to Endpoint extension,
 // therefore variables(path, isFullPath, method) needn't to be exposed from Requestable.
 public protocol Requestable {
-    func urlRequest() throws -> URLRequest
+    func urlRequest() -> URLRequest
 }
 
 public enum RequestError: Error {
@@ -33,18 +33,13 @@ public struct Endpoint {
 // Move config from method injection to constructor injection.
 // Config shouldn't change frequently, if config has to be changed, I would rather create a new one.
 extension Endpoint: Requestable {
-    public func urlRequest() throws -> URLRequest {
-        var urlRequest = URLRequest(url: try url())
+    public func urlRequest() -> URLRequest {
+        var urlRequest = URLRequest(url: url())
         urlRequest.httpMethod = method.rawValue
         return urlRequest
     }
     
-    private func url() throws -> URL {
-        let endpoint = config.baseURL.appendingPathComponent(path)
-        guard let url = URLComponents(url: endpoint, resolvingAgainstBaseURL: true)?.url else {
-            throw RequestError.componentsError
-        }
-
-        return url
+    private func url() -> URL {
+        config.baseURL.appendingPathComponent(path)
     }
 }

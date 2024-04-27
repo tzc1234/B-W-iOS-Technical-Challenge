@@ -20,7 +20,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         let endpoint = makeEndpoint()
         
         let receivedError = dataTransferError(on: sut, with: endpoint, when: {
-            let anyNetworkError = NetworkError.urlGeneration
+            let anyNetworkError = NetworkError.notConnected
             service.complete(with: anyNetworkError)
         })
         
@@ -36,7 +36,7 @@ final class DefaultDataTransferServiceTests: XCTestCase {
         let endpoint = makeEndpoint()
         
         let receivedError = dataTransferError(on: sut, with: endpoint, when: {
-            let anyNetworkError = NetworkError.urlGeneration
+            let anyNetworkError = NetworkError.notConnected
             service.complete(with: anyNetworkError)
         })
         

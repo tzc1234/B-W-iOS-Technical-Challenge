@@ -14,7 +14,7 @@ final class EndpointTests: XCTestCase {
         let path = "path"
         let sut = makeSUT(baseURL: baseURLWithLastSlash, path: path)
         
-        let request = try sut.urlRequest()
+        let request = sut.urlRequest()
         let requestURL = try XCTUnwrap(request.url?.absoluteString)
         
         XCTAssertEqual(request.httpMethod, "GET")
@@ -26,7 +26,7 @@ final class EndpointTests: XCTestCase {
         let path = "path"
         let sut = makeSUT(baseURL: baseURLWithoutLastSlash, path: path)
         
-        let request = try sut.urlRequest()
+        let request = sut.urlRequest()
         let requestURL = try XCTUnwrap(request.url?.absoluteString)
         
         XCTAssertEqual(request.httpMethod, "GET")
@@ -38,7 +38,7 @@ final class EndpointTests: XCTestCase {
         let emptyPath = ""
         let sut = makeSUT(baseURL: baseURL, path: emptyPath)
         
-        let request = try sut.urlRequest()
+        let request = sut.urlRequest()
         let requestURL = try XCTUnwrap(request.url?.absoluteString)
         
         XCTAssertEqual(request.httpMethod, "GET")

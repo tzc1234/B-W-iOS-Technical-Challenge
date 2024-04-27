@@ -16,13 +16,13 @@ final class DefaultImageDataRepositoryTests: XCTestCase {
         XCTAssertEqual(service.requestCallCount, 0)
     }
     
-    func test_fetchImageData_passesCorrectParamsToService() throws {
+    func test_fetchImageData_passesCorrectParamsToService() {
         let (sut, service) = makeSUT()
         let expectedURL = URL(string: "https://image-data.com")!
         
         _ = sut.fetchImageData(for: expectedURL) { _ in }
         
-        let request = try service.endpoints.first?.urlRequest()
+        let request = service.endpoints.first?.urlRequest()
         XCTAssertEqual(request?.url, expectedURL)
         XCTAssertEqual(request?.httpMethod, "GET")
     }
