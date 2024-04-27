@@ -4,7 +4,7 @@ public enum NetworkError: Error {
     case error(statusCode: Int, data: Data?)
     case notConnected
     case cancelled
-    case generic(Error)
+    case generic
 }
 
 public protocol NetworkCancellable {
@@ -51,7 +51,7 @@ public final class DefaultNetworkService {
         switch code {
         case .notConnectedToInternet: return .notConnected
         case .cancelled: return .cancelled
-        default: return .generic(error)
+        default: return .generic
         }
     }
 }
