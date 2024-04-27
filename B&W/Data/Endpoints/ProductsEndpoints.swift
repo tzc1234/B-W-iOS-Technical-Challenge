@@ -20,7 +20,6 @@ struct ProductsRepositoryEndpoints: ProductsEndpoints {
     }
     
     func getProducts() -> Endpoint {
-        // Inject config into Endpoint from here.
-        Endpoint(config: config, path: "db", method: .get)
+        Endpoint(config: config, path: "", method: .get)
     }
 }

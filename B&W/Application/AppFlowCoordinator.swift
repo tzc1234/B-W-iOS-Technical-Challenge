@@ -24,8 +24,8 @@ final class AppFlowCoordinator {
 }
 
 final class AppDependenciesContainer {
-    private let baseURL = URL(string: "https://my-json-server.typicode.com/daliad007/iOS-tech-test/")!
-    private lazy var config = ApiRequestConfig(baseURL: baseURL)
+    private let localDataURL = Bundle.main.url(forResource: "data.json", withExtension: nil)!
+    private lazy var config = ApiRequestConfig(baseURL: localDataURL)
     
     private let networkService = DefaultNetworkService()
     private lazy var dispatchOnMainQueueNetworkService: NetworkService = DispatchOnMainQueueDecorator(decoratee: networkService)

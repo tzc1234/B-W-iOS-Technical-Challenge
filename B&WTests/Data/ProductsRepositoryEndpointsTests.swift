@@ -17,7 +17,7 @@ final class ProductsRepositoryEndpointsTests: XCTestCase {
         let requestURL = request?.url?.absoluteString
         
         XCTAssertEqual(request?.httpMethod, "GET")
-        XCTAssertEqual(requestURL, "https://base-url.com/db")
+        XCTAssertEqual(requestURL, "https://base-url.com/")
     }
     
     // MARK: - Helpers
