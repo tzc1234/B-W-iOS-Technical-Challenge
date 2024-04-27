@@ -13,10 +13,10 @@ final class ProductsRepositoryEndpointsTests: XCTestCase {
         let baseURL = URL(string: "https://base-url.com")!
         let sut = makeSUT(baseURL: baseURL)
         
-        let request = try? sut.getProducts().urlRequest()
-        let requestURL = request?.url?.absoluteString
+        let request = sut.getProducts().urlRequest()
+        let requestURL = request.url?.absoluteString
         
-        XCTAssertEqual(request?.httpMethod, "GET")
+        XCTAssertEqual(request.httpMethod, "GET")
         XCTAssertEqual(requestURL, "https://base-url.com/")
     }
     

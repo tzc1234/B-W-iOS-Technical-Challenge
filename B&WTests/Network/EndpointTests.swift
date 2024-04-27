@@ -50,7 +50,7 @@ final class EndpointTests: XCTestCase {
     private func makeSUT(baseURL: URL = URL(string: "https://any-url.com/")!,
                          path: String,
                          isFullPath: Bool = false,
-                         method: HTTPMethodType = .get) -> Endpoint {
+                         method: HTTPMethod = .get) -> Endpoint {
         let config = ConfigStub(baseURL: baseURL)
         return Endpoint(config: config, path: path, method: method)
     }

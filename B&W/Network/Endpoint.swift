@@ -1,6 +1,6 @@
 import Foundation
 
-public enum HTTPMethodType: String {
+public enum HTTPMethod: String {
     case get = "GET"
 }
 
@@ -21,9 +21,9 @@ public enum RequestError: Error {
 public struct Endpoint {
     private let config: RequestConfig
     private let path: String
-    private let method: HTTPMethodType
+    private let method: HTTPMethod
 
-    public init(config: RequestConfig, path: String, method: HTTPMethodType) {
+    public init(config: RequestConfig, path: String, method: HTTPMethod) {
         self.config = config
         self.path = path
         self.method = method
