@@ -19,7 +19,9 @@ final class URLSessionHTTPClient {
     
     func request(_ request: URLRequest, completion: @escaping (Result<(Data, HTTPURLResponse), Error>) -> Void) {
         let task = session.dataTask(with: request) { data, response, error in
-            if let error {
+            if let data, let httpResponse = response as? HTTPURLResponse {
+                completion(.success((data, httpResponse)))
+            } else if let error {
                 completion(.failure(error))
             } else {
                 completion(.failure(UnexpectedRepresentationError()))
@@ -68,6 +70,28 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(errorFor((anyData(), nonHTTPURLResponse(), nil)))
         XCTAssertNotNil(errorFor((anyData(), nonHTTPURLResponse(), anyNSError())))
         XCTAssertNotNil(errorFor((anyData(), anyHTTPURLResponse(), anyNSError())))
+    }
+    
+    func test_request_succeedsOnHTTPRequestWithData() {
+        let sut = makeSUT()
+        let expectedData = anyData()
+        let httpRequest = anyHTTPURLResponse()
+        
+        URLProtocolStub.stub(data: expectedData, response: httpRequest, error: nil)
+        
+        let exp = expectation(description: "Wait for completion")
+        sut.request(URLRequest(url: anyURL())) { result in
+            switch result {
+            case let .success((data, response)):
+                XCTAssertEqual(data, expectedData)
+                XCTAssertEqual(response.url, httpRequest.url)
+                XCTAssertEqual(response.statusCode, httpRequest.statusCode)
+            default:
+                XCTFail("Expect a success, got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
     }
     
     // MARK: - Helpers
