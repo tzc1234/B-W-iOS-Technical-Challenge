@@ -36,17 +36,22 @@ final class URLSessionHTTPClientTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
-    func test_request_failsOnRequestErrors() {
-        XCTAssertNotNil(errorFor((nil, nil, nil)))
-        XCTAssertNotNil(errorFor((anyData(), nil, nil)))
-        XCTAssertNotNil(errorFor((nil, nil, anyNSError())))
-        XCTAssertNotNil(errorFor((nil, nonHTTPURLResponse(), nil)))
-        XCTAssertNotNil(errorFor((anyData(), nil, anyNSError())))
-        XCTAssertNotNil(errorFor((nil, nonHTTPURLResponse(), anyNSError())))
-        XCTAssertNotNil(errorFor((nil, anyHTTPURLResponse(), anyNSError())))
-        XCTAssertNotNil(errorFor((anyData(), nonHTTPURLResponse(), nil)))
-        XCTAssertNotNil(errorFor((anyData(), nonHTTPURLResponse(), anyNSError())))
-        XCTAssertNotNil(errorFor((anyData(), anyHTTPURLResponse(), anyNSError())))
+    func test_request_failsOnRequestError() {
+        let requestError = errorFor((data: nil, response: nil, error: anyNSError()))
+        
+        XCTAssertNotNil(requestError)
+    }
+    
+    func test_request_failsOnAllInvalidRepresentationErrors() {
+        XCTAssertNotNil(errorFor((data: nil, response: nil, error: nil)))
+        XCTAssertNotNil(errorFor((data: anyData(), response: nil, error: nil)))
+        XCTAssertNotNil(errorFor((data: nil, response: nonHTTPURLResponse(), error: nil)))
+        XCTAssertNotNil(errorFor((data: anyData(), response: nil, error: anyNSError())))
+        XCTAssertNotNil(errorFor((data: nil, response: nonHTTPURLResponse(), error: anyNSError())))
+        XCTAssertNotNil(errorFor((data: nil, response: anyHTTPURLResponse(), error: anyNSError())))
+        XCTAssertNotNil(errorFor((data: anyData(), response: nonHTTPURLResponse(), error: nil)))
+        XCTAssertNotNil(errorFor((data: anyData(), response: nonHTTPURLResponse(), error: anyNSError())))
+        XCTAssertNotNil(errorFor((data: anyData(), response: anyHTTPURLResponse(), error: anyNSError())))
     }
     
     func test_request_succeedsOnHTTPRequestWithData() throws {
