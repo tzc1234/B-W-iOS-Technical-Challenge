@@ -3,52 +3,10 @@
 //  B&WTests
 //
 //  Created by Tsz-Lung on 28/04/2024.
-//  Copyright © 2024 Artemis Simple Solutions Ltd. All rights reserved.
 //
 
 import XCTest
-
-protocol HTTPClientTask {
-    func cancel()
-}
-
-protocol HTTPClient {
-    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
-    
-    func request(_ request: URLRequest, completion: @escaping (Result) -> Void) -> HTTPClientTask
-}
-
-final class URLSessionHTTPClient: HTTPClient {
-    private let session: URLSession
-    
-    init(session: URLSession) {
-        self.session = session
-    }
-    
-    struct UnexpectedRepresentationError: Error {}
-    
-    private struct Wrapper: HTTPClientTask {
-        let task: URLSessionTask
-        
-        func cancel() {
-            task.cancel()
-        }
-    }
-    
-    func request(_ request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
-        let task = session.dataTask(with: request) { data, response, error in
-            if let data, let httpResponse = response as? HTTPURLResponse {
-                completion(.success((data, httpResponse)))
-            } else if let error {
-                completion(.failure(error))
-            } else {
-                completion(.failure(UnexpectedRepresentationError()))
-            }
-        }
-        task.resume()
-        return Wrapper(task: task)
-    }
-}
+import B_W
 
 final class URLSessionHTTPClientTests: XCTestCase {
     override func setUp() {

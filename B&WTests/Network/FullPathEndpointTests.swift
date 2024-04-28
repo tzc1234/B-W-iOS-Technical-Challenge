@@ -10,11 +10,11 @@ import XCTest
 import B_W
 
 final class FullPathEndpointTests: XCTestCase {
-    func test_urlRequest_requestsByURL() throws {
+    func test_urlRequest_requestsByURL() {
         let url = URL(string: "https://url.com")!
         let sut = FullPathEndpoint(url: url)
         
-        let request = try sut.urlRequest()
+        let request = sut.urlRequest()
         
         XCTAssertEqual(request.url, url)
         XCTAssertEqual(request.httpMethod, "GET")
