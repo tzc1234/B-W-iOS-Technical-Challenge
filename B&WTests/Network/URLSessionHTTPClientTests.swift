@@ -25,12 +25,10 @@ final class URLSessionHTTPClient {
 
 final class URLSessionHTTPClientTests: XCTestCase {
     func test_request_performsRequest() {
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.protocolClasses = [URLProtocolStub.self]
-        let session = URLSession(configuration: configuration)
-        let sut = URLSessionHTTPClient(session: session)
-        let url = URL(string: "https://rquest-url.com")!
-        let expectedRequest = URLRequest(url: url)
+        let sut = makeSUT()
+        let url = URL(string: "https://request-url.com")!
+        var expectedRequest = URLRequest(url: url)
+        expectedRequest.httpMethod = "GET"
         
         let exp = expectation(description: "Wait for observer")
         URLProtocolStub.observer = { request in
@@ -39,6 +37,17 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
         sut.request(expectedRequest)
         wait(for: [exp], timeout: 1)
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [URLProtocolStub.self]
+        let session = URLSession(configuration: configuration)
+        let sut = URLSessionHTTPClient(session: session)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return sut
     }
     
     private final class URLProtocolStub: URLProtocol {
