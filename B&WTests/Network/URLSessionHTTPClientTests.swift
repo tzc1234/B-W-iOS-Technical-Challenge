@@ -12,7 +12,13 @@ protocol HTTPClientTask {
     func cancel()
 }
 
-final class URLSessionHTTPClient {
+protocol HTTPClient {
+    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
+    
+    func request(_ request: URLRequest, completion: @escaping (Result) -> Void) -> HTTPClientTask
+}
+
+final class URLSessionHTTPClient: HTTPClient {
     private let session: URLSession
     
     init(session: URLSession) {
@@ -29,8 +35,7 @@ final class URLSessionHTTPClient {
         }
     }
     
-    func request(_ request: URLRequest,
-                 completion: @escaping (Result<(Data, HTTPURLResponse), Error>) -> Void) -> HTTPClientTask {
+    func request(_ request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
         let task = session.dataTask(with: request) { data, response, error in
             if let data, let httpResponse = response as? HTTPURLResponse {
                 completion(.success((data, httpResponse)))
@@ -119,7 +124,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> HTTPClient {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [URLProtocolStub.self]
         let session = URLSession(configuration: configuration)
@@ -164,11 +169,11 @@ final class URLSessionHTTPClientTests: XCTestCase {
     private func resultFor(_ value: (data: Data?, response: URLResponse?, error: Error?)? = nil,
                            taskHandler: (HTTPClientTask) -> Void = { _ in },
                            file: StaticString = #filePath,
-                           line: UInt = #line) -> Result<(Data, HTTPURLResponse), Error> {
+                           line: UInt = #line) -> HTTPClient.Result {
         let sut = makeSUT(file: file, line: line)
         value.map { URLProtocolStub.stub(data: $0, response: $1, error: $2) }
         
-        var receivedResult: Result<(Data, HTTPURLResponse), Error>?
+        var receivedResult: HTTPClient.Result?
         let exp = expectation(description: "Wait for completion")
         taskHandler(sut.request(URLRequest(url: anyURL())) { result in
             receivedResult = result
